@@ -8,7 +8,7 @@
 <title>Commit Test</title>
 </head>
 <body>
-	<h1 class="bg-blue-500 text-white">TEST!1fg</h1>
+	<h1 class="bg-blue-500 text-white">TEST!</h1>
 	
 </body>
 </html>
