@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link href="../css/output.css" rel="stylesheet">
 <title>Commit Test</title>
 </head>
 <body>
-	<h1>TEST!1</h1>
+	<h1 class="bg-blue-500 text-white">TEST!1fg</h1>
+	
 </body>
 </html>
