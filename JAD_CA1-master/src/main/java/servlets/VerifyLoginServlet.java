@@ -38,6 +38,9 @@ public class VerifyLoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		
+		String dbUser = System.getenv("PLANETSCALE_USERNAME");
+		String dbKey = System.getenv("PLANETSCALE_KEY");
+	
 		String userRole = "adminUser";
 		String user = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -51,7 +54,7 @@ public class VerifyLoginServlet extends HttpServlet {
 		 			Class.forName("com.mysql.cj.jdbc.Driver");
 			 		System.out.println("past driver");
 			 		// Step 2: Define Connection URL
-			 		String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=3cm9lb2mvr0gdvuun8k3&password=pscale_pw_f7vSSbj0uYGrixp0uDZwqVAMiiJL0GuNnG13tvGHkjT&serverTimezone=UTC";
+			 		String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
 			 		System.out.println("pass connURL");
 			 		// Step 3: Establish connection to URL
 			 		Connection conn = DriverManager.getConnection(connURL);

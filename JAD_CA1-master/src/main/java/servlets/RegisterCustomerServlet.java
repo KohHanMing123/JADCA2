@@ -34,6 +34,9 @@ public class RegisterCustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+        
+        String dbUser = System.getenv("PLANETSCALE_USERNAME");
+		String dbKey = System.getenv("PLANETSCALE_KEY");
 
         String username = request.getParameter("username");
         String email = request.getParameter("email");
@@ -49,7 +52,7 @@ public class RegisterCustomerServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=3cm9lb2mvr0gdvuun8k3&password=pscale_pw_f7vSSbj0uYGrixp0uDZwqVAMiiJL0GuNnG13tvGHkjT&serverTimezone=UTC";
+            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
             Connection conn = DriverManager.getConnection(connURL);
 
             String sqlStr = "INSERT INTO Customers (username, email, password) VALUES (?, ?, ?);";
