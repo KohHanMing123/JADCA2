@@ -10,55 +10,35 @@
 <title>BooksGalore Home</title>
 </head>
 <body>
+<%@ page import ="books.*, java.util.*" %>
 	<div class="bg-sand">
 		<%@ include file = "../components/navBar.html" %>
+		<%ArrayList<Book> books = SQLquery.getNewArrivalBooks(); %>
 		<div class="h-96 flex flex-col items-center">
 	        <div class="flex h-20 items-end w-4/5">
 	            <p class="font-semibold text-3xl">New Arrivals!</p>
 	        </div>
 	        <div class="flex gap-10 justify-start mt-10 w-4/5">
-	            <div class="flex hover:cursor-pointer hover:scale-105 duration-300">
-	                <div class="bg-grey">
-	                    <img class="h-56" src="https://kbimages1-a.akamaihd.net/00437f92-768a-4b3d-9f43-a1c2ac75816a/1200/1200/False/geronimo-stilton-and-the-kingdom-of-fantasy-2-the-quest-for-paradise.jpg" >
-	                </div>
-	                <div class="bg-light-blue w-64 px-4 pt-2">
-	                    <p class="font-semibold text-xl">Geronimo Stilton</p>
-	                    <p class="text-sm">By: Jerald Lee</p>
-	                    <p class="mt-4 text-xs max-h-24 overflow-hidden">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad inventore illum nihil quae voluptate a labore incidunt veritatis repellendus explicabo voluptatibus iste aspernatur unde error nisi quasi suscipit ullam voluptatum doloremque adipisci mollitia, sint obcaecati quidem impedit. Fugiat cupiditate ut illo, consequatur modi laboriosam ea suscipit voluptate consectetur, nam iste, sed magnam officiis debitis iure nihil quos eius!</p>
-	                    <div class="flex justify-end gap-2 mt-3">
-	                        <input type="number" step="1" class="w-14 text-center" value="1">
-	                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="flex hover:cursor-pointer hover:scale-105 duration-300">
-	                <div class="bg-grey">
-	                    <img class="h-56" src="https://kbimages1-a.akamaihd.net/00437f92-768a-4b3d-9f43-a1c2ac75816a/1200/1200/False/geronimo-stilton-and-the-kingdom-of-fantasy-2-the-quest-for-paradise.jpg" >
-	                </div>
-	                <div class="bg-light-blue w-64 px-4 pt-2">
-	                    <p class="font-semibold text-xl">Geronimo Stilton</p>
-	                    <p class="text-sm">By: Jerald Lee</p>
-	                    <p class="mt-4 text-xs max-h-24 overflow-hidden">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad inventore illum nihil quae voluptate a labore incidunt veritatis repellendus explicabo voluptatibus iste aspernatur unde error nisi quasi suscipit ullam voluptatum doloremque adipisci mollitia, sint obcaecati quidem impedit. Fugiat cupiditate ut illo, consequatur modi laboriosam ea suscipit voluptate consectetur, nam iste, sed magnam officiis debitis iure nihil quos eius!</p>
-	                    <div class="flex justify-end gap-2 mt-3">
-	                        <input type="number" step="1" class="w-14 text-center" value="1">
-	                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="flex hover:cursor-pointer hover:scale-105 duration-300">
-	                <div class="bg-grey">
-	                    <img class="h-56" src="https://kbimages1-a.akamaihd.net/00437f92-768a-4b3d-9f43-a1c2ac75816a/1200/1200/False/geronimo-stilton-and-the-kingdom-of-fantasy-2-the-quest-for-paradise.jpg" >
-	                </div>
-	                <div class="bg-light-blue w-64 px-4 pt-2">
-	                    <p class="font-semibold text-xl">Geronimo Stilton</p>
-	                    <p class="text-sm">By: Jerald Lee</p>
-	                    <p class="mt-4 text-xs max-h-24 overflow-hidden">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ad inventore illum nihil quae voluptate a labore incidunt veritatis repellendus explicabo voluptatibus iste aspernatur unde error nisi quasi suscipit ullam voluptatum doloremque adipisci mollitia, sint obcaecati quidem impedit. Fugiat cupiditate ut illo, consequatur modi laboriosam ea suscipit voluptate consectetur, nam iste, sed magnam officiis debitis iure nihil quos eius!</p>
-	                    <div class="flex justify-end gap-2 mt-3">
-	                        <input type="number" step="1" class="w-14 text-center" value="1">
-	                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
-	                    </div>
-	                </div>
-	            </div>
+		        <%
+					for(int i = 0; i < books.size(); i++){
+				%>
+					<div class="flex hover:cursor-pointer hover:scale-105 duration-300" onclick="window.location.href='Book.jsp?book=<%=books.get(i).getISBN()%>'">
+		                <div class="bg-grey">
+		                    <img class="h-56" src="https://kbimages1-a.akamaihd.net/00437f92-768a-4b3d-9f43-a1c2ac75816a/1200/1200/False/geronimo-stilton-and-the-kingdom-of-fantasy-2-the-quest-for-paradise.jpg" >
+		                </div>
+		                <div class="bg-light-blue w-64 px-4 pt-2">
+		                    <p class="font-semibold text-xl"><%=books.get(i).getTitle() %></p>
+		                    <p class="text-sm">By: <%=books.get(i).getAuthor() %></p>
+		                    <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription() %></p>
+		                    <div class="flex justify-end gap-2 mt-3">
+		                        <input type="number" step="1" class="w-14 text-center" value="1">
+		                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
+		                    </div>
+		                </div>
+	            	</div>
+				<% 
+					}
+				%>
 	        </div>
 	    </div>
 	    <div class="h-64 flex flex-col items-center">
