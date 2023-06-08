@@ -26,8 +26,8 @@
             <p class="text-red-500 mb-4">Sorry, error in login... <br> Please try again!</p>
             <% } %>
             <div class="mb-4">
-                <label for="loginid" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-                <input type="text" name="loginid" id="loginid" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                <input type="text" name="username" id="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div class="mb-6">
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
@@ -35,12 +35,10 @@
             </div>
             <div class="flex flex-col items-center">
                 <input type="submit" name="btnSubmit" value="Login" class="bg-dark-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-48">
-                <a href="#" class="text-gray-400 mt-2">Register Now</a>
+                <a href="Register.jsp" class="text-gray-400 mt-2">Register Now</a>
             </div>
         </form>
     </div>
 </body>
-
-
 
 </html>

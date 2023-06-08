@@ -39,7 +39,7 @@ public class VerifyLoginServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String userRole = "adminUser";
-		String user = request.getParameter("loginid");
+		String user = request.getParameter("username");
 		String password = request.getParameter("password");
 		System.out.println(user + password);
 		boolean found = false;
@@ -51,7 +51,7 @@ public class VerifyLoginServlet extends HttpServlet {
 		 			Class.forName("com.mysql.cj.jdbc.Driver");
 			 		System.out.println("past driver");
 			 		// Step 2: Define Connection URL
-			 		String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=x77igi94eorp7gt3n0jl&password=pscale_pw_3w8uEGXvSw34UJSl2PuBy1tVzyXfVmgTYXkf4tZkOFb&serverTimezone=UTC";
+			 		String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=3cm9lb2mvr0gdvuun8k3&password=pscale_pw_f7vSSbj0uYGrixp0uDZwqVAMiiJL0GuNnG13tvGHkjT&serverTimezone=UTC";
 			 		System.out.println("pass connURL");
 			 		// Step 3: Establish connection to URL
 			 		Connection conn = DriverManager.getConnection(connURL);
