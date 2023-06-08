@@ -12,7 +12,7 @@
 <body class="bg-sand">
     <%@ include file="../components/navBar.html" %>
     <div class="flex justify-center items-center min-h-screen">
-        <form action="<%= request.getContextPath() %>/VerifyUserServlet" method="post" class="bg-grey shadow-md rounded-md border border-gray-300 max-w-xl px-12 py-6">
+        <form action="<%= request.getContextPath() %>/VerifyLoginServlet" method="post" class="bg-grey shadow-md rounded-md border border-gray-300 max-w-xl px-12 py-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Login</h2>
                 <button type="button" class="text-black text-xl">
@@ -26,7 +26,7 @@
             <p class="text-red-500 mb-4">Sorry, error in login... <br> Please try again!</p>
             <% } %>
             <div class="mb-4">
-                <label for="loginid" class="block text-gray-700 text-sm font-bold mb-2">Login ID:</label>
+                <label for="loginid" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
                 <input type="text" name="loginid" id="loginid" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div class="mb-6">
