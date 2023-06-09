@@ -1,10 +1,11 @@
 package books;
 
 public class Book {
-	private String title, author, public_date, genre, isbn, dateAdded, description;
+	private String title, author, public_date, genre, isbn, dateAdded, description, imageBlob;
 	private double price;
+	private int id;
 	
-	public Book(String inputTitle, String inputAuthor, String inputPublic_date, String inputGenre, String inputIsbn, String inputDateAdded, double inputPrice, String inputDescription) {
+	public Book(int inputID, String inputTitle, String inputAuthor, String inputPublic_date, String inputGenre, String inputIsbn, String inputDateAdded, double inputPrice, String inputDescription, String inputBlob) {
 		title = inputTitle;
 		author = inputAuthor;
 		public_date = inputPublic_date;
@@ -13,6 +14,11 @@ public class Book {
 		dateAdded = inputDateAdded;
 		price = inputPrice;
 		description = inputDescription;
+		imageBlob = inputBlob;
+		id = inputID;
+	}
+	public int getID() {
+		return id;
 	}
 	
 	public String getTitle() {
@@ -29,5 +35,12 @@ public class Book {
 	
 	public String getISBN() {
 		return isbn;
+	}
+	
+	public String getImage() {
+		return imageBlob;
+	}
+	public String getGenre() {
+		return genre;
 	}
 }
