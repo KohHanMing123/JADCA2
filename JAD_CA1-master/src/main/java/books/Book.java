@@ -50,4 +50,16 @@ public class Book {
 	public int getStock() {
 		return stock;
 	}
+	
+	public void setTitle(String inputTitle) {
+		this.title = title;
+	}
+
+	public void setAuthor(String inputAuthor) {
+		this.author = author;
+	}
+
+	public void setPrice(double inputPrice) {
+		this.price = price;
+	}
 }

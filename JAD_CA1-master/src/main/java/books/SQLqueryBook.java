@@ -45,6 +45,11 @@ public class SQLqueryBook {
 	}
 	
 	public Book getBook(int inputID) throws Exception {
+		if (inputID == 0) {
+	        // Return a default Book object or throw an exception, or handle as desired
+	        return null;
+	    }
+	    
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
 			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
