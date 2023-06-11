@@ -2,7 +2,7 @@ package books;
 import java.sql.*;
 import java.util.*;
 
-public class SQLquery {
+public class SQLqueryBook {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");
 	public ArrayList<Book> getNewArrivalBooks(int limit, int offset) throws Exception {

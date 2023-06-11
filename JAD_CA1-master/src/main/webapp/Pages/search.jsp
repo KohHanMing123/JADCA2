@@ -13,7 +13,7 @@
 <body>
 <%@ page import ="books.*, java.util.*" %>
 	<%
-	SQLquery query = new SQLquery();
+	SQLqueryBook query = new SQLqueryBook();
 	ArrayList<Book> books = query.getNewArrivalBooks(8, 0);
 	%>
 	<div class="bg-sand">

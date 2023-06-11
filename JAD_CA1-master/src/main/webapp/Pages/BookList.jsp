@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="books.Book" %>
-<%@ page import="books.SQLquery" %>
+<%@ page import="books.SQLqueryBook" %>
 <%
-    SQLquery query = new SQLquery();
+ 	SQLqueryBook query = new SQLqueryBook();
     List<Book> bookList = query.getAllBooks();
 %>
 <!DOCTYPE html>
