@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="admin.*, java.util.*" %>
+<%	
+	SQLqueryAdmin query = new SQLqueryAdmin();
+	ArrayList<AdminUser> users = new ArrayList<AdminUser>();
+	users = query.getAllUsers(1, 2);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,20 +21,20 @@
         <div class="h-full px-3 py-7 overflow-y-auto bg-tan">
            <ul class="space-y-2">
               <li>
-                 <a href="#" class="flex items-center p-2 rounded-lg text-xl font-semibold text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                 <a class="flex items-center p-2 rounded-lg text-xl font-semibold text-white bg-gray-700">
                     <i class="fa-solid fa-user fa-lg"></i>
                     <span class="ml-3">Users</span>
                  </a>
               </li>
               <li>
-                 <a href="#" class="flex items-center p-2 rounded-lg text-xl font-semibold text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                 <a href="books.jsp" class="flex items-center p-2 rounded-lg text-xl font-semibold text-black hover:text-white hover:bg-gray-700">
                     <i class="fa-solid fa-book fa-lg"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Books</span>
                  </a>
               </li>
            </ul>
            <div class="bottom-0 left-0 fixed flex justify-center w-full">
-            <a class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full">
+            <a class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-700 w-full">
                 <i class="fa-solid fa-right-from-bracket fa-xl"></i>
                 <p class=" ml-3 font-bold">Log Out</p>
             </a>
@@ -50,26 +56,18 @@
             </div>
         </div>
         <ul class="">
+        	<% for(int i = 0; i < users.size(); i++){ %>
             <li>
                 <a href="#" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
                     <div class="basis-1/3">
-                        <p class="pl-2">Jerald Lee</p>
+                        <p class="pl-2"><%=users.get(i).getUserName() %></p>
                     </div>
                     <div class="basis-1/3">
-                        <p class="">jleeshancheng@gmail.com</p>
+                        <p class=""><%=users.get(i).getEmail() %></p>
                     </div>
                 </a>
             </li>
-            <li>
-                <a href="#" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
-                    <div class="basis-1/3">
-                        <p class="pl-2">Jerald Lee</p>
-                    </div>
-                    <div class="basis-1/3">
-                        <p class="">jleeshancheng@gmail.com</p>
-                    </div>
-                </a>
-            </li>
+            <%} %>
         </ul>
      </div>
 </body>
