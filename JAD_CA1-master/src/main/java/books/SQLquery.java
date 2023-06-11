@@ -82,15 +82,16 @@ public class SQLquery {
 	    }
 	}
 	
-	public List<Book> getAllBooks() throws Exception {
+	public List<Book> getBooksByGenre(String genre) throws Exception {
 	    List<Book> books = new ArrayList<Book>();
 	    try {
 	        Class.forName("com.mysql.jdbc.Driver");
 	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
 	        Connection conn = DriverManager.getConnection(connURL);
 
-	        String sqlStr = "SELECT * FROM Books";
+	        String sqlStr = "SELECT * FROM Books WHERE genre = ?";
 	        PreparedStatement ps = conn.prepareStatement(sqlStr);
+	        ps.setString(1, genre);
 
 	        ResultSet rs = ps.executeQuery();
 	        while (rs.next()) {
@@ -98,7 +99,6 @@ public class SQLquery {
 	            String title = rs.getString("title");
 	            String publicationDate = rs.getString("publication_date");
 	            String author = rs.getString("author");
-	            String genre = rs.getString("genre");
 	            double price = rs.getDouble("price");
 	            String isbn = rs.getString("isbn13");
 	            String dateAdded = rs.getString("dateAdded");
@@ -109,17 +109,18 @@ public class SQLquery {
 		    		byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
 			    	base64Image = Base64.getEncoder().encodeToString(imageData);
 		    	}
-	            // Create a new Book object and set its properties
-	            Book book = new Book(id, title, author, publicationDate, genre, isbn, dateAdded, price, description, base64Image);
 
-	            // Add the book to the list
+	            Book book = new Book(id, title, publicationDate, author, genre, dateAdded, isbn, price, description, base64Image);
 	            books.add(book);
 	        }
+
+	        rs.close();
+	        ps.close();
+	        conn.close();
 	    } catch (Exception e) {
-	        System.err.println("Error: " + e);
+	        e.printStackTrace();
 	        throw e;
 	    }
-
 	    return books;
 	}
 
