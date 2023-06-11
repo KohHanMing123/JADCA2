@@ -27,23 +27,23 @@
             <p class="text-4xl text-center text-bold">There are no books under this genre.</p>
             <% } else { %>
             <% for (Book book : bookList) { %>
-            <div class="flex flex-col items-start space-y-4 mb-8 space-x-12">
-                <div class="max-w-xs flex flex-col items-start">
-                    <div class="h-56 w-40">
-                        <img class="h-full object-contain flex hover:cursor-pointer hover:scale-105 duration-300" 
-                             src="data:image/jpeg;base64, <%=book.getImage()%>"
-                             onclick="redirectToBook('<%=book.getID()%>')">
-                    </div>
-                    <div class="h-16">
-                        <p class="text-sm font-bold mt-2 line-clamp-2"><%=book.getTitle() %></p>
-                        <p class="text-xs mt-1 line-clamp-1 font-semibold">
-                            By <%=book.getAuthor() %>
-                        </p>
-                        <a href="Cart.jsp?book=<%=book.getID()%>" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">Add to Cart</a>
-                        <i class="fa-regular fa-star" onclick="toggleStar(this)"></i>
-                    </div>
-                </div>
-            </div>
+           <div class="flex flex-col items-start space-y-4 mb-8 space-x-12">
+		    <div class="max-w-xs flex flex-col items-start">
+		        <div class="h-56 w-40">
+		            <img class="h-full object-contain flex hover:cursor-pointer hover:scale-105 duration-300" 
+		                 src="data:image/jpeg;base64, <%=book.getImage()%>"
+		                 onclick="redirectToBook('<%=book.getID()%>')">
+		        </div>
+		        <div class="h-16">
+		            <p class="text-sm font-bold mt-2 line-clamp-2"><%=book.getTitle() %></p>
+		            <p class="text-xs mt-1 mb-3 line-clamp-1 font-semibold">
+		                By <%=book.getAuthor() %>
+		            </p>
+		            <a href="Cart.jsp?book=<%=book.getID()%>" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">Add to Cart</a>
+		            <i class="fa-regular fa-star" onclick="toggleStar(this)"></i>
+		        </div>
+		    </div>
+		</div>
             <% } %>
             <% } %>
         </div>
