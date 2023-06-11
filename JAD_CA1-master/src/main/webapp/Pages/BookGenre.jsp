@@ -12,13 +12,17 @@
 <body class="bg-sand">
   <%@ include file="../components/navBar.html" %>
 
+  <h1 class="text-4xl text-center font-bold my-8">Genre</h1>
+
   <div class="flex flex-wrap justify-center">
     <!-- Button 1 -->
-    <a href="page1.html" class="w-1/5 h-72 bg-light-blue m-6 rounded-xl flex items-center justify-center">
-      <span class="text-black text-3xl font-bold">Fantasy</span>
-    </a>
+    <a href="page1.html" class="w-1/5 h-72 bg-light-blue m-6 rounded-xl flex flex-col items-center justify-center">
+	  <i class="fas fa-wand-sparkles text-8xl mb-9"></i>
+	  <span class="text-black text-3xl font-bold">Fantasy</span>
+	</a>
     <!-- Button 2 -->
-    <a href="page2.html" class="w-1/5 h-72 bg-dark-blue m-6 rounded-xl flex items-center justify-center">
+    <a href="page2.html" class="w-1/5 h-72 bg-dark-blue m-6 rounded-xl flex flex-col items-center justify-center">
+      <i class="fas fa-user-secret text-8xl mb-9"></i>
       <span class="text-black text-3xl font-bold">Thriller</span>
     </a>
     <!-- Button 3 -->
@@ -47,6 +51,7 @@
     </a>
   </div>
 </body>
+
 
 
 
