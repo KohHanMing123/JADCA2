@@ -9,7 +9,7 @@ try{
 }catch(NumberFormatException e){
 	
 }
-SQLquery query = new SQLquery();
+SQLqueryBook query = new SQLqueryBook();
 Book book = query.getBook(id);
 %>
 <!DOCTYPE html>

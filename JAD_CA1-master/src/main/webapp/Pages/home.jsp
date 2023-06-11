@@ -15,7 +15,7 @@
 	<div class="bg-sand">
 		<%@ include file = "../components/navBar.html" %>
 		<%
-		SQLquery query = new SQLquery();
+		SQLqueryBook query = new SQLqueryBook();
 		ArrayList<Book> books = query.getNewArrivalBooks(3, 0);
 		%>
 		<div class="h-96 flex flex-col items-center">

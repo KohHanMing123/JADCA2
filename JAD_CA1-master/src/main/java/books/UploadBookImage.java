@@ -63,7 +63,7 @@ public class UploadBookImage extends HttpServlet {
 		             fis.read(imageData);
 		         }
 		         fileInputStream.close();
-		         SQLquery query = new SQLquery();
+		         SQLqueryBook query = new SQLqueryBook();
 		         query.insertImage(imageData);
 		     } catch (IOException e) {
 		         e.printStackTrace();

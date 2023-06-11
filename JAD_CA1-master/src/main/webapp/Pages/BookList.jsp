@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="books.Book" %>
-<%@ page import="books.SQLquery" %>
+<%@ page import="books.SQLqueryBook" %>
 <%
-
 	String genre = request.getParameter("genre");
 
-    SQLquery query = new SQLquery();
+    SQLqueryBook query = new SQLqueryBook();
     List<Book> bookList = query.getBooksByGenre(genre);
+
 %>
 <!DOCTYPE html>
 <html>
