@@ -14,7 +14,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="../assets/logo.png" type="image/png">
-    <title>Book List</title>
+    <title><%= genre %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../js/twCustom.js"></script>
     <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
@@ -39,7 +39,7 @@
                         <p class="text-xs mt-1 line-clamp-1 font-semibold">
                             By <%=book.getAuthor() %>
                         </p>
-                        <button class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">Add to Cart</button>
+                        <a href="Cart.jsp?book=<%=book.getID()%>" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">Add to Cart</a>
                         <i class="fa-regular fa-star" onclick="toggleStar(this)"></i>
                     </div>
                 </div>
