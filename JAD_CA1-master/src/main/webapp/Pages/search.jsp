@@ -10,18 +10,24 @@
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="min-h-screen">
 <%@ page import ="books.*, java.util.*" %>
 	<%
+	String search = request.getParameter("search");
+	if(search == null){
+		search = "";
+	}
+	System.out.println(request.getContextPath());
 	SQLqueryBook query = new SQLqueryBook();
-	ArrayList<Book> books = query.getNewArrivalBooks(8, 0);
+	ArrayList<Book> books = query.searchBook(search, "", 0, 0, "", 8, 0);
+	
 	%>
-	<div class="bg-sand">
+	<div class="bg-sand min-h-screen flex flex-col">
 		<%@ include file = "../components/navBar.html" %>
 		 <div class="flex justify-center my-10">
-	        <form action="">
+	        <form action="<%=request.getContextPath()%>/SearchBook" method="post">
 	            <div class="flex">
-	                <input type="text" class="text-xl py-1 rounded-l-lg w-96 pl-2" name="searchInput">
+	                <input type="text" class="text-xl py-1 rounded-l-lg w-96 pl-2" name="searchInput" value="<%=search%>">
 	                <button type="submit" class="flex items-center px-3 bg-white border-l rounded-r-lg">
 	                    <i class="fa-solid fa-magnifying-glass fa-xl"></i>
 	                </button>
@@ -29,13 +35,13 @@
 	        </form>
 	    </div>
 	
-	    <div class="flex justify-center w-screen flex-wrap gap-10">
+	    <div class="flex justify-center w-screen flex-wrap gap-10 grow">
 	    	<%
 				for(int i = 0; i < books.size(); i++){
 			%>
 	        <div class="flex w-1/4 justify-center mb-5">
 	            <img class="h-56" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
-	            <div class="bg-light-blue pl-4 pt-2">
+	            <div class="bg-light-blue pl-4 pt-2 h-56">
 	                <p class="font-semibold text-2xl"><%=books.get(i).getTitle()%></p>
 			        <p class="text-sm">By: <%=books.get(i).getAuthor()%></p>
 			        <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription()%></p>

@@ -23,9 +23,9 @@ Book book = query.getBook(id);
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="bg-sand">
+	<div class="bg-sand h-screen">
 		<%@ include file = "../components/navBar.html" %>
-		<div class="h-max mx-64 my-20 flex">
+		<div class="mx-64 my-20 flex">
         <div class="min-w-fit">
             <img class="h-80" src="data:image/jpeg;base64,<%=book.getImage()%>" >
         </div>
@@ -40,10 +40,20 @@ Book book = query.getBook(id);
             	<p class="text-md text-gray-500">Genre: </p>
             	<a class="ml-4 bg-light-blue px-3 rounded-md hover:scale-105 duration-300"><%=book.getGenre() %></a>
             </div>
-            	
+            <div class="flex mt-6">
+            	<div class="basis-1/2 flex">
+            		<p class="text-xl font-semibold">$<%=book.getPrice() %></p>
+            	</div>
+            	<div class="basis-1/2 flex justify-end">
+            		<form class="flex justify-end">
+            			<input class="text-lg w-16 h-9 text-center" value="1" type="number" min="1" step="1">
+            			<button class="text-lg font-semibold bg-dark-blue text-white py-1 px-2" >Add To Cart</button>
+            		</form>	
+            	</div>
+            </div>
         </div>
     </div>
+    </div>	
 		<%@ include file = "../components/footer.html" %>
-	</div>	
 </body>
 </html>

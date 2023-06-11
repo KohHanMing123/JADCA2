@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="admin.*, java.util.*" %>
 <%	
+	
 	SQLqueryAdmin query = new SQLqueryAdmin();
 	ArrayList<AdminUser> users = new ArrayList<AdminUser>();
 	users = query.getAllUsers(1, 2);
