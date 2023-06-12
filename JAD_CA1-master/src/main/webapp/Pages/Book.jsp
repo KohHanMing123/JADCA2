@@ -22,8 +22,8 @@ Book book = query.getBook(id);
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
-<body>
-	<div class="bg-sand h-screen">
+<body class="min-h-screen flex flex-col">
+	<div class="bg-sand grow">
 		<%@ include file = "../components/navBar.html" %>
 		<div class="mx-64 my-20 flex">
         <div class="min-w-fit">

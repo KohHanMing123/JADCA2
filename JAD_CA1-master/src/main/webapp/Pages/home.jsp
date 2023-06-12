@@ -10,9 +10,9 @@
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 <title>BooksGalore Home</title>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 <%@ page import ="books.*, java.util.*" %>
-	<div class="bg-sand">
+	<div class="bg-sand grow">
 		<%@ include file = "../components/navBar.html" %>
 		<%
 		SQLqueryBook query = new SQLqueryBook();

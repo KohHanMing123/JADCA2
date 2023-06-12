@@ -19,7 +19,7 @@
 	}
 	System.out.println(request.getContextPath());
 	SQLqueryBook query = new SQLqueryBook();
-	ArrayList<Book> books = query.searchBook(search, "", 0, 0, "", 8, 0);
+	ArrayList<Book> books = query.searchBook(search, "", 0, 0, "", 9, 0);
 	
 	%>
 	<div class="bg-sand min-h-screen flex flex-col">
@@ -31,25 +31,32 @@
 	                <button type="submit" class="flex items-center px-3 bg-white border-l rounded-r-lg">
 	                    <i class="fa-solid fa-magnifying-glass fa-xl"></i>
 	                </button>
-	            </div>
+	            </div> 
 	        </form>
 	    </div>
 	
-	    <div class="flex justify-center w-screen flex-wrap gap-10 grow">
+	    <div class="flex justify-center flex-wrap gap-10 grow">
 	    	<%
 				for(int i = 0; i < books.size(); i++){
 			%>
-	        <div class="flex w-1/4 justify-center mb-5">
+	        <div class="flex justify-center mb-5 hover:cursor-pointer hover:scale-105 duration-300">
 	            <img class="h-56" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
-	            <div class="bg-light-blue pl-4 pt-2 h-56">
+	            <div class="bg-light-blue px-4 pt-2 h-56 w-80">
 	                <p class="font-semibold text-2xl"><%=books.get(i).getTitle()%></p>
 			        <p class="text-sm">By: <%=books.get(i).getAuthor()%></p>
 			        <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription()%></p>
+			        <div class="flex justify-end gap-2 mt-3">
+                        <input type="number" step="1" class="w-14 text-center" value="1">
+                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
+                    </div>
 	            </div>
 	        </div>
 			<% 
 				}
 			%>
+	    </div>
+	    <div class="flex justify-center">
+	    
 	    </div>
 		<%@ include file = "../components/footer.html" %>
 	</div>	
