@@ -20,7 +20,8 @@
 	System.out.println(request.getContextPath());
 	SQLqueryBook query = new SQLqueryBook();
 	ArrayList<Book> books = query.searchBook(search, "", 0, 0, "", 9, 0);
-	
+	ArrayList<String> genres = query.getAllGenre();
+
 	%>
 	<div class="bg-sand min-h-screen flex flex-col">
 		<%@ include file = "../components/navBar.html" %>
@@ -32,6 +33,14 @@
 	                    <i class="fa-solid fa-magnifying-glass fa-xl"></i>
 	                </button>
 	            </div> 
+	            <div class="flex mt-3 text-xl">
+					<select name="genres" class="rounded-lg p-1">
+						<option disabled selected class="text-grey">Choose Genre</option>
+					    <%for(int i = 0; i < genres.size(); i++){ %>
+					    <option value="<%=genres.get(i) %>"><%=genres.get(i) %></option>
+					    <%} %>
+					</select>
+	            </div>
 	        </form>
 	    </div>
 	

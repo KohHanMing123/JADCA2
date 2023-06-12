@@ -194,4 +194,22 @@ public class SQLqueryBook {
 		}
 	}
 	
+	public ArrayList<String> getAllGenre() throws Exception {
+		try {
+			Class.forName("com.mysql.jdbc.Driver"); 
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			String sqlStr = "SELECT DISTINCT(genre) AS genre FROM Books";
+			PreparedStatement ps=conn.prepareStatement(sqlStr);
+			ResultSet rs= ps.executeQuery();
+			ArrayList<String> genres = new ArrayList<String>();
+			while(rs.next()) {
+				genres.add(rs.getString("genre"));
+			}
+			return genres;
+		}catch(Exception e) {
+			System.err.println("Error :" + e);
+			throw new Exception("Error");
+		}
+	}
 }

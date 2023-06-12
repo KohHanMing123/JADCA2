@@ -37,6 +37,12 @@ public class addToCart extends HttpServlet {
     	    throws ServletException, IOException {
     	    PrintWriter out = response.getWriter();
     	    HttpSession session = request.getSession();
+    	    
+    	    //Checks if they are logged in
+    	    if(session.getAttribute("custID") == null) {
+    			response.sendRedirect("http://localhost:8080/JAD_CA1-master/CheckProfileExistence");
+    			return;
+    		}
 
     	    String dbUser = System.getenv("PLANETSCALE_USERNAME");
     	    String dbKey = System.getenv("PLANETSCALE_KEY");
