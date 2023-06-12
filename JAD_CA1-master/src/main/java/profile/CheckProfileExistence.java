@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class CheckProfileExistence
@@ -28,11 +29,13 @@ public class CheckProfileExistence extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getAttribute("token") == null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("Pages/Login.jsp");
-    		dispatcher.forward(request, response);
-    		
+		HttpSession session = request.getSession();
+		if(session.getAttribute("username") == null || session.getAttribute("sessUserRole") == null || session.getAttribute("loginStatus") != "success" ) {
+			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/Login.jsp");
+		}else {
+			//Put in the profile 
 		}
+
 	}
 
 	/**

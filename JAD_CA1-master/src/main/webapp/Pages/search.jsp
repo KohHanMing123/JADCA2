@@ -39,15 +39,18 @@
 	    	<%
 				for(int i = 0; i < books.size(); i++){
 			%>
-	        <div class="flex justify-center mb-5 hover:cursor-pointer hover:scale-105 duration-300">
+	        <div class="flex justify-center mb-5 hover:cursor-pointer hover:scale-105 duration-300" onclick="window.location.href='Book.jsp?book=<%=books.get(i).getID()%>'">
 	            <img class="h-56" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
 	            <div class="bg-light-blue px-4 pt-2 h-56 w-80">
 	                <p class="font-semibold text-2xl"><%=books.get(i).getTitle()%></p>
 			        <p class="text-sm">By: <%=books.get(i).getAuthor()%></p>
 			        <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription()%></p>
 			        <div class="flex justify-end gap-2 mt-3">
-                        <input type="number" step="1" class="w-14 text-center" value="1">
-                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
+				        <form action="<%= request.getContextPath() %>/addToCart" method="post">
+					        <input type="hidden" name="book" value="<%=books.get(i).getID()%>">
+						    <input type="hidden" name="unitPrice" value="<%=books.get(i).getPrice()%>">	
+	                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
+				        </form>
                     </div>
 	            </div>
 	        </div>
