@@ -3,6 +3,8 @@
 <%@ page import="books.*" %>
 <%@ page import = "cart.*" %>
 <%
+
+
     String bookIDString = request.getParameter("book");
     int bookID = 0; 
     if (bookIDString != null) {
@@ -12,7 +14,8 @@
     SQLqueryBook query = new SQLqueryBook();
     Book book = query.getBook(bookID);
     System.out.println("Book object: " + book);
-    // Get the current cart from the session
+    
+    String custID = (String) session.getAttribute("custID");
     List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
     System.out.println("Cart items: " + cart);
     if (cart == null) {
@@ -31,16 +34,22 @@
                 
                 SQLqueryCart queryCart = new SQLqueryCart();
                 queryCart.updateCartItemQuantity(book.getID(), newQuantity);
+                queryCart.updateTotalPrice(book.getID(), newQuantity);
                 
                 break;
             }
         }
         
         if (!bookExists) {
-            // Add the book as a new cart item
             cart.add(new CartItem(book, 1));
+            SQLqueryCart queryCart = new SQLqueryCart();
+            queryCart.updateTotalPrice(book.getID(), 1);
         }
+        
+        response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp");
+        return;
     }
+    
 %>
 
 <!DOCTYPE html>
@@ -69,6 +78,7 @@
                 </tr>
             </thead>
             <tbody>
+            	<% double totalPrice = 0; %>
                 <% for (CartItem cartItem : cart) { %>
                 <tr>
                     <td class="py-4 px-6 border-b border-gray-200">
@@ -85,75 +95,72 @@
                         </div>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200"><%= cartItem.getBook().getPrice() %></td>
+                    <%
+					    int cartBookID = cartItem.getBook().getID();
+					    int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
+					    double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
+					    totalPrice += total;
+					%>	
                     <td class="py-4 px-6 border-b border-gray-200">
                         <div class="flex items-center justify-center">
-                            <button class="rounded-l-lg 	bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 minus-btn" onclick="minusButton(this)">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span class="w-10 py-1 bg-gray-200 text-center text-gray-700 font-semibold quantity"><%= cartItem.getQuantity() %></span>
-                            <button class="rounded-r-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 plus-btn" onclick="plusButton(this)">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                            <form action="<%= request.getContextPath() %>/PlusMinusButton" method="post">
+							    <input type="hidden" name="action" value="minus">
+							    <input type="hidden" name="bookID" value="<%= cartItem.getBook().getID() %>">
+							    <input type="hidden" name="quantity" value="<%= cartItem.getQuantity() %>">
+							    <button class="rounded-l-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 minus-btn">
+							        <i class="fas fa-minus"></i>
+							    </button>
+							</form>
+							<%System.out.println("quantity is " + cartItem.getQuantity()); %>
+							<span class="w-10 py-1 bg-gray-200 text-center text-gray-700 font-semibold quantity">							
+								<%= quantity %> 							
+							</span>
+							
+							<form action="<%= request.getContextPath() %>/PlusMinusButton" method="post">
+							    <input type="hidden" name="action" value="plus">
+							    <input type="hidden" name="bookID" value="<%= cartItem.getBook().getID() %>">
+							    <input type="hidden" name="quantity" value="<%= cartItem.getQuantity() %>">
+							    <button class="rounded-r-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 plus-btn">
+							        <i class="fas fa-plus"></i>
+							    </button>
+							</form>
                         </div>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
-                        <span class="total-price"><%= (cartItem.getBook().getPrice() * cartItem.getQuantity()) %></span>
+                        <span class="total-price"><%= String.format("%.2f", total)%></span>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
-                        <button class="rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 action-btn" onclick="deleteButton(this)">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
+					    <form action="<%= request.getContextPath() %>/deleteFromCart" method="post">
+					        <input type="hidden" name="bookID" value="<%= cartItem.getBook().getID() %>">
+					        <button class="rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 action-btn" type="submit">
+					            <i class="fas fa-trash"></i>
+					        </button>
+					    </form>
+					</td>
                 </tr>
                 <% } %>
             </tbody>
+            
+		 <tfoot>
+		    <tr>
+		        <td class="py-4 px-6 border-t border-gray-200 font-bold" colspan="3">Total Price</td>
+		        <td class="py-4 px-6 border-t border-gray-200 text-center">
+		            <span class="total-price"><%= String.format("%.2f", totalPrice) %></span>
+		        </td>
+		        <td class="py-4 px-6 border-t border-gray-200 text-center">
+		            <a href="#" class="rounded-lg bg-dark-blue text-white hover:bg-blue-700 px-4 py-2 checkout-btn">Checkout</a>
+		        </td>
+		    </tr>
+		    <tr>
+		        <td colspan="5" class="py-2 px-6 text-right">
+		            <span class="text-gray-500">Total: </span>
+		            <span class="text-gray-700 font-bold"><%= String.format("%.2f", totalPrice) %></span>
+		        </td>
+		    </tr>
+		</tfoot>
         </table>
         <% } %>
     </div>
 
-    <script>
-        function plusButton(button) {
-            const quantityElement = button.parentNode.querySelector('.quantity');
-            let quantity = parseInt(quantityElement.textContent);
-            quantity++;
-            quantityElement.textContent = quantity.toString();
-            
-            updateTotalPrice(button);
-        }
-
-        function minusButton(button) {
-            const quantityElement = button.parentNode.querySelector('.quantity');
-            let quantity = parseInt(quantityElement.textContent);
-            if (quantity > 1) {
-                quantity--;
-                quantityElement.textContent = quantity.toString();
-                
-                updateTotalPrice(button);
-            }
-        }
-        
-        function updateTotalPrice(button) {
-            const quantityElement = button.parentNode.querySelector('.quantity');
-            const unitPriceElement = button.parentNode.parentNode.previousElementSibling;
-            const totalPriceElement = button.parentNode.parentNode.nextElementSibling.querySelector('.total-price');
-
-            let quantity = parseInt(quantityElement.textContent);
-            let unitPrice = parseFloat(unitPriceElement.textContent);
-
-            let totalPrice = quantity * unitPrice;
-            totalPriceElement.textContent = totalPrice.toFixed(2);
-        }
-        
-        function deleteButton(button) {
-            const row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-            
-            updateTotalPrice(button);
-        }
-        
-        function redirectToBook(bookID) {
-            window.location.href = 'Book.jsp?book=' + bookID;
-        }
-    </script>
 </body>
 </html>

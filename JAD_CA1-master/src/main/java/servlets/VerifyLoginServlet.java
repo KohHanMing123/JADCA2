@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.util.*;
+import cart.*;
+import books.*;
+
 /**
  * Servlet implementation class VerifyLoginServlet
  */
@@ -32,70 +36,77 @@ public class VerifyLoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession();
-		
-		String dbUser = System.getenv("PLANETSCALE_USERNAME");
-		String dbKey = System.getenv("PLANETSCALE_KEY");
-	
-		String userRole = "adminUser";
-		String user = request.getParameter("username");
-		String password = request.getParameter("password");
-		System.out.println(user + password);
-		boolean found = false;
-		// start database connection 
-				
-		 		try {
-		 			System.out.println("inside inside try catch!");
-			 		// Step1: Load JDBC Driver
-		 			Class.forName("com.mysql.cj.jdbc.Driver");
-			 		System.out.println("past driver");
-			 		// Step 2: Define Connection URL
-			 		String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-			 		System.out.println("pass connURL");
-			 		// Step 3: Establish connection to URL
-			 		Connection conn = DriverManager.getConnection(connURL);
-			 		System.out.println("Connected to Database!");
-					 // Step 4: Create Statement object
-			 		// Statement stmt = conn.createStatement();
-					 
-			 		// Step 5: Execute SQL Command
-			 		String sqlStr = "SELECT * FROM Customers WHERE username=? AND password=?";
-			 		PreparedStatement pstmt = conn.prepareStatement(sqlStr);
-			 		pstmt.setString(1, user);
-			 		pstmt.setString(2, password);
-			 		// ResultSet rs = stmt.executeQuery(sqlStr);
-			 		ResultSet rs = pstmt.executeQuery();
-			 		System.out.println("Query executed!");
-			 		// Step 6: Process Result
-			 		while (rs.next()) {
-			 			found = true;
-			 			String custID = rs.getString("custID");
-		                System.out.println("custID is " + custID);
-		                session.setAttribute("custID", custID);
-			 		}
-			 		// Step 7: Close connection
-			 		conn.close();
-		 		} catch (Exception e) {
-		 			out.println("Error: " + e);
-		 		}
-				// end database connection
-				System.out.println(found + "found value");
-				if (found) {
-					System.out.println("user is" + user);
-					session.setAttribute("username", user);
-					session.setAttribute("sessUserRole", userRole);
-					session.setAttribute("loginStatus", "success");
-					session.setMaxInactiveInterval(3 * 60);		// 3 minutes
-					//out.print(request.getContextPath() + "/src");
-					response.sendRedirect(request.getContextPath() + "/Pages/BookGenre.jsp");
-				} else {
-					response.sendRedirect(request.getContextPath() + "/Pages/LoginFailed.jsp?errCode=invalidLogin");
-				}
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+
+        String dbUser = System.getenv("PLANETSCALE_USERNAME");
+        String dbKey = System.getenv("PLANETSCALE_KEY");
+
+        String userRole = "adminUser";
+        String user = request.getParameter("username");
+        String password = request.getParameter("password");
+        System.out.println(user + password);
+        boolean found = false;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
+
+            Connection conn = DriverManager.getConnection(connURL);
+
+            String sqlStr = "SELECT * FROM Customers WHERE username=? AND password=?";
+            PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+            pstmt.setString(1, user);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            System.out.println("Query executed!");
+
+            while (rs.next()) {
+                found = true;
+                String custID = rs.getString("custID");
+                System.out.println("custID is " + custID);
+                session.setAttribute("custID", custID);
+                
+                //retrieve the cart items from db when logged in
+                List<CartItem> cartItems = new ArrayList<>();
+                try {
+                    String cartQuery = "SELECT * FROM Cart WHERE custID=?";
+                    PreparedStatement cartStmt = conn.prepareStatement(cartQuery);
+                    cartStmt.setString(1, custID);
+                    ResultSet cartRs = cartStmt.executeQuery();
+
+                    while (cartRs.next()) {
+                        int bookID = cartRs.getInt("bookID");
+                        SQLqueryBook query = new SQLqueryBook();
+                        Book book = query.getBook(bookID); 
+                        int quantity = cartRs.getInt("quantity");
+                        cartItems.add(new CartItem(book, quantity));
+                    }
+
+                    session.setAttribute("cart", cartItems);
+                } catch (Exception e) {
+                    out.println("Error: " + e);
+                }
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            out.println("Error: " + e);
+        }
+
+        System.out.println(found + "found value");
+        if (found) {
+            session.setAttribute("username", user);
+            session.setAttribute("sessUserRole", userRole);
+            session.setAttribute("loginStatus", "success");
+            session.setMaxInactiveInterval(3 * 60); // 3 minutes
+            response.sendRedirect(request.getContextPath() + "/Pages/BookGenre.jsp");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/Pages/LoginFailed.jsp?errCode=invalidLogin");
+        }
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
