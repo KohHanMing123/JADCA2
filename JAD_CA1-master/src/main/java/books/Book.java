@@ -62,4 +62,13 @@ public class Book {
 	public void setPrice(double inputPrice) {
 		this.price = price;
 	}
+	
+	public void setBookID(int inputID) {
+		this.id = id;
+	}
+	
+	public void setImage(String inputBlob) {
+		this.imageBlob = imageBlob;
+	}
+
 }

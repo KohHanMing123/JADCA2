@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
 <%@ page import="books.*" %>
+<%@ page import = "cart.*" %>
 <%
     String bookIDString = request.getParameter("book");
     int bookID = 0; 
@@ -10,19 +11,38 @@
     
     SQLqueryBook query = new SQLqueryBook();
     Book book = query.getBook(bookID);
-
+    System.out.println("Book object: " + book);
     // Get the current cart from the session
-    List<Book> cart = (List<Book>) session.getAttribute("cart");
+    List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
+    System.out.println("Cart items: " + cart);
     if (cart == null) {
-        cart = new ArrayList<Book>();
+        cart = new ArrayList<CartItem>();
         session.setAttribute("cart", cart);
     }
 
-    // Add the book to the cart
     if (book != null) {
-        cart.add(book);
+        // Check if the book already exists in the cart
+        boolean bookExists = false;
+        for (CartItem item : cart) {
+            if (item.getBook().getID() == book.getID()) {
+                int newQuantity = item.getQuantity() + 1;
+                item.setQuantity(newQuantity);
+                bookExists = true;
+                
+                SQLqueryCart queryCart = new SQLqueryCart();
+                queryCart.updateCartItemQuantity(book.getID(), newQuantity);
+                
+                break;
+            }
+        }
+        
+        if (!bookExists) {
+            // Add the book as a new cart item
+            cart.add(new CartItem(book, 1));
+        }
     }
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,35 +69,35 @@
                 </tr>
             </thead>
             <tbody>
-                <% for (Book cartBook : cart) { %>
+                <% for (CartItem cartItem : cart) { %>
                 <tr>
                     <td class="py-4 px-6 border-b border-gray-200">
                         <div class="flex items-center">
                             <div class="h-24 w-16 mr-4">
                                 <img class="h-full object-contain hover:cursor-pointer hover:scale-105 duration-300" 
-                                     src="data:image/jpeg;base64, <%=cartBook.getImage()%>"
-                                     onclick="redirectToBook('<%=cartBook.getID()%>')">
+                                     src="data:image/jpeg;base64, <%=cartItem.getBook().getImage()%>"
+                                     onclick="redirectToBook('<%=cartItem.getBook().getID()%>')">
                             </div>
                             <div>
-                                <p class="text-base font-bold"><%= cartBook.getTitle() %></p>
-                                <p class="text-xs font-semibold"><%= cartBook.getAuthor() %></p>
+                                <p class="text-base font-bold"><%= cartItem.getBook().getTitle() %></p>
+                                <p class="text-xs font-semibold"><%= cartItem.getBook().getAuthor() %></p>
                             </div>
                         </div>
                     </td>
-                    <td class="py-4 px-6 border-b border-gray-200"><%= cartBook.getPrice() %></td>
+                    <td class="py-4 px-6 border-b border-gray-200"><%= cartItem.getBook().getPrice() %></td>
                     <td class="py-4 px-6 border-b border-gray-200">
                         <div class="flex items-center justify-center">
-                            <button class="rounded-l-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 minus-btn" onclick="minusButton(this)">
+                            <button class="rounded-l-lg 	bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 minus-btn" onclick="minusButton(this)">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <span class="w-10 py-1 bg-gray-200 text-center text-gray-700 font-semibold quantity">1</span>
+                            <span class="w-10 py-1 bg-gray-200 text-center text-gray-700 font-semibold quantity"><%= cartItem.getQuantity() %></span>
                             <button class="rounded-r-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 plus-btn" onclick="plusButton(this)">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
-                        <span class="total-price"><%= cartBook.getPrice() %></span>
+                        <span class="total-price"><%= (cartItem.getBook().getPrice() * cartItem.getQuantity()) %></span>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
                         <button class="rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 action-btn" onclick="deleteButton(this)">
@@ -130,7 +150,10 @@
             
             updateTotalPrice(button);
         }
+        
+        function redirectToBook(bookID) {
+            window.location.href = 'Book.jsp?book=' + bookID;
+        }
     </script>
 </body>
-
 </html>

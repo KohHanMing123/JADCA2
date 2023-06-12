@@ -73,6 +73,9 @@ public class VerifyLoginServlet extends HttpServlet {
 			 		// Step 6: Process Result
 			 		while (rs.next()) {
 			 			found = true;
+			 			String custID = rs.getString("custID");
+		                System.out.println("custID is " + custID);
+		                session.setAttribute("custID", custID);
 			 		}
 			 		// Step 7: Close connection
 			 		conn.close();
@@ -83,12 +86,12 @@ public class VerifyLoginServlet extends HttpServlet {
 				System.out.println(found + "found value");
 				if (found) {
 					System.out.println("user is" + user);
-					session.setAttribute("sessUserID", user);
+					session.setAttribute("username", user);
 					session.setAttribute("sessUserRole", userRole);
 					session.setAttribute("loginStatus", "success");
 					session.setMaxInactiveInterval(3 * 60);		// 3 minutes
 					//out.print(request.getContextPath() + "/src");
-					response.sendRedirect(request.getContextPath() + "/Pages/LoginTest.jsp");
+					response.sendRedirect(request.getContextPath() + "/Pages/BookGenre.jsp");
 				} else {
 					response.sendRedirect(request.getContextPath() + "/Pages/LoginFailed.jsp?errCode=invalidLogin");
 				}

@@ -39,8 +39,17 @@
 		            <p class="text-xs mt-1 mb-3 line-clamp-1 font-semibold">
 		                By <%=book.getAuthor() %>
 		            </p>
-		            <a href="Cart.jsp?book=<%=book.getID()%>" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">Add to Cart</a>
-		            <i class="fa-regular fa-star" onclick="toggleStar(this)"></i>
+		             <form action="<%= request.getContextPath() %>/addToCart" method="post">
+					    <input type="hidden" name="book" value="<%=book.getID()%>">
+					    <input type="hidden" name="unitPrice" value="<%=book.getPrice()%>">					
+					    <button type="submit" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">
+					        Add to Cart
+					    </button>
+					    
+					    <i class="fa-regular fa-star" onclick="toggleStar(this)"></i>
+					</form>
+
+		            
 		        </div>
 		    </div>
 		</div>
