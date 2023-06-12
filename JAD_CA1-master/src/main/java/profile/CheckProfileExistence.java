@@ -33,7 +33,7 @@ public class CheckProfileExistence extends HttpServlet {
 		if(session.getAttribute("username") == null || session.getAttribute("sessUserRole") == null || session.getAttribute("loginStatus") != "success" ) {
 			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/Login.jsp");
 		}else {
-			//Put in the profile 
+			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/User.jsp");
 		}
 
 	}
