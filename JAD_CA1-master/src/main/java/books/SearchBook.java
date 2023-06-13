@@ -26,8 +26,19 @@ public class SearchBook extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("searchInput"));
-		String path = request.getContextPath() + "/Pages/search.jsp?search=" + request.getParameter("searchInput");
+		String path = request.getContextPath() + "/Pages/search.jsp?q=" + request.getParameter("searchInput");
+		if(!request.getParameter("genres").equals("default")) {
+			path += "&g=" + request.getParameter("genres");
+		}
+		if(request.getParameter("minPrice") != "" && Double.parseDouble(request.getParameter("minPrice")) != 0) {
+			path += "&mn=" + Double.parseDouble(request.getParameter("minPrice"));
+		}
+		if(request.getParameter("maxPrice") != "" && Double.parseDouble(request.getParameter("maxPrice")) != 0) {
+			path += "&mx=" + Double.parseDouble(request.getParameter("maxPrice"));
+		}
+		if(!request.getParameter("orderBy").equals("default")) {
+			path += "&ob=" + request.getParameter("orderBy");
+		}
 		response.sendRedirect(path);
 	}
 

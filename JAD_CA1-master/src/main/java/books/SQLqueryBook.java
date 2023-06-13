@@ -51,13 +51,28 @@ public class SQLqueryBook {
 			Class.forName("com.mysql.jdbc.Driver");  
 			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
 			Connection conn = DriverManager.getConnection(connURL);
-			String sqlStr = "SELECT * FROM Books WHERE stock <> 0 AND IF(ISNULL(?), TRUE, title LIKE ?) LIMIT ? OFFSET ?";
+			String sqlStr = "SELECT * FROM Books WHERE stock <> 0 AND title LIKE ? AND IF(? = '', TRUE, genre = ?) AND IF(? = 0, TRUE, price >= ?) AND IF(? = 0, TRUE, price <= ?) ";
+			if(!orderBy.equals("")) {
+				if(orderBy.equals("priceASC"))
+					sqlStr += "ORDER BY price ASC ";
+				if(orderBy.equals("priceDSC"))
+					sqlStr += "ORDER BY price DESC ";
+			}
+			sqlStr += "LIMIT ? OFFSET ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
 		    String formattedSearch  ="%" + searchInput + "%";
+		    
+
+		    
 		    ps.setString(1, formattedSearch);
-		    ps.setString(2, formattedSearch);
-		    ps.setInt(3, limit);
-		    ps.setInt(4, offset);
+		    ps.setString(2, genreInput);
+		    ps.setString(3, genreInput);
+		    ps.setDouble(4, minPrice);
+		    ps.setDouble(5, minPrice);
+		    ps.setDouble(6, maxPrice);
+		    ps.setDouble(7, maxPrice);
+		    ps.setInt(8, limit);
+		    ps.setInt(9, offset);
 		    ResultSet rs = ps.executeQuery();
 		    ArrayList<Book> books = new ArrayList<Book>();
 		    while(rs.next()) {
