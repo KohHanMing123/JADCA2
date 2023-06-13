@@ -3,8 +3,6 @@
 <%@ page import="books.*" %>
 <%@ page import = "cart.*" %>
 <%
-
-
     String bookIDString = request.getParameter("book");
     int bookID = 0; 
     if (bookIDString != null) {
