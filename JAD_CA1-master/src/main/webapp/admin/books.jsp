@@ -47,6 +47,9 @@
             <div class="basis-1/2">
                 <p class="text-2xl font-semibold">Books</p>
             </div>
+            <div class="basis-1/2 flex justify-end">
+            	<a href="<%=request.getContextPath() %>/admin/newbook.jsp" class="bg-dark-blue px-4 rounded-lg text-white py-1 font-semibold">New Book</a>
+            </div>
         </div>
         <div class="flex mt-8 border-b-2 pb-2 border-gray-400">
             <div class="basis-5/12">
