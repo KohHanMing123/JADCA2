@@ -74,22 +74,6 @@ public class UpdateUserInfo extends HttpServlet {
                 sqlBuilder.append(" password = ?,");
             }
 
-//         // Check if the image file is provided
-//            Part imagePart = request.getPart("image");
-//            if (imagePart != null && imagePart.getSize() > 0) {
-//                sqlBuilder.append(" image = ?,");
-//                
-//                // Read the image data from the Part
-//                InputStream inputStream = imagePart.getInputStream();
-//                byte[] imageData = inputStream.readAllBytes();
-//                
-//                // Convert the image data to Base64 encoding
-//                String base64Image = Base64.getEncoder().encodeToString(imageData);
-//                
-//                // Set the Base64-encoded image data as a request attribute
-//                request.setAttribute("base64Image", base64Image);
-//            }
-
             // Remove the trailing comma from the SQL query
             sqlBuilder.deleteCharAt(sqlBuilder.length() - 1);
 
@@ -112,13 +96,7 @@ public class UpdateUserInfo extends HttpServlet {
                 pstmt.setString(parameterIndex, password);
                 parameterIndex++;
             }
-
-//            if (imagePart != null && imagePart.getSize() > 0) {
-//                InputStream inputStream = imagePart.getInputStream();
-//                pstmt.setBinaryStream(parameterIndex, inputStream);
-//                parameterIndex++;
-//            }
-
+            
             pstmt.setInt(parameterIndex, custID);
 
             pstmt.executeUpdate();
