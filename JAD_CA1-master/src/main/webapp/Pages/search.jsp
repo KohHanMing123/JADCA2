@@ -142,7 +142,7 @@
 			        <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription()%></p>
 			        <div class="flex mt-3">
 			        	<div class="flex justify-start">
-			        		<p>$<%=books.get(i).getPrice() %></p>
+			        		<p class="font-semibold">$<%=books.get(i).getPrice() %></p>
 			        	</div>
 			        	<div class="grow flex justify-end gap-2">
 					        <form action="<%= request.getContextPath() %>/addToCart" method="post">

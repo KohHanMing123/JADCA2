@@ -10,10 +10,10 @@
 <title>Register</title>
 </head>
 
-<body class="bg-sand">
+<body class="bg-sand h-screen flex flex-col">
     <%@ include file="../components/navBar.html" %>
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="bg-grey shadow-md rounded-md border border-gray-300 max-w-xl px-12 py-6">
+    <div class="flex justify-center items-center grow">
+        <div class="bg-grey shadow-md rounded-md border border-gray-300 w-96 px-12 py-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Register</h2>
                 <button type="button" class="text-black text-xl">
@@ -54,6 +54,7 @@
             </form>
         </div>
     </div>
+    <%@ include file="../components/footer.html" %>
 </body>
 
 </html>

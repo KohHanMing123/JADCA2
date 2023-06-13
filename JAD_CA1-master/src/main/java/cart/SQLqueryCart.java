@@ -49,8 +49,8 @@ public class SQLqueryCart {
 		    return quantity;
 		}
 	  
-	  public int getCartItemTotalPrice(int bookID) {
-		    int total = 0;
+	  public double getCartItemTotalPrice(int bookID) {
+		    double total = 0;
 		    try {
 		        Class.forName("com.mysql.jdbc.Driver");
 		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
@@ -61,7 +61,7 @@ public class SQLqueryCart {
 		        ResultSet rs = ps.executeQuery();
 
 		        if (rs.next()) {
-		            total = rs.getInt("totalPrice");
+		            total = rs.getDouble("totalPrice");
 		        }
 
 		        rs.close();
@@ -101,7 +101,7 @@ public class SQLqueryCart {
 		        PreparedStatement ps = conn.prepareStatement(sqlStr);
 		        ps.setInt(1, bookID);
 		        ps.executeUpdate();
-		        
+
 		        ps.close();	
 		        conn.close();
 		    } catch (Exception e) {

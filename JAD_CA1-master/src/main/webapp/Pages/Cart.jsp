@@ -125,7 +125,7 @@
                         </div>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
-                        <span class="total-price"><%= String.format("%.2f", total)%></span>
+                        <span class="total-price"><%= total%></span>
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200 text-center">
 					    <form action="<%= request.getContextPath() %>/deleteFromCart" method="post">
