@@ -78,7 +78,7 @@ public class addToCart extends HttpServlet {
     	    System.out.println("Item added to cart");
     	}
 
-		}
+}
 
 
 

@@ -28,7 +28,7 @@
   <div class="container mx-auto py-8 flex flex-col items-center justify-center">
     <h1 class="text-3xl mb-6 text-center font-bold">Update Profile</h1>
     <div class="bg-grey p-8 rounded shadow">
-      <form>
+       <form action="<%= request.getContextPath() %>/UpdateUserInfo" method="post">
         <% if (user != null) { %>
         
         <div class="mb-8 flex items-center justify-center">
@@ -52,10 +52,9 @@
               type="text"
               id="usernameInput"
               name="username"
-              class="w-3/2 ml-2 pl-2 pr-3 h-15 text-lg font-semibold placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
+              class="w-3/2 ml-2 pl-2 pr-3 h-15 text-lg placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
               placeholder=""
               autocomplete="off"
-              required
             >
             <i class="fa-solid fa-pen-to-square cursor-pointer ml-3 mt-1 text-gray-500 hover:text-gray-700" onclick="toggleUsernameInput()"></i>
           </div>
@@ -72,10 +71,9 @@
 			        type="password"
 			        id="passwordInput"
 			        name="password"
-			        class="w-3/2 ml-2 pl-2 pr-10 h-15 text-lg font-semibold placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
+			        class="w-3/2 ml-2 pl-2 pr-10 h-15 text-lg placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
 			        placeholder=""
 			        autocomplete="off"
-			        required
 			      >
 			      <label for="passwordInput" class="absolute inset-y-0 right-3 flex items-center cursor-pointer">
 			        <i class="far fa-eye text-gray-500 hover:text-gray-700 opacity-0"></i>
@@ -96,18 +94,19 @@
               type="email"
               id="emailInput"
               name="email"
-              class="w-80 ml-2 pl-2 pr-3 h-15 text-lg font-semibold placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
+              class="w-80 ml-2 pl-2 pr-3 h-15 text-lg placeholder-gray-500 text-black rounded-lg border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2 hidden"
               placeholder=""
               autocomplete="off"
-              required
             >
             <i class="fa-solid fa-pen-to-square cursor-pointer ml-3 mt-1 text-gray-500 hover:text-gray-700" onclick="toggleEmailInput()"></i>
           </div>
         </div>
         
         <div class="flex items-center justify-center">
+        
           <button type="submit" class="bg-dark-blue text-white py-2 px-4 rounded-xl hover:bg-blue-800">Update</button>
         </div>
+        
         
         <% } else { %>
         <div class="flex items-center justify-center h-screen">
