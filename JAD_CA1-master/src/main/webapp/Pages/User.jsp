@@ -28,19 +28,21 @@
   <div class="container mx-auto py-8 flex flex-col items-center justify-center">
     <h1 class="text-3xl mb-6 text-center font-bold">Update Profile</h1>
     <div class="bg-grey p-8 rounded shadow">
-       <form action="<%= request.getContextPath() %>/UpdateUserInfo" method="post">
+       <form action="<%= request.getContextPath() %>/UpdateUserInfo" method="post" enctype="multipart/form-data">
         <% if (user != null) { %>
         
-        <div class="mb-8 flex items-center justify-center">
-          <div class="relative inline-block">
-            <label for="imageInput" class="cursor-pointer">
-              <div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">
-                <i class="fa-solid fa-plus text-2xl"></i>
-              </div>
-              <input type="file" id="imageInput" name="image" class="hidden">
-            </label>
-          </div>
-        </div>
+		<div class="mb-8 flex items-center justify-center">
+		  <div class="relative inline-block">
+		    <label for="imageInput" class="cursor-pointer">
+		      <div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">		        
+		        <img id="profileImage" src="<%= request.getContextPath() %>/getImage?id=<%= session.getAttribute("custID") %>" alt="Profile Image">
+		      </div>
+		      <input type="file" id="imageInput" name="imageInput" class="hidden">
+		    </label>
+		  </div>
+		</div>
+		
+		<%-- <i class="fa-solid fa-plus text-2xl"></i> --%>
         
         <div class="mb-8 flex items-center">
           <label for="username" class="block font-bold text-xl">

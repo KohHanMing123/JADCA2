@@ -35,24 +35,36 @@ public class SQLqueryUser {
 	    }
 	}
 
-	public String insertImage(byte[] imageBlob) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver"); 
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
-			String sqlStr = "UPDATE Customers SET imageURL = ? WHERE custID = ?";
-			PreparedStatement ps=conn.prepareStatement(sqlStr);
-			ps.setBytes(1, imageBlob);
-			ps.setInt(2, 3);
-			int rowsAffected= ps.executeUpdate();
-			if(rowsAffected == 1) {
-				return "Inserted";
-			}
-			return "Not Inserted";
-		}catch(Exception e) {
-			System.err.println("Error :" + e);
-			return "Error";
-		}
+	public String insertImage(int custID, byte[] imageBlob) {
+	    try {
+	        Class.forName("com.mysql.jdbc.Driver");
+	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+	        Connection conn = null;
+	        PreparedStatement ps = null;
+	        try {
+	            conn = DriverManager.getConnection(connURL);
+	            String sqlStr = "UPDATE Customers SET custImageURL = ? WHERE custID = ?";
+	            ps = conn.prepareStatement(sqlStr);
+	            ps.setBytes(1, imageBlob);
+	            ps.setInt(2, custID);
+	            int rowsAffected = ps.executeUpdate();
+	            if (rowsAffected == 1) {
+	                return "Inserted";
+	            }
+	            return "Not Inserted";
+	        } finally {
+	            if (ps != null) {
+	                ps.close();
+	            }
+	            if (conn != null) {
+	                conn.close();
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.err.println("Error: " + e);
+	        return "Error";
+	    }
 	}
+
 
 }

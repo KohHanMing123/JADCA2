@@ -72,8 +72,8 @@ public class UploadCustomerImage extends HttpServlet {
 		             fis.read(imageData);
 		         }
 		         fileInputStream.close();
-		         SQLqueryUser query = new SQLqueryUser();
-		         query.insertImage(imageData);
+//		         SQLqueryUser query = new SQLqueryUser();
+//		         query.insertImage(custID, imageData);
 		     } catch (IOException e) {
 		         e.printStackTrace();
 		         System.out.println("error");
