@@ -149,10 +149,7 @@
                             By <%=book.getAuthor() %>
                         </p>
                         <form action="<%= request.getContextPath() %>/addToCart" method="post">
-                            <input type="hidden" name="book" value="<%=book.getID()%>">
-                            
-                            <% System.out.println("Booklist book ID " + book.getID()); %>
-                            
+                            <input type="hidden" name="book" value="<%=book.getID()%>">                           
                             <input type="hidden" name="unitPrice" value="<%=book.getPrice()%>">
                             <button type="submit" class="mt-2 py-1 px-3 bg-dark-blue hover:bg-blue-600 rounded-full text-sm text-gray font-bold">
                                 Add to Cart

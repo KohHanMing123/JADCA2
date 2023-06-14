@@ -100,6 +100,7 @@
 					    int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
 					    double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
 					    cartItem.setQuantity(quantity);
+					    cartItem.setTotalPrice(total);
 					    totalPrice += total;
 					%>	
                     <td class="py-4 px-6 border-b border-gray-200">
