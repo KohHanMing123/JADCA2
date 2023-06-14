@@ -8,8 +8,8 @@
 </head>
 <body>
 	<p>Add Book Image</p>
-	<form action="../UploadBookImage" method="post" enctype="multipart/form-data">
-        <input type="file" name="imageFile">
+	<form action="<%=request.getContextPath()%>/EditBook" method="post" enctype="multipart/form-data">
+        <input name="bookID" type="hidden" value="1">
         <input type="submit" value="Upload">
     </form>
 </body>

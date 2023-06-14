@@ -50,6 +50,9 @@ public class Book {
 	public int getStock() {
 		return stock;
 	}
+	public String getDate() {
+		return public_date;
+	}
 	
 	public void setTitle(String inputTitle) {
 		this.title = title;

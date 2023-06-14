@@ -13,6 +13,17 @@
 <body class="min-h-screen">
 <%@ page import ="books.*, java.util.*" %>
 	<%
+	int limit = 9;
+	int offset = 0;
+	String offsetStr = request.getParameter("os");
+	if(offsetStr != null){
+		try{
+			offset = Integer.parseInt(offsetStr);
+		}catch(NumberFormatException e){
+			
+		}
+	}
+	
 	String search = request.getParameter("q");
 	String genre = request.getParameter("g");
 	String minPriceStr = request.getParameter("mn");
@@ -43,9 +54,34 @@
 		orderBy = "";
 	}
 	SQLqueryBook query = new SQLqueryBook();
-	ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, 9, 0);
+	ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, limit, offset);
+	int totalSearchCount = query.searchCount(search, genre, minPrice, maxPrice, orderBy);
 	ArrayList<String> genres = query.getAllGenre();
-
+	int resultShownCountMin = offset + 1;
+	int resultShownCountMax = offset + limit;
+	if(totalSearchCount == 0){
+		resultShownCountMin = 0;
+		resultShownCountMax = 0;
+	}else{
+		if(totalSearchCount < resultShownCountMin){
+			resultShownCountMin = totalSearchCount;
+		}
+		if(resultShownCountMax > totalSearchCount){
+			resultShownCountMax = totalSearchCount;
+		}
+	}
+	String pathQuery = request.getQueryString();
+	String pathWithQuery;
+	if(pathQuery == null){
+		pathWithQuery = request.getRequestURL() + "?";
+	}else{
+		pathWithQuery = request.getRequestURL().append('?').append(pathQuery).toString();
+	}
+	String prefix = "&os=";
+	if(pathWithQuery.contains(prefix)){
+		int indexOfPrefix = pathWithQuery.indexOf(prefix);
+		pathWithQuery = pathWithQuery.substring(0, indexOfPrefix);
+	}
 	%>
 	<div class="bg-sand min-h-screen flex flex-col">
 		<%@ include file = "../components/navBar.html" %>
@@ -126,10 +162,11 @@
 		            	</div>
 		            	
 					</div>
-
+					<div class="mt-2 text-gray-500 italic">
+						<p><%=totalSearchCount %> Results | Showing Results <%=resultShownCountMin%> to <%=resultShownCountMax%></p>	
+					</div>
 	        </form>
 	    </div>
-	
 	    <div class="flex justify-center flex-wrap gap-10 grow">
 	    	<%
 				for(int i = 0; i < books.size(); i++){
@@ -137,7 +174,9 @@
 	        <div class="flex justify-center mb-5 hover:cursor-pointer hover:scale-105 duration-300" onclick="window.location.href='Book.jsp?book=<%=books.get(i).getID()%>'">
 	            <img class="h-56" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
 	            <div class="bg-light-blue px-4 pt-2 h-56 w-80">
-	                <p class="font-semibold text-2xl"><%=books.get(i).getTitle()%></p>
+		            <div class="h-10 text-ellipsis overflow-hidden text-container">
+		            	 <p class="font-semibold text-2xl whitespace-nowrap text-ellipsis text-overflow"><%=books.get(i).getTitle()%></p>
+		            </div>
 			        <p class="text-sm">By: <%=books.get(i).getAuthor()%></p>
 			        <p class="mt-4 text-xs max-h-24 overflow-hidden"><%=books.get(i).getDescription()%></p>
 			        <div class="flex mt-3">
@@ -160,7 +199,20 @@
 			%>
 	    </div>
 	    <div class="flex justify-center">
-	    
+	    	<%
+		    if(resultShownCountMin > 1){
+		    %>
+		    	<a href="<%=pathWithQuery%>&os=<%=resultShownCountMin - 10%>" class="mb-7 bg-dark-blue text-lg rounded-md text-white px-3 py-1"><i class="mr-3 fa-solid fa-chevron-left"></i>Back</a>
+		    <% 
+		    }
+		    %>
+		    <%
+		    if(totalSearchCount > resultShownCountMax){
+		    %>
+		    	<a href="<%=pathWithQuery%>&os=<%=resultShownCountMax%>" class="mb-7 bg-dark-blue text-lg rounded-md text-white px-3 py-1">Next<i class="ml-3 fa-solid fa-chevron-right"></i></a>
+		    <% 
+		    }
+		    %>
 	    </div>
 		<%@ include file = "../components/footer.html" %>
 	</div>	

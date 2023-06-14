@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="books.*,java.util.*" %>
+<%@ page import="books.*,admin.*,java.util.*" %>
 <%
 	ArrayList<Book> books = new ArrayList<Book>();
-	SQLqueryBook query = new SQLqueryBook();
+	SQLqueryAdmin query = new SQLqueryAdmin();
 	
-	books = query.getNewArrivalBooks(10, 0);
+	books = query.getAllBooks(20, 0);
 %>
 <!DOCTYPE html>
 <html>
@@ -71,7 +71,7 @@
         <ul class="">
      	<% for(int i = 0; i < books.size(); i++){ %>
          <li>
-             <a href="#" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
+             <a href="book.jsp?id=<%=books.get(i).getID()%>" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
                 <div class="basis-5/12">
                 	<p class=""><%=books.get(i).getTitle() %></p>
 	            </div>
