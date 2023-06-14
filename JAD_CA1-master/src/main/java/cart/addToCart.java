@@ -55,6 +55,10 @@ public class addToCart extends HttpServlet {
     	    double totalPrice = unitPrice;
     	    int quantity = 1;
     	    
+    	    
+    	    System.out.println("addToCart servlet book id " + bookID);
+    	    System.out.println("addToCart servlet cust id " + custID);
+    	    
     	    try {
     	        Class.forName("com.mysql.cj.jdbc.Driver");
     	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";

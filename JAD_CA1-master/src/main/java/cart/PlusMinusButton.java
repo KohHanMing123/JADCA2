@@ -34,10 +34,17 @@ public class PlusMinusButton extends HttpServlet {
 
         if ("plus".equals(action)) {
             queryCart.updateCartPlusButton(bookID, quantity + 1);
-            quantity += 1; 
+            quantity += 1;
         } else if ("minus".equals(action)) {
-            queryCart.updateCartMinusButton(bookID, quantity - 1);
-            quantity -= 1; 
+            if (quantity > 1) {
+                queryCart.updateCartMinusButton(bookID, quantity - 1);
+                quantity -= 1;
+            } else {
+                // Call the deleteFromCart servlet to handle the deletion
+                request.setAttribute("bookID", String.valueOf(bookID));
+                request.getRequestDispatcher("/deleteFromCart").forward(request, response);
+                return; // Return to avoid updating the total price
+            }
         }
 
         queryCart.updateTotalPrice(bookID, quantity);
