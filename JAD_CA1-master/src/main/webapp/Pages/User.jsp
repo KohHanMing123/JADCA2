@@ -41,7 +41,7 @@
 		    </label>
 		  </div>
 		</div>
-		
+		<%-- could add class="w-40 h-40 rounded-full" for img --%>
 		<%-- <i class="fa-solid fa-plus text-2xl"></i> --%>
         
         <div class="mb-8 flex items-center">
