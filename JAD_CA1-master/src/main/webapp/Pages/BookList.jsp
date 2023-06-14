@@ -129,7 +129,7 @@
     <div class="h-max mx-64 my-20">
         <div class="grid grid-cols-6 gap-12">
             <% if (books.isEmpty()) { %>
-            <p class="text-4xl text-center text-bold">No books found.</p>
+            <p class="text-4xl text-center font-bold col-span-6">No books found.</p>
             <% } else { %>
             <% for (Book book : books) { %>
             <div class="flex flex-col items-start space-y-4 mb-8 space-x-12">
