@@ -85,46 +85,42 @@
                 </button>
             </div>
 
-            <div id="dropdown" class="hidden mt-3 duration-500 transition-transform mt-3 w-full border-gray-400 border-y-2 py-4">
-                <div class="flex">
-
-                    <div class="flex grow justify-end">
-                        <p class="mr-3 font-semibold">Order By:</p>
-                        <select name="orderBy" class="rounded-lg p-1">
-                            <option value='default' class='text-grey'>None</option>
-                            <%if(orderBy.equals("")){ %>
-                            <option value="priceASC">Price - Ascending</option>
-                            <option value="priceDSC">Price - Descending</option>
-                            <%
-                                }else{
-                                if(orderBy.equals("priceASC")){
-                            %>
-                            <option selected value="priceASC">Price - Ascending</option>
-                            <option value="priceDSC">Price - Descending</option>
-                            <%}else if(orderBy.equals("priceDSC")){ %>
-                            <option value="priceASC">Price - Ascending</option>
-                            <option selected value="priceDSC">Price - Descending</option>
-                            <%}} %>
-                        </select>
-                    </div>
-                </div>
-                <div class="flex">
-                    <div class="flex flex-col">
-                        <div class="flex mt-3 items-center">
-                            <p class="mr-3 font-semibold">Min Price:</p>
-                            <input name="minPrice" min="0" type="number" step="0.1" class="pl-2 rounded-lg py-1 w-20" value="<%=minPrice %>" >
-                        </div>
-                        <div class="flex mt-3 items-center">
-                            <p class="mr-3 font-semibold">Max Price:</p>
-                            <input name="maxPrice" min="0" type="number" step="0.1" class="pl-2 rounded-lg py-1 w-20" value="<%=maxPrice %>" >
-                        </div>
-                    </div>
-                    <div class="grow flex flex-col justify-end items-end">
-                        <button type="submit" class="py-1 px-3 bg-light-blue font-semibold rounded-lg">Apply Filters</button>
-                    </div>
-                </div>
-
+<div id="dropdown" class="hidden mt-3 duration-500 transition-transform mt-3 w-full border-gray-400 border-y-2 py-4 h-38">
+    <div class="flex justify-between">
+        <div class="flex flex-col">
+            <div class="flex items-center">
+                <p class="mr-3 font-semibold">Min Price:</p>
+                <input name="minPrice" min="0" type="number" step="0.1" class="pl-2 rounded-lg py-1 w-20" value="<%=minPrice %>" >
             </div>
+            <div class="flex mt-3 items-center">
+                <p class="mr-3 font-semibold">Max Price:</p>
+                <input name="maxPrice" min="0" type="number" step="0.1" class="pl-2 rounded-lg py-1 w-20" value="<%=maxPrice %>" >
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <div class="flex items-center">
+                <p class="mr-3 font-semibold">Order By:</p>
+                <select name="orderBy" class="rounded-lg p-1">
+                    <option value='default' class='text-grey'>None</option>
+                    <% if(orderBy.equals("")){ %>
+                    <option value="priceASC">Price - Ascending</option>
+                    <option value="priceDSC">Price - Descending</option>
+                    <% }else{ if(orderBy.equals("priceASC")){ %>
+                    <option selected value="priceASC">Price - Ascending</option>
+                    <option value="priceDSC">Price - Descending</option>
+                    <% }else if(orderBy.equals("priceDSC")){ %>
+                    <option value="priceASC">Price - Ascending</option>
+                    <option selected value="priceDSC">Price - Descending</option>
+                    <% } } %>
+                </select>
+            </div>
+            <div class="flex justify-end mt-12">
+                <button type="submit" class="py-1 px-3 bg-light-blue font-semibold rounded-lg">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         </form>
     </div>
