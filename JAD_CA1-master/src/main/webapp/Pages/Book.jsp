@@ -3,12 +3,14 @@
 <%@ page import ="books.*" %>
 <% 
 String idStr = request.getParameter("book");
+System.out.println("Book.jsp book idStr " + idStr);
 int id = 0;
-try{
-	id = Integer.parseInt(idStr);
-}catch(NumberFormatException e){
-	
+if (idStr != null) {
+    id = Integer.parseInt(idStr);
 }
+
+System.out.println("Book.jsp book id " + id);
+
 SQLqueryBook query = new SQLqueryBook();
 Book book = query.getBook(id);
 %>
@@ -45,8 +47,10 @@ Book book = query.getBook(id);
             		<p class="text-xl font-semibold">$<%=book.getPrice() %></p>
             	</div>
             	<div class="basis-1/2 flex justify-end">
-            		<form class="flex justify-end">
-            			<input class="text-lg w-16 h-9 text-center" value="1" type="number" min="1" step="1">
+            		<form action="<%= request.getContextPath() %>/addToCart" method="post" class="flex justify-end" >
+            			<input type="hidden" name="book" value="<%=book.getID()%>">
+						<input type="hidden" name="unitPrice" value="<%=book.getPrice()%>">	
+            			<input class="text-lg w-16 h-9 text-center" value="1" type="number" min="1" step="1" name="bookQuantity">
             			<button class="text-lg font-semibold bg-dark-blue text-white py-1 px-2" >Add To Cart</button>
             		</form>	
             	</div>

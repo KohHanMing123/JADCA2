@@ -137,7 +137,7 @@ public class SQLqueryBook {
 			Class.forName("com.mysql.jdbc.Driver");  
 			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
 			Connection conn = DriverManager.getConnection(connURL);
-			
+			System.out.println("getBook method id is " + inputID);
 			String sqlStr = "SELECT * FROM Books WHERE id = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
 		    ps.setInt(1, inputID);
@@ -146,6 +146,7 @@ public class SQLqueryBook {
 		    Book books;
 		    if(rs.next()) {
 		    	int id = rs.getInt("id");
+		    	System.out.println("my id isssdfghf" + id);
 		    	String title = rs.getString("title");
 		    	String publicdate = rs.getString("publication_date");
 		    	String author = rs.getString("author");
@@ -200,7 +201,6 @@ public class SQLqueryBook {
 		    		byte[] imageData = imageBlob.getBytes(1, (int) imageBlob.length());
 			    	base64Image = Base64.getEncoder().encodeToString(imageData);
 		    	}
-	            // Create a new Book object and set its properties
 	            Book book = new Book(stock, id, title, author, publicationDate, genre, isbn, dateAdded, price, description, base64Image);
 	            books.add(book);
 	        }

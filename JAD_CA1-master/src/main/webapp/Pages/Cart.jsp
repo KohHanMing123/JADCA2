@@ -9,6 +9,8 @@
         bookID = Integer.parseInt(bookIDString);
     }
     
+    System.out.println("book ID in Cart isss " + bookID);
+    
     SQLqueryBook query = new SQLqueryBook();
     Book book = query.getBook(bookID);
     System.out.println("Book object: " + book);
@@ -97,6 +99,8 @@
 					    int cartBookID = cartItem.getBook().getID();
 					    int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
 					    double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
+					    cartItem.setQuantity(quantity);
+					    cartItem.setTotalPrice(total);
 					    totalPrice += total;
 					%>	
                     <td class="py-4 px-6 border-b border-gray-200">

@@ -125,5 +125,23 @@ public class SQLqueryCart {
 		        e.printStackTrace();
 		    }
 		}
+		
+//		public void deleteCartItem(int bookID) {
+//		    try {
+//		        Class.forName("com.mysql.jdbc.Driver");
+//		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+//		        Connection conn = DriverManager.getConnection(connURL);
+//		        String sqlStr = "DELETE FROM Cart WHERE bookID = ?";
+//		        PreparedStatement ps = conn.prepareStatement(sqlStr);
+//		        ps.setInt(1, bookID);
+//		        ps.executeUpdate();
+//
+//		        ps.close();
+//		        conn.close();
+//		    } catch (Exception e) {
+//		        e.printStackTrace();
+//		    }
+//		}
+
 	  
 }
