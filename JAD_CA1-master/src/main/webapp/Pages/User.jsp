@@ -35,7 +35,7 @@
 		  <div class="relative inline-block">
 		    <label for="imageInput" class="cursor-pointer">
 		      <div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">		        
-		        <img id="profileImage" src="<%= request.getContextPath() %>/getImage?id=<%= session.getAttribute("custID") %>" alt="Profile Image">
+		        <img id="profileImage" class="w-40 h-40 rounded-full" src="<%= request.getContextPath() %>/getImage?id=<%= session.getAttribute("custID") %>" alt="Profile Image">
 		      </div>
 		      <input type="file" id="imageInput" name="imageInput" class="hidden">
 		    </label>

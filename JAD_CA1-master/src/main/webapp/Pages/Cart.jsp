@@ -13,7 +13,7 @@
     
     SQLqueryBook query = new SQLqueryBook();
     Book book = query.getBook(bookID);
-    System.out.println("Book object: " + book);
+    System.out.println("Book object: " + book.getTitle());
     
     String custID = (String) session.getAttribute("custID");
     List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
@@ -78,7 +78,8 @@
                 </tr>
             </thead>
             <tbody>
-            	<% double totalPrice = 0; %>
+            	<% double totalPrice = 0;
+            	%>
                 <% for (CartItem cartItem : cart) { %>
                 <tr>
                     <td class="py-4 px-6 border-b border-gray-200">

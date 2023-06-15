@@ -59,7 +59,7 @@
         <ul class="">
         	<% for(int i = 0; i < users.size(); i++){ %>
             <li>
-                <a href="#" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
+                <a href="user.jsp?id=<%=users.get(i).getUserID()%>" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
                     <div class="basis-1/3">
                         <p class="pl-2"><%=users.get(i).getUserName() %></p>
                     </div>
