@@ -32,12 +32,12 @@
         </a>
         <!-- Button 4 -->
         <a href="BookList.jsp?genre=Romance" class="w-1/5 h-72 bg-dark-blue m-6 rounded-xl flex flex-col items-center justify-center">
-        <i class="fa-solid fa-bird text-8xl mb-9"></i>
+        <i class="fa-solid fa-heart text-8xl mb-9"></i>
             <span class="text-black text-3xl font-bold">Romance</span>
         </a>
         <!-- Button 5 -->
         <a href="BookList.jsp?genre=Science Fiction" class="w-1/5 h-72 bg-light-blue m-6 rounded-xl flex flex-col items-center justify-center">
-        <i class="fa-solid fa-planet-ringed text-8xl mb-9"></i>
+        <i class="fa-solid fa-atom text-8xl mb-9"></i>
             <span class="text-black text-3xl font-bold">Sci-Fi</span>
         </a>
         <!-- Button 6 -->
@@ -47,7 +47,7 @@
         </a>
         <!-- Button 7 -->
         <a href="BookList.jsp?genre=Cooking" class="w-1/5 h-72 bg-light-blue m-6 rounded-xl flex flex-col items-center justify-center">
-        <i class="fa-solid fa-grill-hot text-8xl mb-9"></i>
+        <i class="fa-solid fa-bowl-food text-8xl mb-9"></i>
             <span class="text-black text-3xl font-bold">Cooking</span>
         </a>
         <!-- Button 8 -->
