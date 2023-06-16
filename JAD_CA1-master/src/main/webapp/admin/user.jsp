@@ -1,16 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="user.*" %>
+<%@page import="admin.*,user.*" %>
 <%
-String userID = request.getParameter("id");
-if(userID == null){
+String userIDStr = request.getParameter("id");
+int userID = 0;
+if(userIDStr == null){
 	response.sendRedirect("users.jsp");
 	return;
+}else{
+	try{
+		userID = Integer.parseInt(userIDStr);
+	}catch(NumberFormatException e){
+		response.sendRedirect("users.jsp");
+		return;
+	}
 }
-    SQLqueryUser query = new SQLqueryUser();
+    SQLqueryAdmin query = new SQLqueryAdmin();
     User currentUser = null;
     try{
-    	currentUser = query.getUserInfo(userID);
+    	currentUser = query.getCustomer(userID);
     }catch(Exception e){
     	response.sendRedirect("users.jsp");
     	return;
@@ -55,39 +63,43 @@ if(userID == null){
         </div>
     </div>
     <div class="bg-sand h-screen pl-72 pr-7">
-    	<div class="pt-7 flex">
-    		<p class="text-2xl font-semibold">User</p>
-    		<div class="grow flex justify-end">
-    			<button name="deleteUser" class="text-lg font-semibold px-5 text-white py-1 bg-maroon rounded-lg">Delete</button>
-    		</div>
-    	</div>
-    	<div class="flex justify-center mt-20">
-    		<div class='flex flex-col items-center'>
-    			<div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">	
-    				<label for="image"><img class="w-40 h-40 rounded-full" src="<%= request.getContextPath() %>/getImage?id=<%=userID %>" /></label>
-    			</div>
-    			<label for="image" class="mt-5 text-md text-gray-500">Change Profile Image</label>
-    			<input type="file" class="hidden" name="imageFile" accept=".png, .jpg, .jpeg" id="image">
-    		</div>
-    		<div class='flex flex-col text-lg ml-20'>
-	    		<div class="flex">
-	    			<p class="mr-3 w-32 font-semibold">Username:</p>
-	    			<input type="text" class="pl-3 rounded-md" value="<%=currentUser.getUsername() %>">
+	    <form action="<%=request.getContextPath() %>/EditUser" method="post" enctype="multipart/form-data" >
+	    <input type="hidden" value="<%=currentUser.getUserID() %>" name="userID">
+	    	<div class="pt-7 flex">
+	    		<p class="text-2xl font-semibold">User</p>
+	    		<div class="grow flex justify-end">
+	    			<label for="deleteUser" class="text-lg font-semibold px-5 text-white py-1 bg-maroon rounded-lg">Delete</label>
 	    		</div>
-    			<div class="flex mt-3">
-	    			<p class="mr-3 w-32 font-semibold">Email:</p>
-	    			<input type="text" class="pl-3 rounded-md w-72" value="<%=currentUser.getEmail() %>">
+	    	</div>
+	    	<div class="flex justify-center mt-20">
+	    		<div class='flex flex-col items-center'>
+	    			<div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">	
+	    				<label for="image"><img class="w-40 h-40 rounded-full" src="<%= request.getContextPath() %>/getImage?id=<%=userID %>" /></label>
+	    			</div>
+	    			<label for="image" class="mt-5 text-md text-gray-500">Change Profile Image</label>
+	    			<input type="file" class="hidden" name="imageFile" accept=".png, .jpg, .jpeg" id="image">
 	    		</div>
-	    		<div class="flex mt-3">
-	    			<p class="mr-3 w-32 font-semibold">Password:</p>
-	    			<input id="password" type="text" class="pl-3 rounded-md" disabled value="<%=password %>">
-	    			<button class="ml-4 text-gray-500 text-sm" onclick="changePassword()">Change Password</button>
+	    		<div class='flex flex-col text-lg ml-20'>
+		    		<div class="flex">
+		    			<p class="mr-3 w-32 font-semibold">Username:</p>
+		    			<input type="text" name="username" class="pl-3 rounded-md" value="<%=currentUser.getUsername() %>">
+		    		</div>
+	    			<div class="flex mt-3">
+		    			<p class="mr-3 w-32 font-semibold">Email:</p>
+		    			<input type="text" name="email" class="pl-3 rounded-md w-72" value="<%=currentUser.getEmail() %>">
+		    		</div>
+		    		<div class="flex mt-3">
+		    			<p class="mr-3 w-32 font-semibold">Password:</p>
+		    			<input id="password" name="password" type="text" class="pl-3 rounded-md" disabled value="<%=password %>">
+		    			<button type="button" class="ml-4 text-gray-500 text-sm" onclick="changePassword()">Change Password</button>
+		    		</div>
+		    		<div class="flex justify-end mt-10">
+		    			<button name="editUser" type="submit" class="text-lg font-semibold px-5 text-white py-1 bg-dark-blue rounded-lg">Save Changes</button>
+		    			<button name="deleteUser" id="deleteUser" type="submit" class="hidden">Delete</button>
+		    		</div>
 	    		</div>
-	    		<div class="flex justify-end mt-10">
-	    			<button name="editUser" class="text-lg font-semibold px-5 text-white py-1 bg-dark-blue rounded-lg">Save Changes</button>
-	    		</div>
-    		</div>
-    	</div>
+	    	</div>
+	    </form>
     </div>	
     <script>
     	function changePassword(){

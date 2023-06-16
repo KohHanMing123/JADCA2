@@ -12,6 +12,7 @@ import javax.servlet.http.Part;
 
 import books.Book;
 import books.SQLqueryBook;
+import user.User;
 
 public class SQLqueryAdmin {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
@@ -244,6 +245,53 @@ public class SQLqueryAdmin {
 		    }
 		}catch(Exception e) {
 			return "Error";
+		}
+	}
+	
+	public User getCustomer(int userID) throws Exception {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "SELECT * FROM Customers WHERE custID = ?";
+		    PreparedStatement ps=conn.prepareStatement(sqlStr);
+		    ps.setInt(1, userID);
+		    ResultSet rs = ps.executeQuery();
+		    if(rs.next()) {
+		    	String username = rs.getString("username");
+		    	String email = rs.getString("email");
+		    	String password = rs.getString("password");
+		    	String imageBlob = rs.getString("custImageURL");
+		    	int custID = rs.getInt("custID");
+		    	User user = new User(username, email, password, imageBlob);
+		    	
+		    	user.setUserID(custID);
+		    	
+		    	return user;
+		    }else {
+		    	throw new Exception("No User");
+		    }
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public void deleteUser(int userID) throws Exception{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "DELETE FROM Customers WHERE custID = ?";
+		    PreparedStatement ps=conn.prepareStatement(sqlStr);
+		    ps.setInt(1, userID);
+		    int affectedRows = ps.executeUpdate();
+		    if(affectedRows != 1) {
+		    	throw new Exception("Error");
+		    }
+		}catch(Exception e) {
+			throw e;
 		}
 	}
 	

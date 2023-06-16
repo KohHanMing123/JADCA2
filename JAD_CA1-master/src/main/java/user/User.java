@@ -5,6 +5,7 @@ public class User {
     private String email;
     private String password;
     private String imageBlob;
+    private int userID;
 
     public User(String username, String email, String password, String imageBlob) {
         this.username = username;
@@ -28,6 +29,13 @@ public class User {
 	public String getImage() {
 		return imageBlob;
 	}
+	
+	public void setUserID(int inputUserID) {
+		userID = inputUserID;
+	}
     
+	public int getUserID() {
+		return userID;
+	}
 
 }
