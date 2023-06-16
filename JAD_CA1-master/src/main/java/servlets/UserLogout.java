@@ -35,7 +35,7 @@ public class UserLogout extends HttpServlet {
 
 		    session.invalidate();
 		    
-	        response.sendRedirect(request.getContextPath() + "/search.jsp"); // can modify to another page if not correct
+	        response.sendRedirect(request.getContextPath() + "/Pages/home.jsp"); // can modify to another page if not correct
 		}
 	}
 

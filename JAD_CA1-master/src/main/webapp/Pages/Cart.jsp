@@ -3,19 +3,30 @@
 <%@ page import="books.*" %>
 <%@ page import = "cart.*" %>
 <%
+
     String bookIDString = request.getParameter("book");
     int bookID = 0; 
     if (bookIDString != null) {
         bookID = Integer.parseInt(bookIDString);
     }
-    
+    	
     System.out.println("book ID in Cart isss " + bookID);
     
     SQLqueryBook query = new SQLqueryBook();
-    Book book = query.getBook(bookID);
+    Book book = null;
+    try{
+    	book = query.getBook(bookID);
+    }catch(Exception e){
+    	System.out.println(book);
+    	
+    }
     System.out.println("Book object: " + book);
     
+   
     String custID = (String) session.getAttribute("custID");
+    System.out.println("GOING INTO CUST IDD");
+    System.out.println("custOMER in CART.JSP id is " + custID);
+    System.out.println("PASSED CUST IDD");
     List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
     System.out.println("Cart items: " + cart);
     if (cart == null) {

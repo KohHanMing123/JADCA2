@@ -187,6 +187,7 @@
 			        	<div class="grow flex justify-end gap-2">
 					        <form action="<%= request.getContextPath() %>/addToCart" method="post">
 						        <input type="hidden" name="book" value="<%=books.get(i).getID()%>">
+						        <% System.out.println("bookID in search.jsp " + books.get(i).getID()); %>
 							    <input type="hidden" name="unitPrice" value="<%=books.get(i).getPrice()%>">	
 		                        <button class="hover:scale-105 duration-200 bg-dark-blue text-grey px-2">Add To Cart</button>
 					        </form>

@@ -49,6 +49,7 @@ Book book = query.getBook(id);
             	<div class="basis-1/2 flex justify-end">
             		<form action="<%= request.getContextPath() %>/addToCart" method="post" class="flex justify-end" >
             			<input type="hidden" name="book" value="<%=book.getID()%>">
+            			<% System.out.println("bookID in Book.jsp " + book.getID()); %>
 						<input type="hidden" name="unitPrice" value="<%=book.getPrice()%>">	
             			<input class="text-lg w-16 h-9 text-center" value="1" type="number" min="1" step="1" name="bookQuantity">
             			<button class="text-lg font-semibold bg-dark-blue text-white py-1 px-2" >Add To Cart</button>

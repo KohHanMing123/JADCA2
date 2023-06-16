@@ -146,7 +146,7 @@ public class SQLqueryBook {
 		    Book books;
 		    if(rs.next()) {
 		    	int id = rs.getInt("id");
-		    	System.out.println("my id isssdfghf" + id);
+		    	System.out.println("my id isssdfghf " + id);
 		    	String title = rs.getString("title");
 		    	String publicdate = rs.getString("publication_date");
 		    	String author = rs.getString("author");

@@ -50,6 +50,7 @@ public class addToCart extends HttpServlet {
         String bookIDString = request.getParameter("book");
         int bookID = Integer.parseInt(bookIDString);
         int custID = Integer.parseInt((String) session.getAttribute("custID"));  
+        System.out.println("custID in addToCart is " + custID);
         int quantity;
         String quantityString = request.getParameter("bookQuantity");
         

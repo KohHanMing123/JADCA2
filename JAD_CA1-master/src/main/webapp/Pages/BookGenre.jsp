@@ -3,6 +3,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+HttpSession testSession = request.getSession(false);
+if (testSession != null) {
+    System.out.println("Session is active in genre");
+} else {
+    System.out.println("Session is not active in genre");
+}
+
+String custID = (String) session.getAttribute("custID");
+System.out.println("GOING INTO CUST IDD");
+System.out.println("cust id is " + custID);
+%>
 <meta charset="ISO-8859-1">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/twCustom.js"></script>

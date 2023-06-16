@@ -5,6 +5,7 @@
 <%
 	SQLqueryUser query = new SQLqueryUser();
 	String custID = (String) session.getAttribute("custID");
+	System.out.println("custID in user.jsp " + custID);
 	User user = null;
 	
 	try {
@@ -35,7 +36,7 @@
 		  <div class="relative inline-block">
 		    <label for="imageInput" class="cursor-pointer">
 		      <div class="bg-gray-300 w-40 h-40 rounded-full border-2 border-black flex items-center justify-center">		        
-		        <img id="profileImage" src="<%= request.getContextPath() %>/getImage?id=<%= session.getAttribute("custID") %>" alt="Profile Image">
+		        <img class="w-40 h-40 rounded-full" id="profileImage" src="<%= request.getContextPath() %>/getImage?id=<%= session.getAttribute("custID") %>" alt="Profile Image">
 		      </div>
 		      <input type="file" id="imageInput" name="imageInput" class="hidden">
 		    </label>
@@ -105,13 +106,13 @@
         </div>
         
         <div class="flex items-center justify-center">
-        
           <button type="submit" class="bg-dark-blue text-white py-2 px-4 rounded-xl hover:bg-blue-800">Update</button>
+          <a href="<%= request.getContextPath() %>/UserLogout" class="bg-red-500 text-white py-2 px-4 rounded-xl hover:bg-red-700 ml-2">Logout</a>
         </div>
         
         
         <% } else { %>
-        <div class="flex items-center justify-center h-screen">
+        <div class="flex items-center justify-center h-80">
           <h2 class="text-4xl font-bold">No user found</h2>
         </div>
         <% } %>
