@@ -89,7 +89,8 @@
                 </tr>
             </thead>
             <tbody>
-            	<% double totalPrice = 0; %>
+            	<% double totalPrice = 0;
+            	%>
                 <% for (CartItem cartItem : cart) { %>
                 <tr>
                     <td class="py-4 px-6 border-b border-gray-200">
