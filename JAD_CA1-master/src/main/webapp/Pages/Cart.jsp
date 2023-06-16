@@ -12,8 +12,14 @@
     System.out.println("book ID in Cart isss " + bookID);
     
     SQLqueryBook query = new SQLqueryBook();
-    Book book = query.getBook(bookID);
-    System.out.println("Book object: " + book.getTitle());
+    Book book = null;
+    try{
+    	book = query.getBook(bookID);
+    }catch(Exception e){
+    	System.out.println(book);
+    	
+    }
+    System.out.println("Book object: " + book);
     
     String custID = (String) session.getAttribute("custID");
     List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
