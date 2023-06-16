@@ -12,7 +12,13 @@ if (idStr != null) {
 System.out.println("Book.jsp book id " + id);
 
 SQLqueryBook query = new SQLqueryBook();
-Book book = query.getBook(id);
+Book book = null;
+try{
+	book = query.getBook(id);
+}catch(Exception e){
+	response.sendRedirect("home.jsp");
+	return;
+}
 %>
 <!DOCTYPE html>
 <html>
