@@ -102,7 +102,7 @@ public class VerifyLoginServlet extends HttpServlet {
             session.setAttribute("sessUserRole", userRole);
             session.setAttribute("loginStatus", "success");
             session.setMaxInactiveInterval(3 * 60); // 3 minutes
-            response.sendRedirect(request.getContextPath() + "/Pages/BookGenre.jsp");
+            response.sendRedirect(request.getContextPath() + "/Pages/home.jsp");
         } else {
             response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp?errCode=invalidLogin");
         }

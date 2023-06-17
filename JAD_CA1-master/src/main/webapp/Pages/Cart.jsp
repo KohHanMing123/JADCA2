@@ -3,7 +3,13 @@
 <%@ page import="books.*" %>
 <%@ page import = "cart.*" %>
 <%
-
+	
+	//Checks if they are logged in
+	if (session.getAttribute("custID") == null) {
+	    response.sendRedirect("http://localhost:8080/JAD_CA1-master/CheckProfileExistence");
+	    return;
+	}	
+	
     String bookIDString = request.getParameter("book");
     int bookID = 0; 
     if (bookIDString != null) {
