@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import books.*;
 /**
  * Servlet implementation class PlusMinusButton
  */
@@ -30,6 +30,23 @@ public class PlusMinusButton extends HttpServlet {
         int bookID = Integer.parseInt(request.getParameter("bookID"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+        SQLqueryBook queryBook = new SQLqueryBook();
+        Book book = null;
+		try {
+			book = queryBook.getBook(bookID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+        if (book == null) {
+            // Handle the case where the book is not found
+            // You can redirect or display an error message
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
+            return;
+        }
+
+        double unitPrice = book.getPrice();
         SQLqueryCart queryCart = new SQLqueryCart();
 
         if ("plus".equals(action)) {
@@ -47,11 +64,10 @@ public class PlusMinusButton extends HttpServlet {
             }
         }
 
-        queryCart.updateTotalPrice(bookID, quantity);
+        queryCart.updateTotalPrice(bookID, quantity, unitPrice);
 
         response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp");
     }
-
 	
 }
 

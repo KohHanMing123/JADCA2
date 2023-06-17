@@ -52,34 +52,37 @@ public class addToCart extends HttpServlet {
         int custID = Integer.parseInt((String) session.getAttribute("custID"));  
         System.out.println("custID in addToCart is " + custID);
         int quantity;
-        String quantityString = request.getParameter("bookQuantity");
+        String quantityString = request.getParameter("bookQuantity"); // this is to get from Book.jsp
         
         if (quantityString != null && !quantityString.isEmpty()) {
             quantity = Integer.parseInt(quantityString);
         } else {
-            quantity = 1; // Default quantity
+            quantity = 1; // Default quantity - for both Booklist.jsp and Search.jsp
         }
         
         String unitPriceString = request.getParameter("unitPrice");
         double unitPrice = Double.parseDouble(unitPriceString);
         double totalPrice = unitPrice * quantity;
 
-
+        System.out.println("add to cart serrvlet quantity is " + quantity);
+        System.out.println("add to cart serrvlet tPrice is " + totalPrice);
         System.out.println("addToCart servlet book id " + bookID);
         System.out.println("addToCart servlet cust id " + custID);
-
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
             Connection conn = DriverManager.getConnection(connURL);
-
+            System.out.println("inside try total PRice is " + totalPrice);
             String sqlStr = "INSERT INTO Cart (custID, bookID, unitPrice, totalPrice, quantity) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+            
             pstmt.setInt(1, custID);
             pstmt.setInt(2, bookID);
             pstmt.setDouble(3, unitPrice);
             pstmt.setDouble(4, totalPrice);
             pstmt.setInt(5, quantity);
+            System.out.println("SQL Query: " + pstmt.toString());
             pstmt.executeUpdate();
 
             conn.close();

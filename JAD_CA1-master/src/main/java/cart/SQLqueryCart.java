@@ -74,17 +74,18 @@ public class SQLqueryCart {
 		}
 
 	  
-	  public void updateTotalPrice(int bookID, int quantity) {
+	  public void updateTotalPrice(int bookID, int quantity, double unitPrice) {
 	        try {
 	            Class.forName("com.mysql.jdbc.Driver");
 	            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
 	            Connection conn = DriverManager.getConnection(connURL);
-	            String sqlStr = "UPDATE Cart SET totalPrice = unitPrice * ? WHERE bookID = ?";
-	            PreparedStatement ps=conn.prepareStatement(sqlStr);
-	            ps.setInt(1, quantity);
+	            String sqlStr = "UPDATE Cart SET totalPrice = ? WHERE bookID = ?";
+	            PreparedStatement ps = conn.prepareStatement(sqlStr);
+	            ps.setDouble(1, unitPrice * quantity);
 	            ps.setInt(2, bookID);
 	            ps.executeUpdate();
-	            
+	            ps.executeUpdate();
+	           System.out.println("updateTotalPrice unitPrice is " + unitPrice);
 	            ps.close();
 	            conn.close();
 	        } catch (Exception e) {

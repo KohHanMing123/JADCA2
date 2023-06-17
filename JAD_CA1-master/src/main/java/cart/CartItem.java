@@ -10,7 +10,7 @@ public class CartItem {
     public CartItem(Book book, int quantity) {
         this.book = book;
         this.quantity = quantity;
-        this.totalPrice = book.getPrice() * quantity;
+        calculateTotalPrice();
     }
 
     public Book getBook() {
@@ -27,15 +27,16 @@ public class CartItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-        this.totalPrice = book.getPrice() * quantity;
+        calculateTotalPrice();
     }
-    
+
     public double getTotalPrice() {
         return totalPrice;
     }
-    
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+
+    private void calculateTotalPrice() {
+        if (book != null) {
+            this.totalPrice = book.getPrice() * quantity;
+        }
     }
 }
-

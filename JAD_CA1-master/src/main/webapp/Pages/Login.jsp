@@ -15,7 +15,7 @@
         <form action="<%= request.getContextPath() %>/VerifyLoginServlet" method="post" class="bg-grey shadow-md rounded-md border border-gray-300 h-fit max-w-xl px-12 py-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Login</h2>
-                <button type="button" class="text-black text-xl">
+                <button type="button" class="text-black text-xl" onclick="redirectToHome()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -44,5 +44,11 @@
     </div>
     <%@ include file="../components/footer.html" %>
 </body>
+
+<script>
+    function redirectToHome() {
+        window.location.href = "home.jsp";
+    }
+</script>
 
 </html>

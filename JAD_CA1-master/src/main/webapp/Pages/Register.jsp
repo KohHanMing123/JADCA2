@@ -16,7 +16,7 @@
         <div class="bg-grey shadow-md rounded-md border border-gray-300 w-96 px-12 py-6">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold">Register</h2>
-                <button type="button" class="text-black text-xl">
+                <button type="button" class="text-black text-xl" onclick="redirectToLogin()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -56,5 +56,11 @@
     </div>
     <%@ include file="../components/footer.html" %>
 </body>
+
+<script>
+    function redirectToLogin() {
+        window.location.href = "Login.jsp";
+    }
+</script>
 
 </html>

@@ -24,9 +24,7 @@
     
    
     String custID = (String) session.getAttribute("custID");
-    System.out.println("GOING INTO CUST IDD");
     System.out.println("custOMER in CART.JSP id is " + custID);
-    System.out.println("PASSED CUST IDD");
     List<CartItem> cart = (List<CartItem>) session.getAttribute("cart");
     System.out.println("Cart items: " + cart);
     if (cart == null) {
@@ -45,7 +43,8 @@
                 
                 SQLqueryCart queryCart = new SQLqueryCart();
                 queryCart.updateCartItemQuantity(book.getID(), newQuantity);
-                queryCart.updateTotalPrice(book.getID(), newQuantity);
+                System.out.println("book price is " + book.getPrice());
+                queryCart.updateTotalPrice(book.getID(), newQuantity, book.getPrice());
                 
                 break;
             }
@@ -54,7 +53,7 @@
         if (!bookExists) {
             cart.add(new CartItem(book, 1));
             SQLqueryCart queryCart = new SQLqueryCart();
-            queryCart.updateTotalPrice(book.getID(), 1);
+            queryCart.updateTotalPrice(book.getID(), 1, book.getPrice());
         }
         
         response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp");
@@ -89,9 +88,8 @@
                 </tr>
             </thead>
             <tbody>
-            	<% double totalPrice = 0;
-            	%>
-                <% for (CartItem cartItem : cart) { %>
+            	<% double totalPrice = 0;    	
+                 for (CartItem cartItem : cart) { %>
                 <tr>
                     <td class="py-4 px-6 border-b border-gray-200">
                         <div class="flex items-center">
@@ -108,18 +106,20 @@
                     </td>
                     <td class="py-4 px-6 border-b border-gray-200"><%= cartItem.getBook().getPrice() %></td>
                     <%
+                    	
 					    int cartBookID = cartItem.getBook().getID();
-					    int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
-					    double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
+                    	int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
+                    	double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
 					    cartItem.setQuantity(quantity);
-					    cartItem.setTotalPrice(total);
+
 					    totalPrice += total;
+					    System.out.println("what is this Cart tPrice" + totalPrice);
 					%>	
                     <td class="py-4 px-6 border-b border-gray-200">
                         <div class="flex items-center justify-center">
                             <form action="<%= request.getContextPath() %>/PlusMinusButton" method="post">
 							    <input type="hidden" name="action" value="minus">
-							    <input type="hidden" name="bookID" value="<%= cartItem.getBook().getID() %>">
+							    <input type="hidden" name="bookID" value="<%= cartItem.getBook().getID()%>">
 							    <input type="hidden" name="quantity" value="<%= cartItem.getQuantity() %>">
 							    <button class="rounded-l-lg bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 minus-btn">
 							        <i class="fas fa-minus"></i>
