@@ -8,6 +8,7 @@
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 <title>Login</title>
+<link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
 <body class="bg-sand h-screen flex flex-col">
     <%@ include file="../components/navBar.html" %>

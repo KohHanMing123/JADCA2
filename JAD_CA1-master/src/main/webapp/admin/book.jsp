@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="models.SQLqueryAdmin, models.Book, models.SQLqueryBook" %>
+<%@ page import="models.SQLqueryAdmin, models.Book, models.SQLqueryBook, java.util.ArrayList" %>
 <%
 	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 	try{
@@ -37,12 +37,26 @@
 	}
 	
 	String msg = request.getParameter("msg");
+	
+	ArrayList<String> genreArr = new ArrayList<>();
+	
+	genreArr.add("Fantasy");
+	genreArr.add("Thriller");
+	genreArr.add("Horror");
+	genreArr.add("Romance");
+	genreArr.add("Sci-Fi");
+	genreArr.add("History");
+	genreArr.add("Cooking");
+	genreArr.add("Historical Fiction");
+	genreArr.add("Fiction");
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title><%=book.getTitle() %></title>
+<link rel="icon" href="../assets/logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
@@ -80,8 +94,9 @@
 	    	<div class="flex justify-center">
 		    	<div class="flex flex-col">
 		    		<img id="previewImage" src="data:image/jpeg;base64,<%=book.getImage() %>" class="h-96 w-64" alt="Preview Image">
+		    		<p id="imageError" class="text-maroon"></p>
 		    		<label class="hover:cursor-pointer rounded-lg bg-dark-blue w-fit mt-3 py-1 px-4 font-semibold text-white" for="image">Change Image</label>
-		    		<input type="file" class="hidden" name="imageFile" value="Change File" accept=".png, .jpg, .jpeg" id="image">
+		    		<input onchange="validateImageSize(this)" type="file" class="hidden" name="imageFile" value="Change File" accept=".png, .jpg, .jpeg" id="image">
 		    	</div>
 	    		<div class="flex flex-col ml-32">
 	    			<div class="flex mt-3">
@@ -106,7 +121,22 @@
 	        			<div class="w-44">
 	        				<p class="text-lg mr-5 font-semibold">Genre:</p>
 	        			</div>
-	        			<input required type="text" value="<%=book.getGenre()%>" class="rounded-lg pl-2 w-52" name="genre">
+	        			<select required class="rounded-lg pl-2 w-52" name="genre" id="genreDropdown">
+	        			<%
+	        				for(int i = 0; i < genreArr.size(); i++){
+	        					if(genreArr.get(i).equals(book.getGenre())){
+	        			%>
+	        					<option selected value="<%=genreArr.get(i) %>"><%=genreArr.get(i) %></option>
+	        			<% 
+	        					}else{
+	        						
+	        			%>
+	        					<option value="<%=genreArr.get(i) %>"><%=genreArr.get(i) %></option>
+	        			<%
+	        					}
+	        				}
+	        			%>
+						</select>
 	        		</div>
 	        		<div class="flex mt-3">
 	        			<div class="w-44">
@@ -132,7 +162,20 @@
 				        			if(msg != null){
 				        				if(msg.equals("Success")){
 				        					out.print("Changes Successfully Saved!");
+				        				}else if(msg.equals("imageSizeErr")){
+				        					
 				        				}
+				        				
+				        			}
+			        			%>
+			        		</p>
+			        		<p class="text-maroon font-semibold mr-10">
+			        			<%
+				        			if(msg != null){
+				        				if(msg.equals("imageSizeErr")){
+				        					out.print("Image File size is too big!");
+				        				}
+				        				
 				        			}
 			        			%>
 			        		</p>
@@ -146,11 +189,12 @@
 	    	</div>
     	</form>
     </div>
-    
     <script>
+
     	const form = document.getElementById("editBookForm");
+    	const genreDropdown = document.getElementById("genreDropdown");
     	form.addEventListener('change', enableSubmit);
-    	
+    	genreDropdown.addEventListener('change', enableSubmit);
     	function enableSubmit(){
     		document.getElementById("submit").disabled = false;
     	}
@@ -170,6 +214,21 @@
 	
 	    	reader.readAsDataURL(file);
     	}
+	    
+	    function validateImageSize(input) {
+	    	  if (input.files && input.files[0]) {
+	    	    var file = input.files[0];
+	    	    var maxSizeInBytes = 1024 * 1024 / 1000 * 60;
+	    	    
+	    	    if (file.size > maxSizeInBytes) {
+	    	    	document.getElementById("imageError").innerText = "Please select an image smaller than 60kB!"
+	    	      	input.value = '';
+	    	    	document.getElementById("submit").disabled = true;
+	    	    }else{
+	    	    	document.getElementById("imageError").innerText = ""
+	    	    }
+	    	  }
+	    	}
     </script>
 </body>
 </html>

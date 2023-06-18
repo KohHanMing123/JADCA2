@@ -7,6 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
+<link rel="icon" href="../assets/logo.png" type="image/png">
 <title>Admin Login</title>
 </head>
 <body class="bg-sand h-screen flex flex-col">
@@ -39,7 +40,7 @@ if(msg==null){
             <%if(msg.equals("invalid")){ %>
             	<p class="text-maroon">Invalid Username or Password</p>
             <%} %>
-        	<p class="text-gray-400 mt-5">Are you an Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp" class="hover:text-dark-blue">Log in here!</a></p>
+        	<p class="text-gray-400 mt-5">Are you a Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp" class="hover:text-dark-blue">Log in here!</a></p>
         	</div>
         </form>
     </div>

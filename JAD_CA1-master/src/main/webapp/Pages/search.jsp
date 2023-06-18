@@ -173,7 +173,7 @@
 			%>
 			<%System.out.println("search.jsp " + books.get(i).getID());%>
 	        <div class="flex justify-center mb-5 hover:cursor-pointer hover:scale-105 duration-300" onclick="window.location.href='Book.jsp?book=<%=books.get(i).getID()%>'">
-	            <img class="h-56" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
+	            <img class="h-56 w-40" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
 	            <div class="bg-light-blue px-4 pt-2 h-56 w-80">
 		            <div class="h-10 text-ellipsis overflow-hidden text-container">
 		            	 <p class="font-semibold text-2xl whitespace-nowrap text-ellipsis text-overflow"><%=books.get(i).getTitle()%></p>

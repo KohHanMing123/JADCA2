@@ -2,21 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ page import="models.SQLqueryAdmin, models.User, java.util.*" %>
 <%	
-SQLqueryAdmin adminQuery = new SQLqueryAdmin();
-try{
-	String adminUsername = (String) session.getAttribute("username");
-	int adminID = (int) session.getAttribute("adminID");
-	if(!adminQuery.verifyAdmin(adminID, adminUsername)){
+	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+	try{
+		String adminUsername = (String) session.getAttribute("username");
+		int adminID = (int) session.getAttribute("adminID");
+		if(!adminQuery.verifyAdmin(adminID, adminUsername)){
+			response.sendRedirect("login.jsp");
+			return;
+		}
+	}catch(Exception e){
 		response.sendRedirect("login.jsp");
 		return;
 	}
-}catch(Exception e){
-	response.sendRedirect("login.jsp");
-	return;
-}
-
+	String search = request.getParameter("q");
+	if(search == null){
+		search = "";
+	}
 	ArrayList<User> users = new ArrayList<User>();
-	users = adminQuery.getAllUsers(1, 2);
+	if(search.equals("")){
+		users = adminQuery.getAllUsers();
+	}else{
+		users = adminQuery.searchUser(search);
+	}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -55,10 +63,18 @@ try{
     </div>
      <div class="bg-sand h-screen pl-72 pr-7">
         <div class="pt-7 flex">
-            <div class="basis-1/2">
+            <div class="basis-1/3">
                 <p class="text-2xl font-semibold">Users</p>
             </div>
-            <div class="flex justify-end basis-1/2">
+            <div class="basis-1/3 flex justify-center">
+            	<form class="flex" action="<%=request.getContextPath() %>/AdminSearchUser" method="post">
+            		<input type="text" class="text-xl py-1 rounded-l-lg w-96 pl-2" name="searchInput" value="<%=search%>">
+	                <button type="submit" class="flex items-center px-3 bg-white border-l rounded-r-lg">
+	                    <i class="fa-solid fa-magnifying-glass fa-xl"></i>
+	                </button>
+            	</form>
+            </div>
+            <div class="flex justify-end basis-1/3">
             	<a href="newUser.jsp" class="py-1 px-3 font-semibold rounded-lg bg-dark-blue text-white">Create User</a>
             </div>
         

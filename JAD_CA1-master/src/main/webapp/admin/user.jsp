@@ -49,6 +49,7 @@ if(userIDStr == null){
 <head>
 <meta charset="UTF-8">
 <title>User: <%=currentUser.getUsername() %></title>
+<link rel="icon" href="../assets/logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>

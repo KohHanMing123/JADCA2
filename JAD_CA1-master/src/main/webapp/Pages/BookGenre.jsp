@@ -20,6 +20,7 @@ System.out.println("cust id is " + custID);
 <script src="../js/twCustom.js"></script>
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 <title>Book Genre</title>
+<link rel="icon" href="../assets/logo.png" type="image/png">
 </head>
 <body class="bg-sand">
     <%@ include file="../components/navBar.html" %>

@@ -13,10 +13,17 @@
 	}catch(Exception e){
 		response.sendRedirect("login.jsp");
 		return;
-	}
+	} 
 	ArrayList<Book> books = new ArrayList<Book>();
-	
-	books = adminQuery.getAllBooks(20, 0);
+	String search = request.getParameter("q");
+	if(search == null){
+		search = "";
+	}
+	if(search.equals("")){
+		books = adminQuery.getAllBooks();
+	}else{
+		books = adminQuery.searchBook(search);
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -55,10 +62,18 @@
     </div>
      <div class="bg-sand min-h-screen pl-72 pr-7">
         <div class="pt-7 flex">
-            <div class="basis-1/2">
+            <div class="basis-1/3">
                 <p class="text-2xl font-semibold">Books</p>
             </div>
-            <div class="basis-1/2 flex justify-end">
+            <div class="basis-1/3 flex justify-center">
+            	<form class="flex" action="<%=request.getContextPath() %>/AdminSearchBook" method="post">
+            		<input type="text" class="text-xl py-1 rounded-l-lg w-96 pl-2" name="searchInput" value="<%=search%>">
+	                <button type="submit" class="flex items-center px-3 bg-white border-l rounded-r-lg">
+	                    <i class="fa-solid fa-magnifying-glass fa-xl"></i>
+	                </button>
+            	</form>
+            </div>
+            <div class="basis-1/3 flex justify-end">
             	<a href="<%=request.getContextPath() %>/admin/newbook.jsp" class="bg-dark-blue px-4 rounded-lg text-white py-1 font-semibold">New Book</a>
             </div>
         </div>

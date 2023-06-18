@@ -78,6 +78,10 @@ public class EditBook extends HttpServlet {
 				path = "admin/book.jsp?id=" + idStr + "&msg=Success";
 				response.sendRedirect(path);
 				return;
+			}else if(results.equals("imageSizeErr")) {
+				path = "admin/book.jsp?id=" + idStr + "&msg=imageSizeErr";
+				response.sendRedirect(path);
+				return;
 			}else {
 				path = "admin/book.jsp?id=" + idStr + "&msg=error";
 				response.sendRedirect(path);

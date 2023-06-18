@@ -72,6 +72,7 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Cart</title>
+    <link rel="icon" href="../assets/logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../js/twCustom.js"></script>
     <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
