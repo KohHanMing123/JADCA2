@@ -145,15 +145,9 @@
 	        			<div>
 		        			<div class="flex items-center">
 		        				<p class="font-semibold">Sample Book View:</p>
-		        				<div class="grow flex justify-end items-center">
-		        					<i class="hover:cursor-pointer hover:scale-105 fa-solid fa-rotate-right"></i>
-		        				</div>
 		        			</div>
 		        			<div class="h-96 w-64 bg-grey flex justify-center items-center">
 		        				<img id="previewImage" src="data:image/jpeg;base64,<%=query.getDefaultBookImage() %>" class="h-96 w-64" alt="Preview Image">
-		        			</div>
-		        			<div class="flex flex-col w-64 mt-2">
-		        				<p class="text-lg font-semibold" id="titlePreview"></p>	
 		        			</div>
 	        			</div>
 	        		</div>
@@ -165,12 +159,8 @@
      <script>
      	//To update image preview on upload
 	     const imageInput = document.getElementById('image');
-     	const titleInput = document.getElementById("title");
 	     imageInput.addEventListener('change', previewImage);
-	     titleInput.addEventListener('change', previewTitle);
-	     function previewTitle(){
-	    	 document.getElementById("titlePreview").innerText = titleInput.value
-	     }
+
 	     function previewImage() {
     	  const file = imageInput.files[0];
     	  const reader = new FileReader();
