@@ -108,8 +108,8 @@
         </div>
         
         <div class="flex items-center justify-center">
-          <button type="submit" class="bg-dark-blue text-white py-2 px-4 rounded-xl hover:bg-blue-800">Update</button>
-          <a href="<%= request.getContextPath() %>/UserLogout" class="bg-red-500 text-white py-2 px-4 rounded-xl hover:bg-red-700 ml-2">Logout</a>
+          <button type="submit" class="bg-dark-blue text-white py-2 px-4 rounded-xl hover:bg-sky-900">Update</button>
+          <a href="<%= request.getContextPath() %>/UserLogout" class="bg-maroon text-white py-2 px-4 rounded-xl hover:bg-red-700 ml-2">Logout</a>
         </div>
         
         

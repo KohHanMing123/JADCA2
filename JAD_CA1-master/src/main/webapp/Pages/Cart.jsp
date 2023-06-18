@@ -83,7 +83,7 @@
         <% if (cart.isEmpty()) { %>
         <p class="text-4xl text-center font-bold">Your cart is empty.</p>
         <% } else { %>
-        <table class="w-full bg-white">
+        <table class="w-full bg-amber-50">
             <thead>
                 <tr>
                     <th class="py-3 px-6 text-left">Book</th>

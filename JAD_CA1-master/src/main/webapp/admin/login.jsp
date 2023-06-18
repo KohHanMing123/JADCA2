@@ -34,7 +34,7 @@
                 <input type="password" name="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div class="mt-20">
-        	<p class="text-gray-400">Are you an Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp">Log in here!</a></p>
+        	<p class="text-gray-400">Are you a Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp" class="hover:text-dark-blue">Log in here!</a></p>
         </div>
         </form>
     </div>

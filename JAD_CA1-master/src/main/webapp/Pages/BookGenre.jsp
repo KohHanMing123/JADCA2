@@ -80,6 +80,7 @@ System.out.println("cust id is " + custID);
             <span class="text-black text-3xl font-bold">Fiction</span>
         </a>
     </div>
+    <%@ include file="../components/footer.html" %>
 </body>
 
 </html>

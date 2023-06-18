@@ -55,8 +55,7 @@ public class getImage extends HttpServlet {
 
                 String imageUrl = rs.getString("custImageURL");
                 String fileExtension = imageUrl.substring(imageUrl.lastIndexOf(".") + 1).toLowerCase();
-                
-                // Currently only works for jpeg, png truncation error, too long
+
                 if (fileExtension.equals("jpeg") || fileExtension.equals("jpg")) {
                     contentType = "image/jpeg";
                 } else if (fileExtension.equals("png")) {

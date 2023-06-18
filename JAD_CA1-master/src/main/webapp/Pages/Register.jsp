@@ -48,8 +48,8 @@
                     
                 </div>
                 <div class="flex flex-col items-center">
-                    <input type="submit" name="btnSubmit" value="Register" class="bg-dark-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-48">
-                    <a href="Login.jsp" class="text-gray-400 mt-2">Back to Login</a>
+                    <input type="submit" name="btnSubmit" value="Register" class="bg-dark-blue hover:bg-sky-900 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-48">
+                    <a href="Login.jsp" class="text-gray-400 mt-2 hover:text-dark-blue">Back to Login</a>
                 </div>
             </form>
         </div>
