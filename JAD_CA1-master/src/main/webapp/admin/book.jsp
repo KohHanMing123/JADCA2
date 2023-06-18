@@ -1,7 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="books.*" %>
+<%@ page import="books.*, admin.*" %>
 <%
+	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+	try{
+		String adminUsername = (String) session.getAttribute("username");
+		int adminID = (int) session.getAttribute("adminID");
+		if(!adminQuery.verifyAdmin(adminID, adminUsername)){
+			response.sendRedirect("login.jsp");
+			return;
+		}
+	}catch(Exception e){
+		response.sendRedirect("login.jsp");
+	}
+	
 	String idStr = request.getParameter("id");
 	if(idStr == null){
 		response.sendRedirect("books.jsp");
@@ -51,12 +63,14 @@
                  </a>
               </li>
            </ul>
-           <div class="bottom-0 left-0 fixed flex justify-center w-full">
-            <a class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full">
-                <i class="fa-solid fa-right-from-bracket fa-xl"></i>
-                <p class=" ml-3 font-bold">Log Out</p>
-            </a>
-           </div>
+         
+           <form class="bottom-0 left-0 fixed flex justify-center w-full" action="<%=request.getContextPath()%>/AdminLogout" method="post">
+           		<button type="submit" class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full">
+	                <i class="fa-solid fa-right-from-bracket fa-xl"></i>
+	                <p class=" ml-3 font-bold">Log Out</p>
+            	</button>
+           </form>
+           
         </div>
     </div>
    	<div class="bg-sand h-screen pl-72 pr-7 pt-10">

@@ -18,6 +18,46 @@ public class SQLqueryAdmin {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");
 	
+	public int adminLogin(String adminPassword, String adminUsername) throws Exception {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "SELECT * FROM Admin WHERE password = ? AND username = ?";
+		    PreparedStatement ps=conn.prepareStatement(sqlStr);
+		    ps.setString(1, adminPassword);
+		    ps.setString(2, adminUsername);
+		    ResultSet rs = ps.executeQuery();
+		    if(rs.next()) {
+		    	return rs.getInt("adminID");
+		    }
+		    throw new Exception("Invalid");
+		}catch (Exception e) {
+	        throw e;
+	    }
+	}
+	
+	public boolean verifyAdmin(int adminID, String adminUsername) throws Exception {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "SELECT * FROM Admin WHERE adminID = ? AND username = ?";
+		    PreparedStatement ps=conn.prepareStatement(sqlStr);
+		    ps.setInt(1, adminID);
+		    ps.setString(2, adminUsername);
+		    ResultSet rs = ps.executeQuery();
+		    if(rs.next()) {
+		    	return true;
+		    }
+		    return false;
+		}catch (Exception e) {
+	        throw e;
+	    }
+	}
+	
 	public ArrayList<Book> getAllBooks(int limit, int offset) throws Exception {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -56,21 +96,27 @@ public class SQLqueryAdmin {
 	    }
 		
 	}
-	public ArrayList<AdminUser> getAllUsers(int offset, int limit) throws Exception{
+	public ArrayList<User> getAllUsers(int offset, int limit) throws Exception{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
 			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
 			Connection conn = DriverManager.getConnection(connURL);
 			
-			String sqlStr = "SELECT c.custID, c.username, c.email FROM Customers AS c";
+			String sqlStr = "SELECT * FROM Customers AS c";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
 		    ResultSet rs = ps.executeQuery();
-		    ArrayList<AdminUser> users = new ArrayList<AdminUser>();
+		    ArrayList<User> users = new ArrayList<User>();
 		    while(rs.next()) {
-		    	int id = rs.getInt("custID");
+		    	int custID = rs.getInt("custID");
 		    	String username = rs.getString("username");
-		    	String email = rs.getString("email");
-		    	users.add(new AdminUser(username, email, id));
+	            String email = rs.getString("email");
+	            String password = rs.getString("password");
+	            String imageBlob = rs.getString("custImageURL");
+	            
+	            User user = new User(username, email, password, imageBlob);
+	            user.setUserID(custID);
+	            
+		    	users.add(user);
 		    }
 		    return users;
 		}catch(Exception e) {
@@ -81,39 +127,10 @@ public class SQLqueryAdmin {
 	public String createBook(Part imageFile, String title, String author, String date, String genre, String isbn, double price, int stock, String desc) {
 		byte[] imageData = null;
 		if(imageFile != null) {
-			String fileName = imageFile.getSubmittedFileName();
-			String folderPath = "temporaryImage";
-			
-			if(!(fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg"))) {
-				
-			}else {
-
-				String filePath = folderPath + File.separator + fileName;
-				File dir = new File(folderPath);
-			    if (!dir.exists()) {
-			        dir.mkdirs();
-			    }
-				try {
-					InputStream fileInputStream = imageFile.getInputStream();
-			        OutputStream fileOutputStream = new FileOutputStream(filePath);
-			         byte[] buffer = new byte[1024];
-			         int length;
-			         while ((length = fileInputStream.read(buffer)) > 0) {
-			             fileOutputStream.write(buffer, 0, length);
-			         }
-			         fileOutputStream.close();
-			         File imageToUpload = new File(filePath);
-			         imageData = new byte[(int) imageToUpload.length()];
-			         try (FileInputStream fis = new FileInputStream(imageToUpload)) {
-			             fis.read(imageData);
-			         }
-			         fileInputStream.close();
-			     } catch (IOException e) {
-			         e.printStackTrace();
-			         System.out.println("error");
-			     }finally {
-			    	 deleteDirectory(dir);
-			     }
+			try {
+				imageData = convertImage(imageFile);
+			} catch (Exception e) {
+				imageData = null;
 			}
 		}
 		try {
@@ -147,39 +164,10 @@ public class SQLqueryAdmin {
 	public String editBook(int id, Part imageFile, String title, String author, String date, String genre, String isbn, double price, int stock, String desc) {
 		byte[] imageData = null;
 		if(imageFile != null) {
-			String fileName = imageFile.getSubmittedFileName();
-			String folderPath = "temporaryImage";
-			
-			if(!(fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg"))) {
-				
-			}else {
-
-				String filePath = folderPath + File.separator + fileName;
-				File dir = new File(folderPath);
-			    if (!dir.exists()) {
-			        dir.mkdirs();
-			    }
-				try {
-					InputStream fileInputStream = imageFile.getInputStream();
-			        OutputStream fileOutputStream = new FileOutputStream(filePath);
-			         byte[] buffer = new byte[1024];
-			         int length;
-			         while ((length = fileInputStream.read(buffer)) > 0) {
-			             fileOutputStream.write(buffer, 0, length);
-			         }
-			         fileOutputStream.close();
-			         File imageToUpload = new File(filePath);
-			         imageData = new byte[(int) imageToUpload.length()];
-			         try (FileInputStream fis = new FileInputStream(imageToUpload)) {
-			             fis.read(imageData);
-			         }
-			         fileInputStream.close();
-			     } catch (IOException e) {
-			         e.printStackTrace();
-			         System.out.println("error");
-			     }finally {
-			    	 deleteDirectory(dir);
-			     }
+			try {
+				imageData = convertImage(imageFile);
+			} catch (Exception e) {
+				imageData = null;
 			}
 		}
 		
@@ -277,7 +265,7 @@ public class SQLqueryAdmin {
 		}
 	}
 	
-	public void deleteUser(int userID) throws Exception{
+	public void deleteCustomer(int custID) throws Exception{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
 			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
@@ -285,7 +273,7 @@ public class SQLqueryAdmin {
 			
 			String sqlStr = "DELETE FROM Customers WHERE custID = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
-		    ps.setInt(1, userID);
+		    ps.setInt(1, custID);
 		    int affectedRows = ps.executeUpdate();
 		    if(affectedRows != 1) {
 		    	throw new Exception("Error");
@@ -309,6 +297,128 @@ public class SQLqueryAdmin {
 	        }
 	        directory.delete();
 	    }
+	}
+	
+	public void updateCustomer(int custID, String custUsername, String email, String custPassword, Part imageFile) throws Exception {
+		byte[] imageData = null;
+		if(imageFile != null) {
+			try {
+				imageData = convertImage(imageFile);
+			} catch (Exception e) {
+			}
+		}
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "UPDATE Customers SET username = ?, email = ?";
+		    
+		    if(custPassword != null) {
+		    	sqlStr += ",password = ?";
+		    }
+		    
+		    if(imageData != null) {
+		    	sqlStr += ",custImageURL = ?";
+		    }
+		    
+		    sqlStr += " WHERE custID = ?";
+		    
+		    PreparedStatement ps = conn.prepareStatement(sqlStr);
+		    ps.setString(1, custUsername);
+		    ps.setString(2, email);
+		    
+		    if(custPassword == null && imageData == null) {
+		    	ps.setInt(3, custID);
+		    }else if(custPassword != null && imageData != null) {
+		    	ps.setString(3, custPassword);
+		    	ps.setBytes(4, imageData);
+		    	ps.setInt(5, custID);
+		    }else if(custPassword == null) {
+		    	ps.setBytes(3, imageData);
+		    	ps.setInt(4, custID);
+		    }else if(imageData == null) {
+		    	ps.setString(3, custPassword);
+		    	ps.setInt(4, custID);
+		    }
+		    
+		    int affectedRows = ps.executeUpdate();
+		    if(affectedRows != 1) {
+		    	throw new Exception("Error");
+		    }
+		}catch(Exception e) {
+			System.err.print(e);
+			throw e;
+		}
+	}
+	
+	public void createUser(String custUsername, String custPassword, String email, Part imageFile) throws Exception {
+		byte[] imageData = null;
+		if(imageFile != null) {
+			try {
+				imageData = convertImage(imageFile);
+			} catch (Exception e) {
+			}
+		}
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");  
+			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
+			Connection conn = DriverManager.getConnection(connURL);
+			
+			String sqlStr = "INSERT INTO Customers (username, email, password, custImageURL) VALUES (?,?,?,?)";
+		    PreparedStatement ps=conn.prepareStatement(sqlStr);
+		    ps.setString(1, custUsername);
+		    ps.setString(2, email);
+		    ps.setString(3, custPassword);
+		    ps.setBytes(4, imageData);
+		    int affectedRows = ps.executeUpdate();
+		    if(affectedRows != 1) {
+		    	throw new Exception("Error");
+		    }
+		}catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public byte[] convertImage(Part imageFile) throws Exception {
+		byte[] imageData = null;
+		String fileName = imageFile.getSubmittedFileName();
+		String folderPath = "temporaryImage";
+		
+		if(!(fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg"))) {
+			throw new Exception("Wrong file format");
+		}else {
+
+			String filePath = folderPath + File.separator + fileName;
+			File dir = new File(folderPath);
+		    if (!dir.exists()) {
+		        dir.mkdirs();
+		    }
+			try {
+				InputStream fileInputStream = imageFile.getInputStream();
+		        OutputStream fileOutputStream = new FileOutputStream(filePath);
+		         byte[] buffer = new byte[1024];
+		         int length;
+		         while ((length = fileInputStream.read(buffer)) > 0) {
+		             fileOutputStream.write(buffer, 0, length);
+		         }
+		         fileOutputStream.close();
+		         File imageToUpload = new File(filePath);
+		         imageData = new byte[(int) imageToUpload.length()];
+		         try (FileInputStream fis = new FileInputStream(imageToUpload)) {
+		             fis.read(imageData);
+		         }
+		         fileInputStream.close();
+		         return imageData;
+		     } catch (IOException e) {
+		         e.printStackTrace();
+		         throw e;
+		     }finally {
+		    	 deleteDirectory(dir);
+		     }
+		}
 	}
 }
 

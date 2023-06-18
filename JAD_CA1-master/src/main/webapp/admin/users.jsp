@@ -1,11 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="admin.*, java.util.*" %>
+<%@ page import="admin.*, user.*, java.util.*" %>
 <%	
-	
-	SQLqueryAdmin query = new SQLqueryAdmin();
-	ArrayList<AdminUser> users = new ArrayList<AdminUser>();
-	users = query.getAllUsers(1, 2);
+SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+try{
+	String adminUsername = (String) session.getAttribute("username");
+	int adminID = (int) session.getAttribute("adminID");
+	if(!adminQuery.verifyAdmin(adminID, adminUsername)){
+		response.sendRedirect("login.jsp");
+		return;
+	}
+}catch(Exception e){
+	response.sendRedirect("login.jsp");
+}
+
+	ArrayList<User> users = new ArrayList<User>();
+	users = adminQuery.getAllUsers(1, 2);
 %>
 <!DOCTYPE html>
 <html>
@@ -34,12 +44,12 @@
                  </a>
               </li>
            </ul>
-           <div class="bottom-0 left-0 fixed flex justify-center w-full">
-            <a class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-700 w-full">
-                <i class="fa-solid fa-right-from-bracket fa-xl"></i>
-                <p class=" ml-3 font-bold">Log Out</p>
-            </a>
-           </div>
+           <form class="bottom-0 left-0 fixed flex justify-center w-full" action="<%=request.getContextPath()%>/AdminLogout" method="post">
+           		<button type="submit" class="hover:cursor-pointer mx-3 rounded-lg py-2 px-2 mb-7 flex items-center text-black hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full">
+	                <i class="fa-solid fa-right-from-bracket fa-xl"></i>
+	                <p class=" ml-3 font-bold">Log Out</p>
+            	</button>
+           </form>
         </div>
     </div>
      <div class="bg-sand h-screen pl-72 pr-7">
@@ -47,6 +57,10 @@
             <div class="basis-1/2">
                 <p class="text-2xl font-semibold">Users</p>
             </div>
+            <div class="flex justify-end basis-1/2">
+            	<a href="newUser.jsp" class="py-1 px-3 font-semibold rounded-lg bg-dark-blue text-white">Create User</a>
+            </div>
+        
         </div>
         <div class="flex mt-8 border-b-2 pb-2 border-gray-400">
             <div class="basis-1/3">
@@ -61,7 +75,7 @@
             <li>
                 <a href="user.jsp?id=<%=users.get(i).getUserID()%>" class="flex border-b-2 py-2 duration-100 hover:bg-light-blue border-gray-300">
                     <div class="basis-1/3">
-                        <p class="pl-2"><%=users.get(i).getUserName() %></p>
+                        <p class="pl-2"><%=users.get(i).getUsername() %></p>
                     </div>
                     <div class="basis-1/3">
                         <p class=""><%=users.get(i).getEmail() %></p>
