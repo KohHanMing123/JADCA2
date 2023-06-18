@@ -68,7 +68,6 @@ public class EditBook extends HttpServlet {
 			imageFile = request.getPart("imageFile");
 		}catch(Exception e) {
 		}
-		
 		SQLqueryAdmin query = new SQLqueryAdmin();
 		//Logic to delete or edit
 		if(submitButton != null) {

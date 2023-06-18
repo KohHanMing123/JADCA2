@@ -145,7 +145,7 @@ public class UpdateUserInfo extends HttpServlet {
             conn.close();
         } catch (Exception e) {
             out.println("Error: " + e);
-        }
+        }	
 
         response.sendRedirect(request.getContextPath() + "/Pages/User.jsp");
         System.out.println("Customer info updated!");
