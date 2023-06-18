@@ -39,7 +39,7 @@ if(msg==null){
             <%if(msg.equals("invalid")){ %>
             	<p class="text-maroon">Invalid Username or Password</p>
             <%} %>
-        	<p class="text-gray-400 mt-5">Are you an Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp">Log in here!</a></p>
+        	<p class="text-gray-400 mt-5">Are you an Customer? <a href="http://localhost:8080/JAD_CA1-master/Pages/Login.jsp" class="hover:text-dark-blue">Log in here!</a></p>
         	</div>
         </form>
     </div>
