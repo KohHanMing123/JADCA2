@@ -40,8 +40,7 @@ public class PlusMinusButton extends HttpServlet {
 		}
 
         if (book == null) {
-            // Handle the case where the book is not found
-            // You can redirect or display an error message
+            // to handle the case where the book is not found
             response.sendRedirect(request.getContextPath() + "/error.jsp");
             return;
         }

@@ -32,125 +32,72 @@ import models.*;
 public class UpdateUserInfo extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
         // Checks if they are logged in
         if (session.getAttribute("custID") == null) {
             response.sendRedirect("http://localhost:8080/JAD_CA1-master/CheckProfileExistence");
             return;
         }
 
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
-
         int custID = Integer.parseInt((String) session.getAttribute("custID"));
         System.out.println("this is my customer ID " + custID);
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser
-                    + "&password=" + dbKey + "&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
+        
+        // Retrieve the updated user information from the request parameters
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
-            StringBuilder sqlBuilder = new StringBuilder("UPDATE Customers SET");
+        // Create an instance of the SQLqueryUser class
+        SQLqueryUser query = new SQLqueryUser();
 
-            // Check if the username field is provided
-            String username = request.getParameter("username");
-            if (username != null && !username.isEmpty()) {
-                sqlBuilder.append(" username = ?,");
-            }
+        // Call the updateUserInfo method to update the user information
+        query.updateUserInfo(custID, username, email, password);
 
-            // Check if the email field is provided
-            String email = request.getParameter("email");
-            if (email != null && !email.isEmpty()) {
-                sqlBuilder.append(" email = ?,");
-            }
+        // Update the user image if provided
+        Part imageFile = request.getPart("imageInput");
+        System.out.println("image file data is " + imageFile);
+        if (imageFile != null && imageFile.getSize() > 0) {
+            String fileName = imageFile.getSubmittedFileName();
+            String folderPath = "temporaryImage";
 
-            // Check if the password field is provided
-            String password = request.getParameter("password");
-            if (password != null && !password.isEmpty()) {
-                sqlBuilder.append(" password = ?,");
-            }
-
-            // Remove the trailing comma from the SQL query
-            sqlBuilder.deleteCharAt(sqlBuilder.length() - 1);
-
-            sqlBuilder.append(" WHERE custID = ?");
-            PreparedStatement pstmt = conn.prepareStatement(sqlBuilder.toString());
-
-            int parameterIndex = 1;
-
-            if (username != null && !username.isEmpty()) {
-                pstmt.setString(parameterIndex, username);
-                parameterIndex++;
-            }
-
-            if (email != null && !email.isEmpty()) {
-                pstmt.setString(parameterIndex, email);
-                parameterIndex++;
-            }
-
-            if (password != null && !password.isEmpty()) {
-                pstmt.setString(parameterIndex, password);
-                parameterIndex++;
-            }
-
-            pstmt.setInt(parameterIndex, custID);
-            
-            
-         // Update the user image if provided
-            Part imageFile = request.getPart("imageInput");
-            System.out.println("image file data is " + imageFile);
-            if (imageFile != null && imageFile.getSize() > 0) {
-                String fileName = imageFile.getSubmittedFileName();
-                String folderPath = "temporaryImage";
-
-                if (fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg")) {
-                    String filePath = folderPath + File.separator + fileName;
-                    File dir = new File(folderPath);
-                    if (!dir.exists()) {
-                        dir.mkdirs();
+            if (fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg")) {
+                String filePath = folderPath + File.separator + fileName;
+                File dir = new File(folderPath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                try {
+                    InputStream fileInputStream = imageFile.getInputStream();
+                    OutputStream fileOutputStream = new FileOutputStream(filePath);
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = fileInputStream.read(buffer)) > 0) {
+                        fileOutputStream.write(buffer, 0, length);
                     }
-                    try {
-                        InputStream fileInputStream = imageFile.getInputStream();
-                        OutputStream fileOutputStream = new FileOutputStream(filePath);
-                        byte[] buffer = new byte[1024];
-                        int length;
-                        while ((length = fileInputStream.read(buffer)) > 0) {
-                            fileOutputStream.write(buffer, 0, length);
-                        }
-                        fileOutputStream.close();
-                        File imageToUpload = new File(filePath);
-                        byte[] imageData = new byte[(int) imageToUpload.length()];
-                        try (FileInputStream fis = new FileInputStream(imageToUpload)) {
-                            fis.read(imageData);
-                        }
-                        fileInputStream.close();
-                        SQLqueryUser query = new SQLqueryUser();
-                        query.insertImage(custID ,imageData);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.out.println("error");
-                    } finally {
-                        deleteDirectory(dir);
+                    fileOutputStream.close();
+                    File imageToUpload = new File(filePath);
+                    byte[] imageData = new byte[(int) imageToUpload.length()];
+                    try (FileInputStream fis = new FileInputStream(imageToUpload)) {
+                        fis.read(imageData);
                     }
+                    fileInputStream.close();
+
+                    // Call the insertImage method to update the user image
+                    query.insertImage(custID, imageData);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("error");
+                } finally {
+                    deleteDirectory(dir);
                 }
             }
-
-            pstmt.executeUpdate();
-
-            
-
-            conn.close();
-        } catch (Exception e) {
-            out.println("Error: " + e);
-        }	
+        }
 
         response.sendRedirect(request.getContextPath() + "/Pages/User.jsp");
         System.out.println("Customer info updated!");
     }
+
 
     public static void deleteDirectory(File directory) {
         if (directory.exists()) {

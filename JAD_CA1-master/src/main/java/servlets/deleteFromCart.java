@@ -33,47 +33,30 @@ public class deleteFromCart extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
 
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
+        String bookID = request.getParameter("bookID");
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
+        SQLqueryCart.deleteCartItem(bookID);
 
-            String bookID = request.getParameter("bookID");
-            String sqlStr = "DELETE FROM Cart WHERE bookID = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sqlStr);
-            pstmt.setString(1, bookID);
-            pstmt.executeUpdate();
-
-            pstmt.close();
-            conn.close();
-
-            // Remove the cart item from the session as well
-            List<CartItem> cart = (List<CartItem>) request.getSession().getAttribute("cart");
-            if (cart != null) {
-                int deleteBookID = Integer.parseInt(bookID);
-                CartItem itemToRemove = null;
-                for (CartItem item : cart) {
-                    if (item.getBook().getID() == deleteBookID) {
-                        itemToRemove = item;
-                        break;
-                    }
-                }
-                if (itemToRemove != null) {
-                    cart.remove(itemToRemove);
+        // Remove the cart item from the session as well
+        List<CartItem> cart = (List<CartItem>) request.getSession().getAttribute("cart");
+        if (cart != null) {
+            int deleteBookID = Integer.parseInt(bookID);
+            CartItem itemToRemove = null;
+            for (CartItem item : cart) {
+                if (item.getBook().getID() == deleteBookID) {
+                    itemToRemove = item;
+                    break;
                 }
             }
-
-        } catch (Exception e) {
-            out.println("Error: " + e);
+            if (itemToRemove != null) {
+                cart.remove(itemToRemove);
+            }
         }
 
         response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp");
         System.out.println("Book deleted from cart!");
     }
+
 
 }
