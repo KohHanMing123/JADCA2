@@ -1,6 +1,4 @@
-package cart;
-
-import books.Book;
+package models;
 
 public class CartItem {
     private Book book;

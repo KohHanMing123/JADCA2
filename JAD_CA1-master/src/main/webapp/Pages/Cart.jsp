@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
-<%@ page import="books.*" %>
-<%@ page import = "cart.*" %>
+<%@ page import="models.SQLqueryBook, models.Book, models.CartItem, models.SQLqueryCart" %>
 <%
 	
 	//Checks if they are logged in

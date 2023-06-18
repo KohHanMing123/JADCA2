@@ -1,8 +1,6 @@
-package profile;
+package servlets;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,16 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class CheckProfileExistence
+ * Servlet implementation class AdminLogout
  */
-@WebServlet("/CheckProfileExistence")
-public class CheckProfileExistence extends HttpServlet {
+@WebServlet("/AdminLogout")
+public class AdminLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CheckProfileExistence() {
+    public AdminLogout() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,13 +27,15 @@ public class CheckProfileExistence extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("username") == null || session.getAttribute("sessUserRole") == null || session.getAttribute("loginStatus") != "success" ) {
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/Login.jsp");
-		}else {
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/User.jsp");
-		}
+		HttpSession session = request.getSession(false); 
 
+		if (session != null) {
+		    session.removeAttribute("adminID");
+		    session.removeAttribute("username");
+		    session.invalidate();
+		    
+	        response.sendRedirect(request.getContextPath() + "/Pages/home.jsp"); 
+		}
 	}
 
 	/**

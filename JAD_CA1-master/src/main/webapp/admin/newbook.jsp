@@ -1,7 +1,7 @@
 
 	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="books.*,java.util.*, admin.*" %>
+<%@ page import="models.SQLqueryAdmin ,java.util.*, models.SQLqueryBook" %>
 <%
 	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 	try{
@@ -13,6 +13,7 @@
 		}
 	}catch(Exception e){
 		response.sendRedirect("login.jsp");
+		return;
 	}
 	SQLqueryBook query = new SQLqueryBook();
 

@@ -1,6 +1,12 @@
-package admin;
+package servlets;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -9,22 +15,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import models.*;
+
 /**
- * Servlet implementation class EditBook
+ * Servlet implementation class CreateBook
  */
 @MultipartConfig(
 	    fileSizeThreshold = 1024 * 1024, // 1MB
 	    maxFileSize = 1024 * 1024 * 10, // 10MB
 	    maxRequestSize = 1024 * 1024 * 50 // 50MB
 	)
-@WebServlet("/EditBook")
-public class EditBook extends HttpServlet {
+@WebServlet("/CreateBook")
+public class CreateBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EditBook() {
+    public CreateBook() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,9 +41,7 @@ public class EditBook extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String deleteButton = request.getParameter("deleteButton");
-		String submitButton = request.getParameter("submitButton");
-		//Initializing variables
+		// TODO Auto-generated method stub
 		Part imageFile = null;
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
@@ -45,22 +51,17 @@ public class EditBook extends HttpServlet {
 		String priceStr = request.getParameter("price");
 		String stockStr = request.getParameter("stock");
 		String desc = request.getParameter("desc");
-		String idStr = request.getParameter("bookID");
-		String path = "admin/book.jsp?id=" + idStr + "&msg=badreq";
-		if(title == null || author == null || date == null || genre == null || isbn == null || priceStr == null || stockStr == null || desc == null || idStr == null) {
-			System.out.println(idStr);
-			response.sendRedirect(path);
+		if(title == null || author == null || date == null || genre == null || isbn == null || priceStr == null || stockStr == null || desc == null ) {
+			response.sendRedirect("admin/newbook.jsp?msg=badreq");
 			return;
 		}
 		double price = 0;
 		int stock = 0;
-		int id = 0;
 		try {
 			price = Double.parseDouble(priceStr);
 			stock = Integer.parseInt(stockStr);
-			id = Integer.parseInt(idStr);
 		}catch(NumberFormatException e) {
-			response.sendRedirect(path);
+			response.sendRedirect("admin/newbook.jsp?msg=badreq");
 			return;
 		}
 		
@@ -69,32 +70,12 @@ public class EditBook extends HttpServlet {
 		}catch(Exception e) {
 		}
 		SQLqueryAdmin query = new SQLqueryAdmin();
-		//Logic to delete or edit
-		if(submitButton != null) {
-			String results = query.editBook(id, imageFile, title, author, date, genre, isbn, price, stock, desc);
-			System.out.println(results);
-			if(results.equals("Success")) {
-				path = "admin/book.jsp?id=" + idStr + "&msg=Success";
-				response.sendRedirect(path);
-				return;
-			}else {
-				path = "admin/book.jsp?id=" + idStr + "&msg=error";
-				response.sendRedirect(path);
-				return;
-			}
+		String results = query.createBook(imageFile, title, author, date, genre, isbn, price, stock, desc);
+		if(results.equals("Success")) {
+			response.sendRedirect("admin/newbook.jsp?msg=success&t=" + title);
+		}else {
+			response.sendRedirect("admin/newbook.jsp?msg=error");
 		}
-		else if(deleteButton != null) {
-			String results = query.deleteBook(id);
-			if(results.equals("Success")) {
-				response.sendRedirect("admin/books.jsp");
-				return;
-			}else {
-				path = "admin/book.jsp?id=" + idStr + "&msg=error";
-				response.sendRedirect(path);
-				return;
-			}
-		}
-		
 	}
 
 	/**

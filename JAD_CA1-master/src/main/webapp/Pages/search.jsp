@@ -11,7 +11,7 @@
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
 <body class="min-h-screen">
-<%@ page import ="books.*, java.util.*" %>
+<%@ page import ="models.SQLqueryBook, models.Book, java.util.*" %>
 	<%
 	int limit = 9;
 	int offset = 0;

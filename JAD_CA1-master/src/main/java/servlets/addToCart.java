@@ -1,4 +1,4 @@
-package cart;
+package servlets;
 
 import java.io.IOException;
 

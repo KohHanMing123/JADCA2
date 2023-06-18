@@ -1,4 +1,4 @@
-package books;
+package models;
 
 public class Book {
 	private String title, author, public_date, genre, isbn, dateAdded, description, imageBlob;

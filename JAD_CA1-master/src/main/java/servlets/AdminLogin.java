@@ -1,4 +1,4 @@
-package admin;
+package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import models.*;
 /**
  * Servlet implementation class AdminLogin
  */
@@ -33,7 +34,6 @@ public class AdminLogin extends HttpServlet {
         
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");	
-		
 		SQLqueryAdmin query = new SQLqueryAdmin();
 		int adminID = 0;
 		try {

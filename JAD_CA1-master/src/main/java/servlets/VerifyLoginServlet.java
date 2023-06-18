@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.*;
-import cart.*;
-import books.*;
+import models.*;
 
 /**
  * Servlet implementation class VerifyLoginServlet

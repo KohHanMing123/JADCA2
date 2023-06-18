@@ -1,4 +1,4 @@
-package user;
+package servlets;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
+import models.*;
 @WebServlet("/UpdateUserInfo")
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024, // 1MB

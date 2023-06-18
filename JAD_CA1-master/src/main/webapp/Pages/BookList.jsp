@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page import="books.Book" %>
-<%@ page import="books.SQLqueryBook" %>
+<%@ page import="models.SQLqueryBook, models.Book" %>
 <%--
     String genre = request.getParameter("genre");
 

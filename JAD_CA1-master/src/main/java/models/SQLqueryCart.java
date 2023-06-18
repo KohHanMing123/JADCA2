@@ -1,4 +1,4 @@
-package cart;
+package models;
 
 import java.sql.*;
 import java.util.*;

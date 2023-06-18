@@ -1,12 +1,6 @@
-package admin;
+package servlets;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -15,24 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import books.SQLqueryBook;
-
+import models.*;
 /**
- * Servlet implementation class CreateBook
+ * Servlet implementation class EditBook
  */
 @MultipartConfig(
 	    fileSizeThreshold = 1024 * 1024, // 1MB
 	    maxFileSize = 1024 * 1024 * 10, // 10MB
 	    maxRequestSize = 1024 * 1024 * 50 // 50MB
 	)
-@WebServlet("/CreateBook")
-public class CreateBook extends HttpServlet {
+@WebServlet("/EditBook")
+public class EditBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateBook() {
+    public EditBook() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +34,9 @@ public class CreateBook extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String deleteButton = request.getParameter("deleteButton");
+		String submitButton = request.getParameter("submitButton");
+		//Initializing variables
 		Part imageFile = null;
 		String title = request.getParameter("title");
 		String author = request.getParameter("author");
@@ -51,17 +46,22 @@ public class CreateBook extends HttpServlet {
 		String priceStr = request.getParameter("price");
 		String stockStr = request.getParameter("stock");
 		String desc = request.getParameter("desc");
-		if(title == null || author == null || date == null || genre == null || isbn == null || priceStr == null || stockStr == null || desc == null ) {
-			response.sendRedirect("admin/newbook.jsp?msg=badreq");
+		String idStr = request.getParameter("bookID");
+		String path = "admin/book.jsp?id=" + idStr + "&msg=badreq";
+		if(title == null || author == null || date == null || genre == null || isbn == null || priceStr == null || stockStr == null || desc == null || idStr == null) {
+			System.out.println(idStr);
+			response.sendRedirect(path);
 			return;
 		}
 		double price = 0;
 		int stock = 0;
+		int id = 0;
 		try {
 			price = Double.parseDouble(priceStr);
 			stock = Integer.parseInt(stockStr);
+			id = Integer.parseInt(idStr);
 		}catch(NumberFormatException e) {
-			response.sendRedirect("admin/newbook.jsp?msg=badreq");
+			response.sendRedirect(path);
 			return;
 		}
 		
@@ -70,12 +70,32 @@ public class CreateBook extends HttpServlet {
 		}catch(Exception e) {
 		}
 		SQLqueryAdmin query = new SQLqueryAdmin();
-		String results = query.createBook(imageFile, title, author, date, genre, isbn, price, stock, desc);
-		if(results.equals("Success")) {
-			response.sendRedirect("admin/newbook.jsp?msg=success&t=" + title);
-		}else {
-			response.sendRedirect("admin/newbook.jsp?msg=error");
+		//Logic to delete or edit
+		if(submitButton != null) {
+			String results = query.editBook(id, imageFile, title, author, date, genre, isbn, price, stock, desc);
+			System.out.println(results);
+			if(results.equals("Success")) {
+				path = "admin/book.jsp?id=" + idStr + "&msg=Success";
+				response.sendRedirect(path);
+				return;
+			}else {
+				path = "admin/book.jsp?id=" + idStr + "&msg=error";
+				response.sendRedirect(path);
+				return;
+			}
 		}
+		else if(deleteButton != null) {
+			String results = query.deleteBook(id);
+			if(results.equals("Success")) {
+				response.sendRedirect("admin/books.jsp");
+				return;
+			}else {
+				path = "admin/book.jsp?id=" + idStr + "&msg=error";
+				response.sendRedirect(path);
+				return;
+			}
+		}
+		
 	}
 
 	/**

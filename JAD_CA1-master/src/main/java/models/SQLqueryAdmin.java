@@ -1,4 +1,4 @@
-package admin;
+package models;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,10 +9,6 @@ import java.sql.*;
 import java.util.*;
 
 import javax.servlet.http.Part;
-
-import books.Book;
-import books.SQLqueryBook;
-import user.User;
 
 public class SQLqueryAdmin {
 	private String username = System.getenv("PLANETSCALE_USERNAME");

@@ -1,4 +1,4 @@
-package books;
+package servlets;
 
 import java.io.IOException;
 import java.net.URLEncoder;

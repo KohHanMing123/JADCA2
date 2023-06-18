@@ -1,8 +1,8 @@
-package user;
+package models;
 
 import java.sql.*;
 import java.util.*;
-import user.*;
+
 public class SQLqueryUser {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");

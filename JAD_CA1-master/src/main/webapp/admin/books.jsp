@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="books.*,admin.*,java.util.*" %>
+<%@ page import="models.SQLqueryAdmin, models.Book, java.util.*" %>
 <%
 	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 	try{
@@ -12,6 +12,7 @@
 		}
 	}catch(Exception e){
 		response.sendRedirect("login.jsp");
+		return;
 	}
 	ArrayList<Book> books = new ArrayList<Book>();
 	
