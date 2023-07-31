@@ -92,7 +92,7 @@ AdminDAO adminQuery = new AdminDAO();
    	 		<input name="bookID" type="hidden" value="<%=book.getID() %>">
 	    	<div class="flex justify-center">
 		    	<div class="flex flex-col">
-		    		<img id="previewImage" src="data:image/jpeg;base64,<%=book.getImage() %>" class="h-96 w-64" alt="Preview Image">
+		    		<img id="previewImage" src="..<%=book.getImage() %>" class="h-96 w-64" alt="Preview Image">
 		    		<p id="imageError" class="text-maroon"></p>
 		    		<label class="hover:cursor-pointer rounded-lg bg-dark-blue w-fit mt-3 py-1 px-4 font-semibold text-white" for="image">Change Image</label>
 		    		<input onchange="validateImageSize(this)" type="file" class="hidden" name="imageFile" value="Change File" accept=".png, .jpg, .jpeg" id="image">
