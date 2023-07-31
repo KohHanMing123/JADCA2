@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import ="models.SQLqueryBook,models.Book" %>
+<%@ page import ="models.BookDAO,models.Book" %>
 <%
 String idStr = request.getParameter("book");
 System.out.println("Book.jsp book idStr " + idStr);
@@ -11,7 +11,7 @@ if (idStr != null) {
 
 System.out.println("Book.jsp book id " + id);
 
-SQLqueryBook query = new SQLqueryBook();
+BookDAO query = new BookDAO();
 Book book = null;
 try{
 	book = query.getBook(id);

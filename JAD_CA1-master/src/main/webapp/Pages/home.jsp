@@ -11,11 +11,11 @@
 <title>BooksGalore Home</title>
 </head>
 <body class="min-h-screen flex flex-col">
-<%@ page import ="models.SQLqueryBook,models.Book,java.util.ArrayList" %>
+<%@ page import ="models.BookDAO,models.Book,java.util.ArrayList" %>
 	<div class="bg-sand grow">
 		<%@ include file = "../components/navBar.html" %>
 		<%
-		SQLqueryBook query = new SQLqueryBook();
+		BookDAO query = new BookDAO();
 				ArrayList<Book> books = query.getNewArrivalBooks(3, 0);
 		%>
 		<div class="h-96 flex flex-col items-center">

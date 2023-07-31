@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page import="models.SQLqueryBook,models.Book" %>
+<%@ page import="models.BookDAO,models.Book" %>
 <%--
     String genre = request.getParameter("genre");
 
@@ -51,7 +51,7 @@ String genre = request.getParameter("genre");
     if (orderBy == null) {
         orderBy = "";
     }
-    SQLqueryBook query = new SQLqueryBook();
+    BookDAO query = new BookDAO();
     ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, 10, 0);
     // List<Book> bookList = query.getBooksByGenre(genre); // Commented out because it's not needed - previous version
 %>

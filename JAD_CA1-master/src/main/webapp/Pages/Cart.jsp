@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
-<%@ page import="models.SQLqueryBook,models.Book,models.CartItem,models.SQLqueryCart" %>
+<%@ page import="models.BookDAO,models.Book,models.CartItem,models.CartDAO" %>
 <%
 //Checks if they are logged in
 	if (session.getAttribute("custID") == null) {
@@ -16,7 +16,7 @@
     	
     System.out.println("book ID in Cart isss " + bookID);
     
-    SQLqueryBook query = new SQLqueryBook();
+    BookDAO query = new BookDAO();
     Book book = null;
     try{
     	book = query.getBook(bookID);
@@ -45,7 +45,7 @@
                 item.setQuantity(newQuantity);
                 bookExists = true;
                 
-                SQLqueryCart queryCart = new SQLqueryCart();
+                CartDAO queryCart = new CartDAO();
                 queryCart.updateCartItemQuantity(book.getID(), newQuantity);
                 System.out.println("book price is " + book.getPrice());
                 queryCart.updateTotalPrice(book.getID(), newQuantity, book.getPrice());
@@ -56,7 +56,7 @@
         
         if (!bookExists) {
             cart.add(new CartItem(book, 1));
-            SQLqueryCart queryCart = new SQLqueryCart();
+            CartDAO queryCart = new CartDAO();
             queryCart.updateTotalPrice(book.getID(), 1, book.getPrice());
         }
         
@@ -112,8 +112,8 @@
                     <%
                     	
 					    int cartBookID = cartItem.getBook().getID();
-                    	int quantity = new SQLqueryCart().getCartItemQuantity(cartBookID);
-                    	double total = new SQLqueryCart().getCartItemTotalPrice(cartBookID);
+                    	int quantity = new CartDAO().getCartItemQuantity(cartBookID);
+                    	double total = new CartDAO().getCartItemTotalPrice(cartBookID);
 					    cartItem.setQuantity(quantity);
 
 					    totalPrice += total;

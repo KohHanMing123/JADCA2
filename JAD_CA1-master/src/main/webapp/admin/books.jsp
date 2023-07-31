@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="models.SQLqueryAdmin,models.Book,java.util.*" %>
+<%@ page import="models.AdminDAO,models.Book,java.util.*" %>
 <%
-SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+AdminDAO adminQuery = new AdminDAO();
 	try{
 		String adminUsername = (String) session.getAttribute("username");
 		int adminID = (int) session.getAttribute("adminID");

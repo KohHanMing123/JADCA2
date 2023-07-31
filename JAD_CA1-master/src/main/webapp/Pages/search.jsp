@@ -11,7 +11,7 @@
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
 <body class="min-h-screen">
-<%@ page import ="models.SQLqueryBook,models.Book,java.util.*" %>
+<%@ page import ="models.BookDAO,models.Book,java.util.*" %>
 	<%
 	int limit = 9;
 		int offset = 0;
@@ -53,7 +53,7 @@
 		if(orderBy == null){
 			orderBy = "";
 		}
-		SQLqueryBook query = new SQLqueryBook();
+		BookDAO query = new BookDAO();
 		ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, limit, offset);
 		int totalSearchCount = query.searchCount(search, genre, minPrice, maxPrice, orderBy);
 		ArrayList<String> genres = query.getAllGenre();

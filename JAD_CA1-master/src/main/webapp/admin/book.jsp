@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="models.SQLqueryAdmin,models.SQLqueryBook,models.Book,java.util.ArrayList" %>
+<%@ page import="models.AdminDAO,models.BookDAO,models.Book,java.util.ArrayList" %>
 <%
-SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+AdminDAO adminQuery = new AdminDAO();
 	try{
 		String adminUsername = (String) session.getAttribute("username");
 		int adminID = (int) session.getAttribute("adminID");
@@ -27,7 +27,7 @@ SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 		response.sendRedirect("books.jsp");
 		return;
 	}
-	SQLqueryBook query = new SQLqueryBook();
+	BookDAO query = new BookDAO();
 	Book book = null;
 	try{
 		book = query.getBook(id);
