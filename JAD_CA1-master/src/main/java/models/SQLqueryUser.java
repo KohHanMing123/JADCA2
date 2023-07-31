@@ -213,5 +213,27 @@ public class SQLqueryUser {
         }
     }
 	
+	public static void deleteUser(String username) {
+	    String dbUser = System.getenv("PLANETSCALE_USERNAME");
+	    String dbKey = System.getenv("PLANETSCALE_KEY");
+
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
+
+	        Connection conn = DriverManager.getConnection(connURL);
+
+	        String sqlStr = "DELETE FROM Customers WHERE username=?";
+	        PreparedStatement pstmt = conn.prepareStatement(sqlStr);
+	        pstmt.setString(1, username);
+	        pstmt.executeUpdate();
+	        System.out.println("User deleted!");
+
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	
 }

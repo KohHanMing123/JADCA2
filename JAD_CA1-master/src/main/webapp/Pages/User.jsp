@@ -112,6 +112,14 @@
           <button type="submit" class="bg-dark-blue text-white py-2 px-4 rounded-xl hover:bg-sky-900">Update</button>
           <a href="<%= request.getContextPath() %>/UserLogout" class="bg-maroon text-white py-2 px-4 rounded-xl hover:bg-red-700 ml-2">Logout</a>
         </div>
+        </form>
+        
+        <div class="flex items-center justify-center mt-4">
+		  <form action="<%= request.getContextPath() %>/DeleteUser" method="post">
+		    <input type="hidden" name="username" value="<%= user.getUsername() %>">
+		    <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-xl hover:bg-red-700">Delete User</button>
+		  </form>
+		</div>
         
         
         <% } else { %>
@@ -119,7 +127,7 @@
           <h2 class="text-4xl font-bold">No user found</h2>
         </div>
         <% } %>
-      </form>
+      
     </div>
   </div>
   
