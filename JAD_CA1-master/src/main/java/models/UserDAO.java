@@ -7,18 +7,13 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
-public class SQLqueryUser {
-	private String username = System.getenv("PLANETSCALE_USERNAME");
-	private String password = System.getenv("PLANETSCALE_KEY");
-	
-	public static void registerUser(String username, String email, String password) {
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
+import dbaccess.DBConnection;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
+public class UserDAO {
+	public static void registerUser(String username, String email, String password) {
+		Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
             String sqlStr = "INSERT INTO Customers (username, email, password) VALUES (?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlStr);
@@ -36,16 +31,10 @@ public class SQLqueryUser {
 	public static String verifyUser(String username, String password, HttpSession session) {
         String custID = null;
         boolean found = false;
-
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-
-            Connection conn = DriverManager.getConnection(connURL);
+        
+        Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
             String sqlStr = "SELECT * FROM Customers WHERE username=? AND password=?";
             PreparedStatement pstmt = conn.prepareStatement(sqlStr);
@@ -95,10 +84,9 @@ public class SQLqueryUser {
 
 	
 	public User getUserInfo(String inputID) throws Exception {
-	    try {
-	        Class.forName("com.mysql.jdbc.Driver");
-	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-	        Connection conn = DriverManager.getConnection(connURL);
+		Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
 	        String sqlStr = "SELECT * FROM Customers WHERE custID = ?";
 	        PreparedStatement ps = conn.prepareStatement(sqlStr);
@@ -123,13 +111,11 @@ public class SQLqueryUser {
 	}
 
 	public String insertImage(int custID, byte[] imageBlob) {
-	    try {
-	        Class.forName("com.mysql.jdbc.Driver");
-	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-	        Connection conn = null;
+		Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 	        PreparedStatement ps = null;
 	        try {
-	            conn = DriverManager.getConnection(connURL);
 	            String sqlStr = "UPDATE Customers SET custImageURL = ? WHERE custID = ?";
 	            ps = conn.prepareStatement(sqlStr);
 	            ps.setBytes(1, imageBlob);
@@ -154,14 +140,9 @@ public class SQLqueryUser {
 	}
 
 	public void updateUserInfo(int custID, String username, String email, String password) {
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser
-                    + "&password=" + dbKey + "&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
+		Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
             StringBuilder sqlBuilder = new StringBuilder("UPDATE Customers SET");
 
@@ -214,14 +195,9 @@ public class SQLqueryUser {
     }
 	
 	public static void deleteUser(String username) {
-	    String dbUser = System.getenv("PLANETSCALE_USERNAME");
-	    String dbKey = System.getenv("PLANETSCALE_KEY");
-
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-
-	        Connection conn = DriverManager.getConnection(connURL);
+		Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
 	        String sqlStr = "DELETE FROM Customers WHERE username=?";
 	        PreparedStatement pstmt = conn.prepareStatement(sqlStr);

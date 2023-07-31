@@ -10,15 +10,14 @@ import java.util.*;
 
 import javax.servlet.http.Part;
 
+import dbaccess.DBConnection;
+
 public class AdminDAO {
-	private String username = System.getenv("PLANETSCALE_USERNAME");
-	private String password = System.getenv("PLANETSCALE_KEY");
 	
 	public int adminLogin(String adminPassword, String adminUsername) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Admin WHERE password = ? AND username = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -35,10 +34,9 @@ public class AdminDAO {
 	}
 	
 	public boolean verifyAdmin(int adminID, String adminUsername) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Admin WHERE adminID = ? AND username = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -55,10 +53,9 @@ public class AdminDAO {
 	}
 	
 	public ArrayList<Book> getAllBooks() throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Books ORDER BY dateAdded DESC";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -92,10 +89,9 @@ public class AdminDAO {
 	}
 	
 	public ArrayList<Book> searchBook(String searchInput) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			String formattedSearch = "%" + searchInput + "%";
 			
 			String sqlStr = "SELECT * FROM Books WHERE title LIKE ? ORDER BY dateAdded DESC ";
@@ -131,10 +127,9 @@ public class AdminDAO {
 	}
 	
 	public ArrayList<User> getAllUsers() throws Exception{
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Customers AS c";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -159,10 +154,9 @@ public class AdminDAO {
 	}
 	
 	public ArrayList<User> searchUser(String searchInput) throws Exception{
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String formattedSearch = "%" + searchInput + "%";
 			String sqlStr = "SELECT * FROM Customers WHERE username LIKE ? OR email LIKE ?";
@@ -199,10 +193,9 @@ public class AdminDAO {
 				imageData = null;
 			}
 		}
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "INSERT INTO Books (title, author, publication_date, genre, price, stock, isbn13, description, imageBLOB) VALUES (?,?,?,?,?,?,?,?,?)";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -237,10 +230,9 @@ public class AdminDAO {
 			}
 		}
 		
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "UPDATE Books SET title = ?, author = ?, publication_date = ?, genre = ?, price = ?, stock = ?, isbn13 = ?, description = ?, imageBLOB = ? WHERE id = ?";
 			if(imageData == null) {
@@ -286,10 +278,9 @@ public class AdminDAO {
 	}
 	
 	public String deleteBook(int bookID) {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "DELETE FROM Books WHERE id = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -306,10 +297,9 @@ public class AdminDAO {
 	}
 	
 	public User getCustomer(int userID) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Customers WHERE custID = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -335,10 +325,9 @@ public class AdminDAO {
 	}
 	
 	public void deleteCustomer(int custID) throws Exception{
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "DELETE FROM Customers WHERE custID = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -377,10 +366,9 @@ public class AdminDAO {
 			}
 		}
 		
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "UPDATE Customers SET username = ?, email = ?";
 		    
@@ -431,10 +419,9 @@ public class AdminDAO {
 			}
 		}
 		
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "INSERT INTO Customers (username, email, password, custImageURL) VALUES (?,?,?,?)";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);

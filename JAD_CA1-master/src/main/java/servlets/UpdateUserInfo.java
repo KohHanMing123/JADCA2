@@ -49,7 +49,7 @@ public class UpdateUserInfo extends HttpServlet {
         String password = request.getParameter("password");
 
         // Create an instance of the SQLqueryUser class
-        SQLqueryUser query = new SQLqueryUser();
+        UserDAO query = new UserDAO();
 
         // Call the updateUserInfo method to update the user information
         query.updateUserInfo(custID, username, email, password);

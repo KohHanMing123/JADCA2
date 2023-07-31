@@ -3,18 +3,14 @@ package models;
 import java.sql.*;
 import java.util.*;
 
+import dbaccess.DBConnection;
+
 public class CartDAO {
-	private String username = System.getenv("PLANETSCALE_USERNAME");
-	private String password = System.getenv("PLANETSCALE_KEY");
 	
 	public static void addToCart(int custID, int bookID, double unitPrice, double totalPrice, int quantity) {
-        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-        String dbKey = System.getenv("PLANETSCALE_KEY");
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-            Connection conn = DriverManager.getConnection(connURL);
+        Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
             String sqlStr = "INSERT INTO Cart (custID, bookID, unitPrice, totalPrice, quantity) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement pstmt = conn.prepareStatement(sqlStr);
@@ -34,10 +30,9 @@ public class CartDAO {
     }
 	
 	  public void updateCartItemQuantity(int bookID, int quantity) {
-	        try {
-	            Class.forName("com.mysql.jdbc.Driver");
-	            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-	            Connection conn = DriverManager.getConnection(connURL);
+		  Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 	            String sqlStr = "UPDATE Cart SET quantity = ? WHERE bookID = ?";
 	            PreparedStatement ps=conn.prepareStatement(sqlStr);
 	            ps.setInt(1, quantity);
@@ -53,10 +48,9 @@ public class CartDAO {
 	  
 	  public int getCartItemQuantity(int bookID) {
 		    int quantity = 0;
-		    try {
-		        Class.forName("com.mysql.jdbc.Driver");
-		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-		        Connection conn = DriverManager.getConnection(connURL);
+		    Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 		        String sqlStr = "SELECT Quantity FROM Cart WHERE bookID = ?";
 		        PreparedStatement ps = conn.prepareStatement(sqlStr);
 		        ps.setInt(1, bookID);
@@ -77,10 +71,9 @@ public class CartDAO {
 	  
 	  public double getCartItemTotalPrice(int bookID) {
 		    double total = 0;
-		    try {
-		        Class.forName("com.mysql.jdbc.Driver");
-		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-		        Connection conn = DriverManager.getConnection(connURL);
+		    Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 		        String sqlStr = "SELECT totalPrice FROM Cart WHERE bookID = ?";
 		        PreparedStatement ps = conn.prepareStatement(sqlStr);
 		        ps.setInt(1, bookID);
@@ -101,10 +94,9 @@ public class CartDAO {
 
 	  
 	  public void updateTotalPrice(int bookID, int quantity, double unitPrice) {
-	        try {
-	            Class.forName("com.mysql.jdbc.Driver");
-	            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-	            Connection conn = DriverManager.getConnection(connURL);
+		  Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 	            String sqlStr = "UPDATE Cart SET totalPrice = ? WHERE bookID = ?";
 	            PreparedStatement ps = conn.prepareStatement(sqlStr);
 	            ps.setDouble(1, unitPrice * quantity);
@@ -120,10 +112,9 @@ public class CartDAO {
 	    }
 	  
 	  public void updateCartPlusButton(int bookID, int quantity) {
-		    try {
-		        Class.forName("com.mysql.jdbc.Driver");
-		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-		        Connection conn = DriverManager.getConnection(connURL);
+		  Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 		        String sqlStr = "UPDATE Cart SET quantity = quantity + 1 WHERE bookID = ?";
 		        PreparedStatement ps = conn.prepareStatement(sqlStr);
 		        ps.setInt(1, bookID);
@@ -137,10 +128,9 @@ public class CartDAO {
 		}
 
 		public void updateCartMinusButton(int bookID, int quantity) {
-		    try {
-		        Class.forName("com.mysql.jdbc.Driver");
-		        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-		        Connection conn = DriverManager.getConnection(connURL);
+			Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 		        String sqlStr = "UPDATE Cart SET quantity = quantity - 1 WHERE bookID = ?";
 		        PreparedStatement ps = conn.prepareStatement(sqlStr);
 		        ps.setInt(1, bookID);
@@ -155,13 +145,9 @@ public class CartDAO {
 		
 		
 		public static void deleteCartItem(String bookID) {
-	        String dbUser = System.getenv("PLANETSCALE_USERNAME");
-	        String dbKey = System.getenv("PLANETSCALE_KEY");
-
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	            String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
-	            Connection conn = DriverManager.getConnection(connURL);
+			Connection conn = null;
+			try {
+				conn = DBConnection.getConnection();
 
 	            String sqlStr = "DELETE FROM Cart WHERE bookID = ?";
 	            PreparedStatement pstmt = conn.prepareStatement(sqlStr);

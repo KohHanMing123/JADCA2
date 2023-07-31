@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="models.SQLqueryUser,models.User" %>
+<%@ page import="models.UserDAO,models.User" %>
 
 <%
-	SQLqueryUser query = new SQLqueryUser();
+UserDAO query = new UserDAO();
 	String custID = (String) session.getAttribute("custID");
 	System.out.println("custID in user.jsp " + custID);
 	User user = null;

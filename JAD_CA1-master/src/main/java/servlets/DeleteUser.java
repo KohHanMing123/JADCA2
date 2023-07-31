@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.SQLqueryUser;
+import models.UserDAO;
 
 /**
  * Servlet implementation class DeleteUser
@@ -41,7 +41,7 @@ public class DeleteUser extends HttpServlet {
         String username = request.getParameter("username");
         System.out.println("username in deleteUser servlet " + username);
 
-        SQLqueryUser.deleteUser(username);
+        UserDAO.deleteUser(username);
 
         response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
         System.out.println("Customer deleted!");

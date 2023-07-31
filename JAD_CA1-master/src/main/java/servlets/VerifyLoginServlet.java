@@ -42,7 +42,7 @@ public class VerifyLoginServlet extends HttpServlet {
         String user = request.getParameter("username");
         String password = request.getParameter("password");
         System.out.println(user + password);
-        String custID = SQLqueryUser.verifyUser(user, password, session);
+        String custID = UserDAO.verifyUser(user, password, session);
 
         if (custID != null) {
             // The user was found

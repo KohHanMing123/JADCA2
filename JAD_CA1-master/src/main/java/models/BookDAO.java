@@ -2,14 +2,13 @@ package models;
 import java.sql.*;
 import java.util.*;
 
+import dbaccess.DBConnection;
+
 public class BookDAO {
-	private String username = System.getenv("PLANETSCALE_USERNAME");
-	private String password = System.getenv("PLANETSCALE_KEY");
 	public ArrayList<Book> getNewArrivalBooks(int limit, int offset) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			
 			String sqlStr = "SELECT * FROM Books WHERE stock <> 0 ORDER BY dateAdded DESC LIMIT ? OFFSET ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -47,10 +46,9 @@ public class BookDAO {
 //		if(!(orderBy == "price" || orderBy == "alphabet")) {
 //			throw new Exception("invalid order By");
 //		}
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			String sqlStr = "SELECT * FROM Books WHERE stock <> 0 AND title LIKE ? AND IF(? = '', TRUE, genre = ?) AND IF(? = 0, TRUE, price >= ?) AND IF(? = 0, TRUE, price <= ?) ";
 			if(!orderBy.equals("")) {
 				if(orderBy.equals("priceASC"))
@@ -102,10 +100,9 @@ public class BookDAO {
 	}
 	
 	public int searchCount(String searchInput, String genreInput, double minPrice, double maxPrice, String orderBy) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			String sqlStr = "SELECT  COUNT(*) as total_count FROM Books WHERE stock <> 0 AND title LIKE ? AND IF(? = '', TRUE, genre = ?) AND IF(? = 0, TRUE, price >= ?) AND IF(? = 0, TRUE, price <= ?) ";
 
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -133,10 +130,9 @@ public class BookDAO {
 	}
 	
 	public Book getBook(int inputID) throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver");  
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			System.out.println("getBook method id is " + inputID);
 			String sqlStr = "SELECT * FROM Books WHERE id = ?";
 		    PreparedStatement ps=conn.prepareStatement(sqlStr);
@@ -175,10 +171,9 @@ public class BookDAO {
 	
 	public List<Book> getBooksByGenre(String genre) throws Exception {
 	    List<Book> books = new ArrayList<Book>();
-	    try {
-	        Class.forName("com.mysql.jdbc.Driver");
-	        String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-	        Connection conn = DriverManager.getConnection(connURL);
+	    Connection conn = null;
+		try {
+			conn = DBConnection.getConnection();
 
 	        String sqlStr = "SELECT * FROM Books WHERE genre = ?";
 	        PreparedStatement ps = conn.prepareStatement(sqlStr);
@@ -216,10 +211,9 @@ public class BookDAO {
 	}
 
 	public String insertImage(byte[] imageBlob) {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver"); 
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			String sqlStr = "UPDATE Books SET imageURL = ? WHERE id = ?";
 			PreparedStatement ps=conn.prepareStatement(sqlStr);
 			ps.setBytes(1, imageBlob);
@@ -236,10 +230,9 @@ public class BookDAO {
 	}
 	
 	public ArrayList<String> getAllGenre() throws Exception {
+		Connection conn = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver"); 
-			String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + username + "&password=" + password + "&serverTimezone=UTC";
-			Connection conn = DriverManager.getConnection(connURL);
+			conn = DBConnection.getConnection();
 			String sqlStr = "SELECT DISTINCT(genre) AS genre FROM Books";
 			PreparedStatement ps=conn.prepareStatement(sqlStr);
 			ResultSet rs= ps.executeQuery();

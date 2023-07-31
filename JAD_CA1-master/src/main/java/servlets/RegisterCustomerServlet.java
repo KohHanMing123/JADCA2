@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import models.SQLqueryUser;
+import models.UserDAO;
 
 /**
  * Servlet implementation class RegisterCustomerServlet
@@ -44,7 +44,7 @@ public class RegisterCustomerServlet extends HttpServlet {
             return;
         }
 
-        SQLqueryUser.registerUser(username, email, password);
+        UserDAO.registerUser(username, email, password);
 
         session.setAttribute("passwordMatch", true);
         response.sendRedirect(request.getContextPath() + "/Pages/Login.jsp");
