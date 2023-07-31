@@ -16,6 +16,7 @@ public class SQLqueryUser {
         String dbKey = System.getenv("PLANETSCALE_KEY");
 
         try {
+        	System.out.print("hi");
             Class.forName("com.mysql.cj.jdbc.Driver");
             String connURL = "jdbc:mysql://aws.connect.psdb.cloud:3306/jad-booksgalore?user=" + dbUser + "&password=" + dbKey + "&serverTimezone=UTC";
             Connection conn = DriverManager.getConnection(connURL);
