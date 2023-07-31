@@ -46,13 +46,13 @@ public class CreateUser extends HttpServlet {
 			response.sendRedirect("admin/newUser.jsp?msg=success");
 		}catch(Exception e) {
 			if(e.getLocalizedMessage().contains("username_UNIQUE")) {
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/newUser.jsp?msg=userexist");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/newUser.jsp?msg=userexist");
 				return;
 			}else if(e.getLocalizedMessage().contains("email_UNIQUE")) {
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/newUser.jsp?msg=emailexist");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/newUser.jsp?msg=emailexist");
 				return;
 			}
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/newUser.jsp?msg=error");
+			response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/newUser.jsp?msg=error");
 		}
 		
 	}

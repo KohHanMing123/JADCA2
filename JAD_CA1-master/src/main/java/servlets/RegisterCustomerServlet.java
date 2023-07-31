@@ -40,7 +40,7 @@ public class RegisterCustomerServlet extends HttpServlet {
         if (!password.equals(confirmPassword)) {
             session.setAttribute("passwordMatch", false);
             response.sendRedirect(request.getContextPath() + "/Pages/Register.jsp");
-            System.out.println("passwords are not the same");
+            System.out.println("passwords is not the same");
             return;
         }
 

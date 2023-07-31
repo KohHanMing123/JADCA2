@@ -43,7 +43,7 @@ public class EditUser extends HttpServlet {
 		try {
 			userID = Integer.parseInt(userIDStr);
 		}catch(Exception e) {
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
+			response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
 		}
 		try {
 			imageFile = request.getPart("imageFile");
@@ -54,9 +54,9 @@ public class EditUser extends HttpServlet {
 		if(request.getParameter("deleteUser") != null) {
 			try {
 				query.deleteCustomer(userID);
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/users.jsp");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/users.jsp");
 			}catch(Exception e) {
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
 				return;
 			}
 		}else {
@@ -64,17 +64,17 @@ public class EditUser extends HttpServlet {
 			
 			try {
 				query.updateCustomer(userID, username, email, password, imageFile);
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=success");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=success");
 			}catch(Exception e) {
 				System.err.println(e);
 				if(e.getLocalizedMessage().contains("username_UNIQUE")) {
-					response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=userexist");
+					response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=userexist");
 					return;
 				}else if(e.getLocalizedMessage().contains("email_UNIQUE")) {
-					response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=emailexist");
+					response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=emailexist");
 					return;
 				}
-				response.sendRedirect("http://localhost:8080/JAD_CA1-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
+				response.sendRedirect("http://localhost:8080/JAD_CA2-master/admin/user.jsp?id=" + userIDStr + "&msg=error");
 			}
 		}
 	}
