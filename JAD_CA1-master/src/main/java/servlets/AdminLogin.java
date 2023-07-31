@@ -40,7 +40,7 @@ public class AdminLogin extends HttpServlet {
 			adminID = query.adminLogin(password, username);
 			session.setAttribute("adminID", adminID);
 			session.setAttribute("username", username);
-			session.setMaxInactiveInterval(3 * 60); // 3 minutes
+			session.setMaxInactiveInterval(10 * 60); 
 			response.sendRedirect("admin/books.jsp");
 		}catch(Exception e) {
 			System.out.print(e.getLocalizedMessage());

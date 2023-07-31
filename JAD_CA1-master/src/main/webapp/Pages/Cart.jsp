@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.*" %>
-<%@ page import="models.SQLqueryBook, models.Book, models.CartItem, models.SQLqueryCart" %>
+<%@ page import="models.SQLqueryBook,models.Book,models.CartItem,models.SQLqueryCart" %>
 <%
-	
-	//Checks if they are logged in
+//Checks if they are logged in
 	if (session.getAttribute("custID") == null) {
 	    response.sendRedirect("http://localhost:8080/JAD_CA1-master/CheckProfileExistence");
 	    return;
@@ -64,7 +63,6 @@
         response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp");
         return;
     }
-    
 %>
 
 <!DOCTYPE html>

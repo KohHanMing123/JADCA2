@@ -11,12 +11,12 @@
 <title>BooksGalore Home</title>
 </head>
 <body class="min-h-screen flex flex-col">
-<%@ page import ="models.SQLqueryBook, models.Book, java.util.ArrayList" %>
+<%@ page import ="models.SQLqueryBook,models.Book,java.util.ArrayList" %>
 	<div class="bg-sand grow">
 		<%@ include file = "../components/navBar.html" %>
 		<%
 		SQLqueryBook query = new SQLqueryBook();
-		ArrayList<Book> books = query.getNewArrivalBooks(3, 0);
+				ArrayList<Book> books = query.getNewArrivalBooks(3, 0);
 		%>
 		<div class="h-96 flex flex-col items-center">
 	        <div class="flex h-20 items-end w-4/5">

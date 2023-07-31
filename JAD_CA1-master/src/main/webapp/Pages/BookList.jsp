@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*" %>
-<%@ page import="models.SQLqueryBook, models.Book" %>
+<%@ page import="models.SQLqueryBook,models.Book" %>
 <%--
     String genre = request.getParameter("genre");
 
@@ -20,7 +20,7 @@
 --%>
 
 <%
-    String genre = request.getParameter("genre");
+String genre = request.getParameter("genre");
     String search = request.getParameter("q");
     String minPriceStr = request.getParameter("mn");
     String maxPriceStr = request.getParameter("mx");

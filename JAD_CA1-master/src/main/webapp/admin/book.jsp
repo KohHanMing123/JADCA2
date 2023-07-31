@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="models.SQLqueryAdmin, models.Book, models.SQLqueryBook, java.util.ArrayList" %>
+<%@ page import="models.SQLqueryAdmin,models.SQLqueryBook,models.Book,java.util.ArrayList" %>
 <%
-	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 	try{
 		String adminUsername = (String) session.getAttribute("username");
 		int adminID = (int) session.getAttribute("adminID");
 		if(!adminQuery.verifyAdmin(adminID, adminUsername)){
-			response.sendRedirect("login.jsp");
-			return;
+	response.sendRedirect("login.jsp");
+	return;
 		}
 	}catch(Exception e){
 		response.sendRedirect("login.jsp");
@@ -49,7 +49,6 @@
 	genreArr.add("Cooking");
 	genreArr.add("Historical Fiction");
 	genreArr.add("Fiction");
-
 %>
 <!DOCTYPE html>
 <html>

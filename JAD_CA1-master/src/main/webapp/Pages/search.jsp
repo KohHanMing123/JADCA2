@@ -11,77 +11,77 @@
 <script src="https://kit.fontawesome.com/61e63c790b.js" crossorigin="anonymous"></script>
 </head>
 <body class="min-h-screen">
-<%@ page import ="models.SQLqueryBook, models.Book, java.util.*" %>
+<%@ page import ="models.SQLqueryBook,models.Book,java.util.*" %>
 	<%
 	int limit = 9;
-	int offset = 0;
-	String offsetStr = request.getParameter("os");
-	if(offsetStr != null){
-		try{
-			offset = Integer.parseInt(offsetStr);
-		}catch(NumberFormatException e){
-			
+		int offset = 0;
+		String offsetStr = request.getParameter("os");
+		if(offsetStr != null){
+			try{
+		offset = Integer.parseInt(offsetStr);
+			}catch(NumberFormatException e){
+		
+			}
 		}
-	}
-	
-	String search = request.getParameter("q");
-	String genre = request.getParameter("g");
-	String minPriceStr = request.getParameter("mn");
-	String maxPriceStr = request.getParameter("mx");
-	String orderBy = request.getParameter("ob");
-	double minPrice = 0, maxPrice = 0;
-	if(minPriceStr != null){
-		try{
-			minPrice = Double.parseDouble(minPriceStr);
-		}catch(NumberFormatException e){
-			
+		
+		String search = request.getParameter("q");
+		String genre = request.getParameter("g");
+		String minPriceStr = request.getParameter("mn");
+		String maxPriceStr = request.getParameter("mx");
+		String orderBy = request.getParameter("ob");
+		double minPrice = 0, maxPrice = 0;
+		if(minPriceStr != null){
+			try{
+		minPrice = Double.parseDouble(minPriceStr);
+			}catch(NumberFormatException e){
+		
+			}
 		}
-	}
-	if(maxPriceStr != null){
-		try{
-			maxPrice = Double.parseDouble(maxPriceStr);
-		}catch(NumberFormatException e){
-			
+		if(maxPriceStr != null){
+			try{
+		maxPrice = Double.parseDouble(maxPriceStr);
+			}catch(NumberFormatException e){
+		
+			}
 		}
-	}
-	if(search == null){
-		search = "";
-	}
-	if(genre == null){
-		genre = "";
-	}
-	if(orderBy == null){
-		orderBy = "";
-	}
-	SQLqueryBook query = new SQLqueryBook();
-	ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, limit, offset);
-	int totalSearchCount = query.searchCount(search, genre, minPrice, maxPrice, orderBy);
-	ArrayList<String> genres = query.getAllGenre();
-	int resultShownCountMin = offset + 1;
-	int resultShownCountMax = offset + limit;
-	if(totalSearchCount == 0){
-		resultShownCountMin = 0;
-		resultShownCountMax = 0;
-	}else{
-		if(totalSearchCount < resultShownCountMin){
-			resultShownCountMin = totalSearchCount;
+		if(search == null){
+			search = "";
 		}
-		if(resultShownCountMax > totalSearchCount){
-			resultShownCountMax = totalSearchCount;
+		if(genre == null){
+			genre = "";
 		}
-	}
-	String pathQuery = request.getQueryString();
-	String pathWithQuery;
-	if(pathQuery == null){
-		pathWithQuery = request.getRequestURL() + "?";
-	}else{
-		pathWithQuery = request.getRequestURL().append('?').append(pathQuery).toString();
-	}
-	String prefix = "&os=";
-	if(pathWithQuery.contains(prefix)){
-		int indexOfPrefix = pathWithQuery.indexOf(prefix);
-		pathWithQuery = pathWithQuery.substring(0, indexOfPrefix);
-	}
+		if(orderBy == null){
+			orderBy = "";
+		}
+		SQLqueryBook query = new SQLqueryBook();
+		ArrayList<Book> books = query.searchBook(search, genre, minPrice, maxPrice, orderBy, limit, offset);
+		int totalSearchCount = query.searchCount(search, genre, minPrice, maxPrice, orderBy);
+		ArrayList<String> genres = query.getAllGenre();
+		int resultShownCountMin = offset + 1;
+		int resultShownCountMax = offset + limit;
+		if(totalSearchCount == 0){
+			resultShownCountMin = 0;
+			resultShownCountMax = 0;
+		}else{
+			if(totalSearchCount < resultShownCountMin){
+		resultShownCountMin = totalSearchCount;
+			}
+			if(resultShownCountMax > totalSearchCount){
+		resultShownCountMax = totalSearchCount;
+			}
+		}
+		String pathQuery = request.getQueryString();
+		String pathWithQuery;
+		if(pathQuery == null){
+			pathWithQuery = request.getRequestURL() + "?";
+		}else{
+			pathWithQuery = request.getRequestURL().append('?').append(pathQuery).toString();
+		}
+		String prefix = "&os=";
+		if(pathWithQuery.contains(prefix)){
+			int indexOfPrefix = pathWithQuery.indexOf(prefix);
+			pathWithQuery = pathWithQuery.substring(0, indexOfPrefix);
+		}
 	%>
 	<div class="bg-sand min-h-screen flex flex-col">
 		<%@ include file = "../components/navBar.html" %>

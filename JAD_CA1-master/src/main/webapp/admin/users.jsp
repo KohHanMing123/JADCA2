@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="models.SQLqueryAdmin, models.User, java.util.*" %>
-<%	
-	SQLqueryAdmin adminQuery = new SQLqueryAdmin();
+<%@ page import="models.SQLqueryAdmin,models.User,java.util.*" %>
+<%
+SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 	try{
 		String adminUsername = (String) session.getAttribute("username");
 		int adminID = (int) session.getAttribute("adminID");
 		if(!adminQuery.verifyAdmin(adminID, adminUsername)){
-			response.sendRedirect("login.jsp");
-			return;
+	response.sendRedirect("login.jsp");
+	return;
 		}
 	}catch(Exception e){
 		response.sendRedirect("login.jsp");
@@ -24,7 +24,6 @@
 	}else{
 		users = adminQuery.searchUser(search);
 	}
-
 %>
 <!DOCTYPE html>
 <html>

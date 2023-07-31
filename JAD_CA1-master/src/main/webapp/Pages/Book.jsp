@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import ="models.SQLqueryBook, models.Book" %>
-<% 
+<%@ page import ="models.SQLqueryBook,models.Book" %>
+<%
 String idStr = request.getParameter("book");
 System.out.println("Book.jsp book idStr " + idStr);
 int id = 0;

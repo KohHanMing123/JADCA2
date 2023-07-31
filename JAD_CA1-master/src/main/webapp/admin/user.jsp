@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="models.SQLqueryAdmin, models.User" %>
+<%@page import="models.SQLqueryAdmin,models.User" %>
 <%
 SQLqueryAdmin adminQuery = new SQLqueryAdmin();
 try{

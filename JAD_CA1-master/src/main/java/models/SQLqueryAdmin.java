@@ -194,6 +194,7 @@ public class SQLqueryAdmin {
 		if(imageFile != null) {
 			try {
 				imageData = convertImage(imageFile);
+				System.out.print(imageData);
 			} catch (Exception e) {
 				imageData = null;
 			}
