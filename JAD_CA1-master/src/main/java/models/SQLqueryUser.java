@@ -58,8 +58,6 @@ public class SQLqueryUser {
                 found = true;
                 custID = rs.getString("custID");
                 System.out.println("custID is " + custID);
-                System.out.println("test TEST");
-
                 
                 // Retrieve the cart items from the database
                 List<CartItem> cartItems = new ArrayList<>();

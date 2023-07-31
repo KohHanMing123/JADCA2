@@ -36,7 +36,7 @@ public class UpdateUserInfo extends HttpServlet {
         HttpSession session = request.getSession();
         // Checks if they are logged in
         if (session.getAttribute("custID") == null) {
-            response.sendRedirect("http://localhost:8080/JAD_CA1-master/CheckProfileExistence");
+            response.sendRedirect("http://localhost:8080/JAD_CA2-master/CheckProfileExistence");
             return;
         }
 

@@ -34,7 +34,7 @@ public class UserLogout extends HttpServlet {
 		    session.removeAttribute("custID");
 
 		    session.invalidate();
-		    
+		    System.out.println("Customer logged out!");
 	        response.sendRedirect(request.getContextPath() + "/Pages/home.jsp"); // can modify to another page if not correct
 		}
 	}

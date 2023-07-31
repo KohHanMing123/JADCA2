@@ -31,9 +31,9 @@ public class CheckProfileExistence extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("username") == null || session.getAttribute("sessUserRole") == null || session.getAttribute("loginStatus") != "success" ) {
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/Login.jsp");
+			response.sendRedirect("http://localhost:8080/JAD_CA2-master/Pages/Login.jsp");
 		}else {
-			response.sendRedirect("http://localhost:8080/JAD_CA1-master/Pages/User.jsp");
+			response.sendRedirect("http://localhost:8080/JAD_CA2-master/Pages/User.jsp");
 		}
 
 	}
