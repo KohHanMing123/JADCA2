@@ -11,7 +11,6 @@ public class SQLqueryUser {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");
 	
-	
 	public static void registerUser(String username, String email, String password) {
         String dbUser = System.getenv("PLANETSCALE_USERNAME");
         String dbKey = System.getenv("PLANETSCALE_KEY");
@@ -59,7 +58,9 @@ public class SQLqueryUser {
                 found = true;
                 custID = rs.getString("custID");
                 System.out.println("custID is " + custID);
+                System.out.println("test TEST");
 
+                
                 // Retrieve the cart items from the database
                 List<CartItem> cartItems = new ArrayList<>();
                 try {
