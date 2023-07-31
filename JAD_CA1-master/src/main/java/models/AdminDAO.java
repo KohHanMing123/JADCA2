@@ -10,7 +10,7 @@ import java.util.*;
 
 import javax.servlet.http.Part;
 
-public class SQLqueryAdmin {
+public class AdminDAO {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");
 	

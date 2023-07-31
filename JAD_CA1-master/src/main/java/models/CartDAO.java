@@ -3,7 +3,7 @@ package models;
 import java.sql.*;
 import java.util.*;
 
-public class SQLqueryCart {
+public class CartDAO {
 	private String username = System.getenv("PLANETSCALE_USERNAME");
 	private String password = System.getenv("PLANETSCALE_KEY");
 	

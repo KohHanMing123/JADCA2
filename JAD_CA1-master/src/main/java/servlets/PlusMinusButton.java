@@ -30,7 +30,7 @@ public class PlusMinusButton extends HttpServlet {
         int bookID = Integer.parseInt(request.getParameter("bookID"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        SQLqueryBook queryBook = new SQLqueryBook();
+        BookDAO queryBook = new BookDAO();
         Book book = null;
 		try {
 			book = queryBook.getBook(bookID);
@@ -46,7 +46,7 @@ public class PlusMinusButton extends HttpServlet {
         }
 
         double unitPrice = book.getPrice();
-        SQLqueryCart queryCart = new SQLqueryCart();
+        CartDAO queryCart = new CartDAO();
 
         if ("plus".equals(action)) {
             queryCart.updateCartPlusButton(bookID, quantity + 1);

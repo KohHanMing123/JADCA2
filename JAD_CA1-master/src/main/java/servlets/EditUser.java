@@ -49,7 +49,7 @@ public class EditUser extends HttpServlet {
 			imageFile = request.getPart("imageFile");
 		}catch(Exception e) {
 		}
-		SQLqueryAdmin query = new SQLqueryAdmin();
+		AdminDAO query = new AdminDAO();
 		
 		if(request.getParameter("deleteUser") != null) {
 			try {

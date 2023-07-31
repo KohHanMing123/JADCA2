@@ -40,7 +40,7 @@ public class CreateUser extends HttpServlet {
 		String email = request.getParameter("email");
 		Part imageFile = request.getPart("imageFile");
 		
-		SQLqueryAdmin query = new SQLqueryAdmin();
+		AdminDAO query = new AdminDAO();
 		try {
 			query.createUser(username, password, email, imageFile);
 			response.sendRedirect("admin/newUser.jsp?msg=success");

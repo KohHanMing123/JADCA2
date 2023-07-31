@@ -70,7 +70,7 @@ public class SQLqueryUser {
 
                     while (cartRs.next()) {
                         int bookID = cartRs.getInt("bookID");
-                        SQLqueryBook query = new SQLqueryBook();
+                        BookDAO query = new BookDAO();
                         Book book = query.getBook(bookID);
                         int quantity = cartRs.getInt("quantity");
                         cartItems.add(new CartItem(book, quantity));

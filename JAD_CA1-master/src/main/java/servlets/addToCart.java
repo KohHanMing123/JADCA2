@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import models.SQLqueryCart;
+import models.CartDAO;
 
 
 /**
@@ -68,7 +68,7 @@ public class addToCart extends HttpServlet {
         System.out.println("addToCart servlet book id " + bookID);
         System.out.println("addToCart servlet cust id " + custID);
         
-        SQLqueryCart.addToCart(custID, bookID, unitPrice, totalPrice, quantity);
+        CartDAO.addToCart(custID, bookID, unitPrice, totalPrice, quantity);
 
         response.sendRedirect(request.getContextPath() + "/Pages/Cart.jsp?book=" + bookID);
         System.out.println("Item added to cart");

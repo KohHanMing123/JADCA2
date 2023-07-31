@@ -36,7 +36,7 @@ public class deleteFromCart extends HttpServlet {
 
         String bookID = request.getParameter("bookID");
 
-        SQLqueryCart.deleteCartItem(bookID);
+        CartDAO.deleteCartItem(bookID);
 
         // Remove the cart item from the session as well
         List<CartItem> cart = (List<CartItem>) request.getSession().getAttribute("cart");

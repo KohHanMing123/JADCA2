@@ -69,7 +69,7 @@ public class CreateBook extends HttpServlet {
 			imageFile = request.getPart("imageFile");
 		}catch(Exception e) {
 		}
-		SQLqueryAdmin query = new SQLqueryAdmin();
+		AdminDAO query = new AdminDAO();
 		String results = query.createBook(imageFile, title, author, date, genre, isbn, price, stock, desc);
 		if(results.equals("Success")) {
 			response.sendRedirect("admin/newbook.jsp?msg=success&t=" + title);

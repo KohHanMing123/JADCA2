@@ -34,7 +34,7 @@ public class AdminLogin extends HttpServlet {
         
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");	
-		SQLqueryAdmin query = new SQLqueryAdmin();
+		AdminDAO query = new AdminDAO();
 		int adminID = 0;
 		try {
 			adminID = query.adminLogin(password, username);
