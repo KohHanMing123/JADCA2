@@ -92,7 +92,7 @@ AdminDAO adminQuery = new AdminDAO();
    	 		<input name="bookID" type="hidden" value="<%=book.getID() %>">
 	    	<div class="flex justify-center">
 		    	<div class="flex flex-col">
-		    		<img id="previewImage" src="..<%=book.getImage() %>" class="h-96 w-64" alt="Preview Image">
+		    		<img id="previewImage" src="..<%=book.getImage() %>" class="bg-gray-400 h-96 w-64"  alt="Preview Image">
 		    		<p id="imageError" class="text-maroon"></p>
 		    		<label class="hover:cursor-pointer rounded-lg bg-dark-blue w-fit mt-3 py-1 px-4 font-semibold text-white" for="image">Change Image</label>
 		    		<input onchange="validateImageSize(this)" type="file" class="hidden" name="imageFile" value="Change File" accept=".png, .jpg, .jpeg" id="image">
@@ -189,7 +189,23 @@ AdminDAO adminQuery = new AdminDAO();
     	</form>
     </div>
     <script>
-
+    	let imageError = false;
+    	const imageElement = document.getElementById('previewImage');
+    	let imageLoadedSrc = document.getElementById("previewImage").src
+    	
+    	function refreshImage(){
+    		document.getElementById("previewImage").src = imageLoadedSrc
+    		document.getElementById("previewImage").classList.remove("animate-pulse")
+    	}
+    	
+    	imageElement.addEventListener('error', function() {
+    		if(!imageLoadedSrc.includes("null")){
+    			document.getElementById("previewImage").src = ""
+    			document.getElementById("previewImage").classList.add("animate-pulse")
+        		setTimeout(refreshImage, 1000)
+        	}
+      	});
+		
     	const form = document.getElementById("editBookForm");
     	const genreDropdown = document.getElementById("genreDropdown");
     	form.addEventListener('change', enableSubmit);
@@ -214,13 +230,14 @@ AdminDAO adminQuery = new AdminDAO();
 	    	reader.readAsDataURL(file);
     	}
 	    
+	    
 	    function validateImageSize(input) {
 	    	  if (input.files && input.files[0]) {
 	    	    var file = input.files[0];
-	    	    var maxSizeInBytes = 1024 * 1024 / 1000 * 60;
+	    	    var maxSizeInBytes = 1024 * 1024;
 	    	    
 	    	    if (file.size > maxSizeInBytes) {
-	    	    	document.getElementById("imageError").innerText = "Please select an image smaller than 60kB!"
+	    	    	document.getElementById("imageError").innerText = "Please select an image smaller than 1 MB!"
 	    	      	input.value = '';
 	    	    	document.getElementById("submit").disabled = true;
 	    	    }else{
