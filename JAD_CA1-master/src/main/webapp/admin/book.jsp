@@ -202,7 +202,7 @@ AdminDAO adminQuery = new AdminDAO();
     		if(!imageLoadedSrc.includes("null")){
     			document.getElementById("previewImage").src = ""
     			document.getElementById("previewImage").classList.add("animate-pulse")
-        		setTimeout(refreshImage, 1000)
+        		setTimeout(refreshImage, 5000)
         	}
       	});
 		

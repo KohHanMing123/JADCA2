@@ -10,7 +10,8 @@ import java.util.*;
 
 import javax.servlet.http.Part;
 
-import dbaccess.DBConnection;
+
+import dbaccess.*;
 
 public class AdminDAO {
 	
@@ -436,6 +437,10 @@ public class AdminDAO {
 		if(!(fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg"))) {
 			throw new Exception("Wrong file format");
 		}else {
+//			CloudinaryConnection cloudinaryConnect = new CloudinaryConnection();
+//			Cloudinary cloudinary = cloudinaryConnect.getConnection();
+//			cloudinary.uploader().upload(imageFile, ObjectUtils.asMap("public_id", "olympic_flag"));
+			
 			String imageUID = UUID.randomUUID().toString();
 			String filePath = System.getenv("ASSETS_PATH") + imageUID;
 			File dir = new File(folderPath);
@@ -460,5 +465,3 @@ public class AdminDAO {
 		}
 	}
 }
-
-//Customers AS c LEFT JOIN CustomerAddress AS ca ON c.CustID = ca.customerID LEFT JOIN Address AS a ON ca.addressID = a.addressID

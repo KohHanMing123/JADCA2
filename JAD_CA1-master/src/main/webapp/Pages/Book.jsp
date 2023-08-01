@@ -35,7 +35,7 @@ try{
 		<%@ include file = "../components/navBar.html" %>
 		<div class="mx-64 my-20 flex">
         <div class="min-w-fit">
-            <img class="h-80" src="data:image/jpeg;base64,<%=book.getImage()%>" >
+            <img class="h-80" src="..<%=book.getImage()%>" >
         </div>
         <div class="flex flex-col ml-20">
             <p class="font-semibold font-serif text-4xl"><%=book.getTitle() %></p>
