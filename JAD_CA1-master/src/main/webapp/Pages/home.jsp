@@ -28,7 +28,7 @@
 				%>
 					<div class="flex hover:cursor-pointer hover:scale-105 duration-300" onclick="window.location.href='Book.jsp?book=<%=books.get(i).getID()%>'">
 		                <div class="bg-grey">
-		                    <img class="h-56 w-40" src="data:image/jpeg;base64,<%=books.get(i).getImage()%>" >
+		                    <img class="h-56 w-40" src="..<%=books.get(i).getImage()%>" >
 		                </div>
 		                <div class="bg-light-blue h-56 w-64 px-4 pt-2">
 		                    <p class="font-semibold text-xl"><%=books.get(i).getTitle()%></p>

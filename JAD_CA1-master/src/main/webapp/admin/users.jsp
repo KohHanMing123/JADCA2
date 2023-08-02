@@ -39,6 +39,12 @@ AdminDAO adminQuery = new AdminDAO();
 	<div id="side-navbar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform translate-x-0">
         <div class="h-full px-3 py-7 overflow-y-auto bg-tan">
            <ul class="space-y-2">
+           	  <li>
+                 <a href="dashboard.jsp" class="flex items-center p-2 rounded-lg text-xl text-black hover:text-white font-semibold hover:bg-gray-700">
+                    <i class="fa-solid fa-chart-line fa-lg"></i>
+                    <span class="ml-3">Dashboard</span>
+                 </a>
+              </li>
               <li>
                  <a class="flex items-center p-2 rounded-lg text-xl font-semibold text-white bg-gray-700">
                     <i class="fa-solid fa-user fa-lg"></i>

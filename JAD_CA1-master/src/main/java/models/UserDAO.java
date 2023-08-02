@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import dbaccess.DBConnection;
 
@@ -98,7 +99,7 @@ public class UserDAO {
 	            String username = rs.getString("username");
 	            String email = rs.getString("email");
 	            String password = rs.getString("password");
-	            String imageBlob = rs.getString("custImageURL");
+	            String imageBlob = rs.getString("imagePath");
 	            return new User(username, email, password, imageBlob);
 	        }
 	        
@@ -110,15 +111,16 @@ public class UserDAO {
 	    }
 	}
 
-	public String insertImage(int custID, byte[] imageBlob) {
+	public String insertImage(int custID, Part imageFile) {
 		Connection conn = null;
 		try {
 			conn = DBConnection.getConnection();
 	        PreparedStatement ps = null;
+	        String imagePath = Image.saveImage(imageFile);
 	        try {
-	            String sqlStr = "UPDATE Customers SET custImageURL = ? WHERE custID = ?";
+	            String sqlStr = "UPDATE Customers SET imagePath = ? WHERE custID = ?";
 	            ps = conn.prepareStatement(sqlStr);
-	            ps.setBytes(1, imageBlob);
+	            ps.setString(1, imagePath);
 	            ps.setInt(2, custID);
 	            int rowsAffected = ps.executeUpdate();
 	            if (rowsAffected == 1) {
