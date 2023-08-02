@@ -1,13 +1,13 @@
 package payment;
 
 public class OrderDetails {
-	private String productName;
+    private String productName;
     private float subtotal;
     private float shipping;
     private float tax;
     private float total;
  
-    public void OrderDetail(String productName, String subtotal, String shipping, String tax, String total) {
+    public OrderDetails(String productName, String subtotal, String shipping, String tax, String total) {
         this.productName = productName;
         this.subtotal = Float.parseFloat(subtotal);
         this.shipping = Float.parseFloat(shipping);

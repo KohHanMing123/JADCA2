@@ -166,8 +166,11 @@
 		            <span class="total-price"><%= String.format("%.2f", totalPrice) %></span>
 		        </td>
 		        <td class="py-4 px-6 border-t border-gray-200 text-center">
-		            <a href="#" class="rounded-lg bg-dark-blue text-white hover:bg-blue-700 px-4 py-2 checkout-btn">Checkout</a>
-		        </td>
+				    <form action="Checkout.jsp" method="post">
+				        <input type="hidden" name="totalPrice" value="<%= String.format("%.2f", totalPrice) %>">
+				        <input type="submit" value="Checkout" class="rounded-lg bg-dark-blue text-white hover:bg-blue-700 px-4 py-2 checkout-btn"/>
+				    </form>
+				</td>
 		    </tr>
 		    <tr>
 		        <td colspan="5" class="py-2 px-6 text-right">
