@@ -56,43 +56,44 @@ public class UpdateUserInfo extends HttpServlet {
 
         // Update the user image if provided
         Part imageFile = request.getPart("imageInput");
-        System.out.println("image file data is " + imageFile);
-        if (imageFile != null && imageFile.getSize() > 0) {
-            String fileName = imageFile.getSubmittedFileName();
-            String folderPath = "temporaryImage";
-
-            if (fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg")) {
-                String filePath = folderPath + File.separator + fileName;
-                File dir = new File(folderPath);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                try {
-                    InputStream fileInputStream = imageFile.getInputStream();
-                    OutputStream fileOutputStream = new FileOutputStream(filePath);
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = fileInputStream.read(buffer)) > 0) {
-                        fileOutputStream.write(buffer, 0, length);
-                    }
-                    fileOutputStream.close();
-                    File imageToUpload = new File(filePath);
-                    byte[] imageData = new byte[(int) imageToUpload.length()];
-                    try (FileInputStream fis = new FileInputStream(imageToUpload)) {
-                        fis.read(imageData);
-                    }
-                    fileInputStream.close();
-
-                    // Call the insertImage method to update the user image
-                    query.insertImage(custID, imageData);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("error");
-                } finally {
-                    deleteDirectory(dir);
-                }
-            }
-        }
+        query.insertImage(custID, imageFile);
+//        System.out.println("image file data is " + imageFile);
+//        if (imageFile != null && imageFile.getSize() > 0) {
+//            String fileName = imageFile.getSubmittedFileName();
+//            String folderPath = "temporaryImage";
+//
+//            if (fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg")) {
+//                String filePath = folderPath + File.separator + fileName;
+//                File dir = new File(folderPath);
+//                if (!dir.exists()) {
+//                    dir.mkdirs();
+//                }
+//                try {
+//                    InputStream fileInputStream = imageFile.getInputStream();
+//                    OutputStream fileOutputStream = new FileOutputStream(filePath);
+//                    byte[] buffer = new byte[1024];
+//                    int length;
+//                    while ((length = fileInputStream.read(buffer)) > 0) {
+//                        fileOutputStream.write(buffer, 0, length);
+//                    }
+//                    fileOutputStream.close();
+//                    File imageToUpload = new File(filePath);
+//                    byte[] imageData = new byte[(int) imageToUpload.length()];
+//                    try (FileInputStream fis = new FileInputStream(imageToUpload)) {
+//                        fis.read(imageData);
+//                    }
+//                    fileInputStream.close();
+//
+//                    // Call the insertImage method to update the user image
+//                    query.insertImage(custID, imageData);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    System.out.println("error");
+//                } finally {
+//                    deleteDirectory(dir);
+//                }
+//            }
+//        }
 
         response.sendRedirect(request.getContextPath() + "/Pages/User.jsp");
         System.out.println("Customer info updated!");

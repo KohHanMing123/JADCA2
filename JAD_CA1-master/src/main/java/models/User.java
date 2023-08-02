@@ -4,14 +4,14 @@ public class User {
     private String username;
     private String email;
     private String password;
-    private String imageBlob;
+    private String imagePath;
     private int userID;
 
-    public User(String username, String email, String password, String imageBlob) {
+    public User(String username, String email, String password, String imagePath) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.imageBlob = imageBlob;
+        this.imagePath = imagePath;
     }
 
     public String getUsername() {
@@ -27,7 +27,7 @@ public class User {
     }
     
 	public String getImage() {
-		return imageBlob;
+		return imagePath;
 	}
 	
 	public void setUserID(int inputUserID) {

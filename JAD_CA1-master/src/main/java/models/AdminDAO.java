@@ -180,7 +180,7 @@ public class AdminDAO {
 		String imagePath = null;
 		if(imageFile != null) {
 			try {
-				imagePath = saveImage(imageFile);
+				imagePath = Image.saveImage(imageFile);
 			} catch (Exception e) {
 				imagePath = null;
 			}
@@ -216,7 +216,7 @@ public class AdminDAO {
 		String imagePath = null;
 		if(imageFile != null) {
 			try {
-				imagePath = saveImage(imageFile);
+				imagePath = Image.saveImage(imageFile);
 			} catch (Exception e) {
 				imagePath = null;
 			}
@@ -353,7 +353,7 @@ public class AdminDAO {
 		String imagePath = null;
 		if(imageFile != null) {
 			try {
-				imagePath = saveImage(imageFile);
+				imagePath = Image.saveImage(imageFile);
 			} catch (Exception e) {
 			}
 		}
@@ -406,7 +406,7 @@ public class AdminDAO {
 		String imagePath = null;
 		if(imageFile != null) {
 			try {
-				imagePath = saveImage(imageFile);
+				imagePath = Image.saveImage(imageFile);
 			} catch (Exception e) {
 			}
 		}
@@ -430,38 +430,4 @@ public class AdminDAO {
 		}
 	}
 	
-	public String saveImage(Part imageFile) throws Exception {
-		String fileName = imageFile.getSubmittedFileName();
-		String folderPath = "temporaryImage";
-		
-		if(!(fileName.contains("png") || fileName.contains("jpeg") || fileName.contains("jpg"))) {
-			throw new Exception("Wrong file format");
-		}else {
-//			CloudinaryConnection cloudinaryConnect = new CloudinaryConnection();
-//			Cloudinary cloudinary = cloudinaryConnect.getConnection();
-//			cloudinary.uploader().upload(imageFile, ObjectUtils.asMap("public_id", "olympic_flag"));
-			
-			String imageUID = UUID.randomUUID().toString();
-			String filePath = System.getenv("ASSETS_PATH") + imageUID;
-			File dir = new File(folderPath);
-		    if (!dir.exists()) {
-		        dir.mkdirs();
-		    }
-			try {
-				InputStream fileInputStream = imageFile.getInputStream();
-		        OutputStream fileOutputStream = new FileOutputStream(filePath);
-		         byte[] buffer = new byte[1024];
-		         int length;
-		         while ((length = fileInputStream.read(buffer)) > 0) {
-		             fileOutputStream.write(buffer, 0, length);
-		         }
-		         fileOutputStream.close();
-
-		         return "/assets/" + imageUID;
-		     } catch (IOException e) {
-		         e.printStackTrace();
-		         throw e;
-		     }
-		}
-	}
 }
